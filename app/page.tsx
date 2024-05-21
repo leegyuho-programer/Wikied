@@ -1,6 +1,5 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Input from './../components/Input/Input';
 
 export default function Home() {
-  return <div>Hi</div>
+  return <Input />
 }
