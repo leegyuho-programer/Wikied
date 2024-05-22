@@ -5,15 +5,16 @@ interface InputProps {
   name: string;
   label?: string;
   type?: string;
+  placeholder: string;
 }
 
-function Input({ name, label, type = 'text' }): InputProps {
+function Input({ name, label, type = 'text', placeholder }): InputProps {
   return (
     <div className={styles.container}>
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
-      <input className={styles.input} id={name} type={type} />
+      <input className={styles.input} id={name} type={type} placeholder={placeholder} />
       {/* {errors && <span className={styles.error}>error</span>} */}
     </div>
   );
