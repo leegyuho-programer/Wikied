@@ -1,0 +1,48 @@
+.container {
+  padding: 20px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.gnb {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.login {
+  color: #8f95b2;
+}
+
+.button {
+  width: 120px;
+  height: 40px;
+  padding: 11px 20px;
+  background-color: #4cbfa4;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.dropdown {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .status {
+    display: none;
+  }
+
+  .dropdown {
+    display: block;
+  }
+}

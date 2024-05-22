@@ -17,5 +17,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// global css 적용되는지 확인
