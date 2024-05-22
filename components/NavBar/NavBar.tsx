@@ -2,6 +2,7 @@ import Image from 'next/image';
 import styles from './NavBar.module.css';
 import Link from 'next/link';
 import Menu from './../SvgComponents/Menu';
+import Button from '../Button/Button';
 
 function NavBar() {
   return (
@@ -15,7 +16,9 @@ function NavBar() {
         <Link href="/" className={styles.login}>
           로그인
         </Link>
-        <button className={styles.button}>내 위키 만들기</button>
+        <Button isLink={true} variant="primary" destination="/" isLittle={true}>
+          내 위키 만들기
+        </Button>
       </div>
       <div className={styles.dropdown}>
         <Menu />
