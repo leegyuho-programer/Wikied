@@ -2,6 +2,7 @@ import Input from './../../components/Input/Input';
 import NavBar from './../../components/NavBar/NavBar';
 import Button from './../../components/Button/Button';
 import styles from './page.module.css';
+import SideBar from '../../components/SideBar/SideBar';
 
 function Test() {
   return (
@@ -14,6 +15,7 @@ function Test() {
       <Button isLink={false} variant="secondary" isLittle={true}>
         로그인
       </Button>
+      <SideBar />
     </div>
   );
 }
