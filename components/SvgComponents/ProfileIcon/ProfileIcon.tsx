@@ -3,7 +3,7 @@ import styles from './ProfileIcon.module.css';
 function ProfileIcon() {
   return (
     <div className={styles.container}>
-      <svg width="200" height="200" viewBox="0 0 85 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg className={styles.icon} viewBox="0 0 85 85" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="icon">
           <circle id="Ellipse 14" cx="42.5" cy="42.5" r="42.5" fill="#F7F7FA" />
           <path

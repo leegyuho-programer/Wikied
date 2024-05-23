@@ -1,0 +1,9 @@
+.container {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    display: block;
+  }
+}
