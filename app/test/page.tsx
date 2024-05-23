@@ -3,6 +3,7 @@ import NavBar from './../../components/NavBar/NavBar';
 import Button from './../../components/Button/Button';
 import styles from './page.module.css';
 import SideBar from '../../components/SideBar/SideBar';
+import DropDown from '../../components/DropDown/DropDown';
 
 function Test() {
   return (
@@ -16,6 +17,7 @@ function Test() {
         로그인
       </Button>
       <SideBar />
+      <DropDown />
     </div>
   );
 }

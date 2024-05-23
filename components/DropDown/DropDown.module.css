@@ -1,0 +1,36 @@
+.containerWrapper {
+  display: flex;
+  width: 400px;
+  height: 45px;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: #f7f7fa;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+}
+
+.input {
+  background-color: #f7f7fa;
+  width: 100%;
+  color: #8f95b2;
+}
+
+.button {
+  background-color: #f7f7fa;
+  border: none;
+  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
