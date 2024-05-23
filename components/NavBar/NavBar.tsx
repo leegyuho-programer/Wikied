@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './NavBar.module.css';
 import Link from 'next/link';
-import Menu from './../SvgComponents/Menu';
+import MenuIcon from '../SvgComponents/MenuIcon';
 import Button from '../Button/Button';
 
 function NavBar() {
@@ -21,7 +21,7 @@ function NavBar() {
         </Button>
       </div>
       <div className={styles.dropdown}>
-        <Menu />
+        <MenuIcon />
       </div>
     </div>
   );

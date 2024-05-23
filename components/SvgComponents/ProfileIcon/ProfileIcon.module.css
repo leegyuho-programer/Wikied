@@ -1,0 +1,19 @@
+.container {
+  margin: 60px 0px;
+}
+
+.icon {
+  width: 200px;
+  height: 200px;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    margin: 20px 30px;
+  }
+
+  .icon {
+    width: 71px;
+    height: 71px;
+  }
+}
