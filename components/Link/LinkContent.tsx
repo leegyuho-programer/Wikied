@@ -1,9 +1,11 @@
 import styles from './LinkContent.module.css';
 
-const ID = '2gyuho_295';
+interface Props {
+  text: string;
+}
 
-function LinkContent() {
-  return <span className={styles.container}>https://www.widied.kr/{ID}</span>;
+function LinkContent({ text }: Props) {
+  return <span className={styles.container}>{text}</span>;
 }
 
 export default LinkContent;
