@@ -1,28 +1,28 @@
 .container {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
   width: 260px;
   position: relative;
   top: 20px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .lineWrapper {
-  gap: 25px;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .line {
-  gap: 20px;
   display: flex;
   flex-direction: row;
+  gap: 20px;
 }
 
 .title {
-  color: #8f95b2;
   width: 60px;
+  color: #8f95b2;
 }
 
 .answer {
