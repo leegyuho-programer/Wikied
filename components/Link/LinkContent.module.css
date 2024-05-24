@@ -1,0 +1,9 @@
+.container {
+  color: #4cbfa4;
+  border-radius: 10px;
+  background: var(--main-main50, #eef9f6);
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px 0px 0px;
+}

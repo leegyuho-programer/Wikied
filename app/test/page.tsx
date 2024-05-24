@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import SideBar from '../../components/SideBar/SideBar';
 import DropDown from '../../components/DropDown/DropDown';
 import Menu from '../../components/Menu/Menu';
+import Link from '../../components/Link/Link';
 
 function Test() {
   return (
@@ -20,6 +21,7 @@ function Test() {
       <SideBar /> */}
       <DropDown />
       <Menu />
+      <Link />
     </div>
   );
 }
