@@ -15,10 +15,10 @@
 }
 
 .empty {
+  width: 260px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  width: 260px;
 }
 
 .contentWrapper {
@@ -27,17 +27,17 @@
 
 .arrowButtonWrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .arrowButton {
-  background: none;
-  border: none;
-  cursor: pointer;
   padding: 10px;
-  transition: transform 0.3s ease;
+  border: none;
   display: none;
+  background: none;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .rotate {
@@ -51,11 +51,11 @@
   }
 
   .container {
-    display: flex;
-    flex-direction: column;
     width: 100vw;
     margin: 0px 60px;
+    display: flex;
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .innerContainer {
@@ -64,8 +64,8 @@
   }
 
   .arrowButton {
-    display: block;
     width: 100vw;
+    display: block;
   }
 }
 
