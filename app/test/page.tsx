@@ -7,6 +7,7 @@ import DropDown from '../../components/DropDown/DropDown';
 import Menu from '../../components/Menu/Menu';
 import Link from '../../components/Link/Link';
 import SnackBar from '../../components/SnackBar/SnackBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 function Test() {
   return (
@@ -24,6 +25,7 @@ function Test() {
       <Menu />
       <Link />
       <SnackBar type="true" />
+      <SearchBar />
     </div>
   );
 }
