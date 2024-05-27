@@ -1,0 +1,21 @@
+.container {
+  width: 860px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background-color: #f7f7fa;
+  padding: 10px 20px;
+  gap: 15px;
+}
+
+.input {
+  width: 100%;
+  color: #474d66;
+  font-size: 2rem;
+  font-weight: 500;
+  background-color: #f7f7fa;
+  outline: none;
+}
