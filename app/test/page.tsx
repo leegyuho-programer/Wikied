@@ -8,6 +8,8 @@ import Menu from '../../components/Menu/Menu';
 import Link from '../../components/Link/Link';
 import SnackBar from '../../components/SnackBar/SnackBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import ModalContainer from '../../components/Modal/ModalContainer/ModalContainer';
+import ModalHeader from '../../components/Modal/ModalHeader/ModalHeader';
 
 function Test() {
   return (
@@ -21,11 +23,14 @@ function Test() {
         로그인
       </Button>
       <SideBar /> */}
-      <DropDown />
+      {/* <DropDown />
       <Menu />
       <Link />
-      <SnackBar type="true" />
+      <SnackBar type="true" /> */}
       <SearchBar />
+      <ModalContainer type="alert">
+        <ModalHeader text="비디오" />
+      </ModalContainer>
     </div>
   );
 }
