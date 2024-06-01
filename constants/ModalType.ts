@@ -1,1 +1,1 @@
-type TitleType = 'alert' | 'link' | 'video' | 'image' | 'menu';
+type TitleType = 'alert' | 'form' | 'link' | 'video' | 'image' | 'menu';

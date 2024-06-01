@@ -4,6 +4,7 @@ import { PropsWithChildren, ReactNode } from 'react';
 import CloseIcon from '../../SvgComponents/CloseIcon/CloseIcon';
 import { useRouter } from 'next/navigation';
 import styles from './ModalContainer.module.css';
+import Button from '../../Button/Button';
 
 interface Props {
   children: ReactNode;
@@ -22,7 +23,12 @@ function ModalContainer({ children, type }: Props) {
       <div className={styles.IconWrapper}>
         <CloseIcon onClick={onClickClose} />
       </div>
-      <div className={styles.text}>{children}</div>
+      {children}
+      <div className={styles.button}>
+        <Button isLink={false} variant="primary" isLittle={true}>
+          확인
+        </Button>
+      </div>
     </div>
   );
 }

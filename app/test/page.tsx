@@ -10,8 +10,13 @@ import SnackBar from '../../components/SnackBar/SnackBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ModalContainer from '../../components/Modal/ModalContainer/ModalContainer';
 import ModalHeader from '../../components/Modal/ModalHeader/ModalHeader';
+import ModalBody from '../../components/Modal/ModalBody/ModalBody';
+
+type TitleType = 'alert' | 'form' | 'link' | 'video' | 'image' | 'menu';
 
 function Test() {
+  const type: TitleType = 'form';
+
   return (
     <div className={styles.container}>
       {/* <Input name="ID" label="이름" type="text" placeholder="하하" />
@@ -27,9 +32,13 @@ function Test() {
       <Menu />
       <Link />
       <SnackBar type="true" /> */}
+      {/* <Button isLink={false} variant="primary" isLittle={true}>
+        로그인
+      </Button> */}
       <SearchBar />
-      <ModalContainer type="alert">
-        <ModalHeader text="비디오" />
+      <ModalContainer type={type}>
+        {type === 'form' && <ModalHeader text="비디오" />}
+        <ModalBody />
       </ModalContainer>
     </div>
   );
