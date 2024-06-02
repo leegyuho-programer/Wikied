@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.header {
+  color: #474d66;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.content {
+  color: #8f95b2;
+  font-size: 1.6rem;
+}

@@ -8,6 +8,10 @@ import Menu from '../../components/Menu/Menu';
 import Link from '../../components/Link/Link';
 import SnackBar from '../../components/SnackBar/SnackBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import Modal from '../../components/Modal';
+import ModalContainer from '../../components/Modal/ModalContainer/ModalContainer';
+import ModalHeader from '../../components/Modal/ModalHeader/ModalHeader';
+import ModalBody from '../../components/Modal/ModalBody/ModalBody';
 
 function Test() {
   return (
@@ -21,11 +25,23 @@ function Test() {
         로그인
       </Button>
       <SideBar /> */}
-      <DropDown />
+      {/* <DropDown />
       <Menu />
       <Link />
-      <SnackBar type="true" />
+      <SnackBar type="true" /> */}
+      {/* <Button isLink={false} variant="primary" isLittle={true}>
+        로그인
+      </Button> */}
       <SearchBar />
+      {/* <ModalContainer type={type} text="확인"> */}
+      <ModalContainer text="확인">
+        <ModalHeader text="비디오" type="form" />
+        <ModalBody />
+      </ModalContainer>
+      <ModalContainer text="확인">
+        <ModalHeader type="quiz" />
+        <ModalBody />
+      </ModalContainer>
     </div>
   );
 }

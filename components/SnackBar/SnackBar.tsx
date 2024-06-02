@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { failModify, successCopy } from '../../lib/constants/SnackBarMassage';
+import { failModify, successCopy } from '../../constants/SnackBarMassage';
 import FailIcon from '../SvgComponents/FailIcon/FailIcon';
 import SuccessIcon from '../SvgComponents/SuccessIcon/SuccessIcon';
 import styles from './SnackBar.module.css';
