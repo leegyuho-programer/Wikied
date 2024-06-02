@@ -2,3 +2,25 @@
   display: flex;
   justify-content: center;
 }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  background-color: #f7f7fa;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+}

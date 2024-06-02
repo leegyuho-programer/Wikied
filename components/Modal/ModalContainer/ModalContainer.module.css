@@ -28,16 +28,13 @@
   margin-top: 40px;
 }
 
-.text {
-}
-
 .alert {
   width: 395px;
   height: 215px;
   flex-shrink: 0;
 }
 
-.link {
+/* .link {
 }
 
 .video {
@@ -47,4 +44,4 @@
 }
 
 .menu {
-}
+} */

@@ -6,17 +6,18 @@ import { useRouter } from 'next/navigation';
 import styles from './ModalContainer.module.css';
 import Button from '../../Button/Button';
 
+type TitleType = 'alert' | 'form' | 'quiz';
 interface Props {
   children: ReactNode;
-  type: string;
+  type?: string;
+  text: string;
 }
 
-function ModalContainer({ children, type }: Props) {
+function ModalContainer({ children, type, text }: Props) {
   const router = useRouter();
   const onClickClose = () => {
     router.back();
   };
-  console.log(type);
 
   return (
     <div className={`${styles.container} ${styles.type}`}>
@@ -26,7 +27,7 @@ function ModalContainer({ children, type }: Props) {
       {children}
       <div className={styles.button}>
         <Button isLink={false} variant="primary" isLittle={true}>
-          확인
+          {text}
         </Button>
       </div>
     </div>

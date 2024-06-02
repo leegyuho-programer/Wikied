@@ -8,15 +8,12 @@ import Menu from '../../components/Menu/Menu';
 import Link from '../../components/Link/Link';
 import SnackBar from '../../components/SnackBar/SnackBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import Modal from '../../components/Modal';
 import ModalContainer from '../../components/Modal/ModalContainer/ModalContainer';
 import ModalHeader from '../../components/Modal/ModalHeader/ModalHeader';
 import ModalBody from '../../components/Modal/ModalBody/ModalBody';
 
-type TitleType = 'alert' | 'form' | 'link' | 'video' | 'image' | 'menu';
-
 function Test() {
-  const type: TitleType = 'form';
-
   return (
     <div className={styles.container}>
       {/* <Input name="ID" label="이름" type="text" placeholder="하하" />
@@ -36,8 +33,13 @@ function Test() {
         로그인
       </Button> */}
       <SearchBar />
-      <ModalContainer type={type}>
-        {type === 'form' && <ModalHeader text="비디오" />}
+      {/* <ModalContainer type={type} text="확인"> */}
+      <ModalContainer text="확인">
+        <ModalHeader text="비디오" type="form" />
+        <ModalBody />
+      </ModalContainer>
+      <ModalContainer text="확인">
+        <ModalHeader type="quiz" />
         <ModalBody />
       </ModalContainer>
     </div>
