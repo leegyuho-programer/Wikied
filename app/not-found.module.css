@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 118px;
+  height: 144px;
+}
+
+.text {
+  margin-top: 40px;
+  margin-bottom: 60px;
+  color: #8f95b2;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .imageWrapper {
+    width: 104px;
+    height: 128px;
+  }
+
+  .text {
+    font-size: 1.8rem;
+  }
+}
