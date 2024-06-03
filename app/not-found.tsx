@@ -7,7 +7,7 @@ function NotFound() {
   return (
     <div className={styles.container}>
       <div className={styles.imageWrapper}>
-        <Image src={notFound} alt="Not-Found Image" placeholder="blur" layout="fill" objectFit="cover" />
+        <Image src={notFound} alt="Not-Found Image" layout="fill" objectFit="cover" />
       </div>
       <p className={styles.text}>해당 페이지를 찾을 수 없어요.</p>
       <Button isLink={true} destination="/" isLittle={true}>

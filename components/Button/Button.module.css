@@ -30,7 +30,15 @@
   background-color: #474d66;
 }
 
+.white {
+  border-radius: 15px;
+  background-color: #fff;
+  color: #474d66;
+}
+
 .mediumButton {
+  font-size: 2rem;
+  font-weight: 700;
   width: 170px;
   height: 59px;
   padding: 15px 30px;

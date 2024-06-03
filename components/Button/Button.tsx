@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import styles from './Button.module.css';
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'gray';
+  variant?: 'primary' | 'secondary' | 'gray' | 'white';
   isLink: boolean;
   destination?: string;
   children?: ReactNode;
