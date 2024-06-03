@@ -9,10 +9,10 @@
   width: 930px;
   height: 2125px;
   margin-top: 120px;
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative;
 }
 
 .buttonContainer {
@@ -37,10 +37,10 @@
   width: 498px;
   height: 590px;
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
 }
 
 .imageWrapper {
@@ -67,33 +67,33 @@
 }
 
 .circleBackground {
-  position: absolute;
-  bottom: 1150px;
   width: 110vw;
   height: 400px;
-  border-radius: 50%;
-  background-color: #474d66;
+  position: absolute;
+  bottom: 1150px;
   z-index: 0;
+  background-color: #474d66;
+  border-radius: 50%;
 }
 
 .sectionContainer {
-  position: absolute;
-  bottom: 60px;
   width: 100vw;
   height: 1211px;
-  background-color: #474d66;
+  position: absolute;
+  bottom: 60px;
   z-index: 1;
   display: flex;
   justify-content: center;
+  background-color: #474d66;
 }
 
 .sectionWrapper {
   margin-top: 193px;
   margin-bottom: 200px;
-  display: flex;
-  gap: 40px;
-  justify-content: center;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
 .section {
@@ -117,35 +117,36 @@
 }
 
 .sectionRight {
-  margin-top: 200px;
-  height: 180px;
   width: 930px;
+  height: 180px;
   display: flex;
   justify-content: end;
   text-align: right;
+  margin-top: 380px;
+  margin-bottom: 140px;
 }
 
 .content {
-  color: #474d66;
   margin-bottom: 120px;
+  color: #474d66;
 }
 
 .imageContainerWrapper {
+  width: 100%;
+  margin-bottom: 200px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
-  width: 100%;
   gap: 70px;
-  margin-bottom: 200px;
 }
 
 .imageContainer4 {
-  display: flex;
   width: 360px;
-  position: relative;
   height: 360px;
-  justify-content: center;
+  position: relative;
+  display: flex;
   align-items: center;
+  justify-content: center;
   background-color: #b2a5fd;
   border-radius: 20px;
 }
@@ -161,53 +162,49 @@
 .imageContainer7 {
   width: 70px;
   height: 360px;
-  background-color: #dee5f5;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
+  background-color: #dee5f5;
 }
 
 .imageContainer8 {
   width: 70px;
   height: 360px;
-  background-color: #dee5f5;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  background-color: #dee5f5;
 }
 
 .bodyContainer {
+  padding: 200px 498px;
+  width: 100%;
+  height: 1291px;
   display: flex;
   justify-content: center;
-  height: 1291px;
-  width: 100%;
   background-color: #ecf0fa;
 }
 
 .body {
   width: 930px;
-  padding: 200px 498px;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 .sectionLeft {
-  /* margin-top: 200px; */
-  height: 180px;
   width: 930px;
-  /* display: flex; */
-  /* justify-content: end;
-  text-align: right; */
+  height: 180px;
 }
 
 .imageContainer9 {
-  display: flex;
   width: 924px;
   height: 280px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
   margin-top: 120px;
   margin-bottom: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wrapper {
@@ -216,67 +213,339 @@
 }
 
 .imageContainer10 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 280px;
   height: 280px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #8e66ff;
   border-radius: 20px;
 }
 
 .imageContainer11 {
-  display: flex;
   width: 604px;
   height: 280px;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lastSection {
-  width: 1920px;
+  width: 100%;
   height: 568px;
-  background-color: #474d66;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   gap: 40px;
+  background-color: #474d66;
 }
 
 .lastTitle {
-  color: #fff;
-  text-align: center;
   font-family: 'NEXON Lv1 Gothic';
   font-size: 6rem;
   font-weight: 700;
+  color: #fff;
+  text-align: center;
 }
 
 .footerContainer {
   width: 100%;
   height: 270px;
-  background-color: #3b415b;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 80px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #3b415b;
   color: #fff;
 }
 
-.footer {
-}
-
 .copyright {
+  margin-bottom: 10px;
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 10px;
 }
 
 .link {
-  display: flex;
-  font-weight: 500;
   margin-top: 30px;
+  display: flex;
   gap: 30px;
+  font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    height: 1842.3px;
+    width: 761px;
+  }
+  .circleBackground {
+    height: 233.431px;
+    bottom: 925px;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionContent {
+    font-size: 3.2rem;
+    margin-top: 20px;
+    margin-bottom: 26px;
+  }
+
+  .imageWrapper {
+    width: 262px;
+    height: 322px;
+  }
+
+  .imageContainer2 {
+    width: 222px;
+    height: 322px;
+  }
+
+  .imageContainer3 {
+    width: 365px;
+    height: 479px;
+  }
+
+  .sectionWrapper {
+    margin-top: 240px;
+    gap: 20px;
+  }
+
+  .sectionContainer {
+    height: 942.284px;
+  }
+
+  .bodyContainer {
+    padding: 160px 136px;
+    width: 100%;
+    height: 1000px;
+  }
+
+  .content {
+    margin-bottom: 0px;
+  }
+
+  .body {
+    width: 100%;
+  }
+
+  .sectionLeft {
+    width: 100%;
+    height: auto;
+  }
+
+  .imageContainer9 {
+    width: 100%;
+    height: 196px;
+    margin-top: 80px;
+    margin-bottom: 22px;
+  }
+
+  .imageContainer10 {
+    width: 230px;
+    height: 160px;
+  }
+
+  .imageContainer11 {
+    width: 100%;
+    height: 160px;
+  }
+
+  .wrapper {
+    width: 100%;
+    gap: 22px;
+  }
+
+  .middleSection {
+    padding: 160px 48px 80px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    text-align: right;
+  }
+
+  .sectionRight {
+    width: 761px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .imageContainerWrapper {
+    margin-bottom: 160px;
+    gap: 20px;
+  }
+
+  .imageContainer4 {
+    width: 260px;
+    height: 260px;
+  }
+
+  .imageContainer7 {
+    height: 260px;
+    width: 30px;
+  }
+
+  .imageContainer8 {
+    height: 260px;
+    width: 30px;
+  }
+
+  .lastSection {
+    height: 488px;
+  }
+
+  .footerContainer {
+    height: 230px;
+    padding: 60px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 1416px;
+    width: 422px;
+  }
+
+  .title {
+    font-size: 4rem;
+  }
+
+  .circleBackground {
+    height: 180px;
+    bottom: 736px;
+  }
+
+  .imageContainer1 {
+    width: 336px;
+    height: 398px;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+  }
+
+  .sectionContainer {
+    height: 624px;
+    bottom: 200px;
+  }
+
+  .sectionContent {
+    font-size: 1.6rem;
+    margin-top: 10px;
+    margin-bottom: 21px;
+  }
+
+  .imageWrapper {
+    width: 133px;
+    height: 162px;
+  }
+
+  .imageContainer2 {
+    width: 112.695px;
+    height: 162px;
+  }
+
+  .imageContainer3 {
+    width: 192px;
+    height: 250px;
+  }
+
+  .sectionWrapper {
+    margin-top: 180px;
+    gap: 10px;
+  }
+
+  .bodyContainer {
+    padding: 100px 20px;
+    width: 100%;
+    height: 600px;
+  }
+
+  .sectionLeft {
+    width: 100%;
+  }
+
+  .imageContainer9 {
+    width: 100%;
+    height: 102px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+
+  .imageContainer10 {
+    width: 145px;
+    height: 102px;
+  }
+
+  .imageContainer11 {
+    width: 100%;
+    height: 102px;
+  }
+
+  .wrapper {
+    width: 100%;
+    gap: 22px;
+  }
+
+  .middleSection {
+    padding: 100px 20px 40px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    text-align: right;
+    margin-top: -235px;
+  }
+
+  .sectionRight {
+    width: 422px;
+  }
+
+  .imageContainerWrapper {
+    margin-bottom: 160px;
+    gap: 20px;
+  }
+
+  .imageContainer4 {
+    width: 150px;
+    height: 150px;
+  }
+
+  .imageContainer7 {
+    height: 150px;
+    width: 30px;
+  }
+
+  .imageContainer8 {
+    height: 150px;
+    width: 30px;
+  }
+
+  .lastTitle {
+    font-size: 3rem;
+  }
+
+  .copyright {
+    font-size: 1rem;
+  }
+
+  .address {
+    font-size: 0.8rem;
+  }
+
+  .font {
+    font-size: 0.8rem;
+  }
+
+  .lastSection {
+    height: 329px;
+  }
+
+  .footerContainer {
+    height: 152px;
+    padding: 40px 20px;
+  }
 }

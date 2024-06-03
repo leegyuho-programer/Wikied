@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Button from '../components/Button/Button';
 import Image1 from '../public/images/landing1.png';
+import Image10 from '../public/images/landing10.png';
 import Image2 from '../public/images/landing2.png';
 import Image3 from '../public/images/landing3.png';
 import Image4 from '../public/images/landing4.png';
@@ -9,9 +11,7 @@ import Image6 from '../public/images/landing6.png';
 import Image7 from '../public/images/landing7.png';
 import Image8 from '../public/images/landing8.png';
 import Image9 from '../public/images/landing9.png';
-import Image10 from '../public/images/landing10.png';
 import styles from './page.module.css';
-import Link from 'next/link';
 
 function Home() {
   return (
@@ -52,13 +52,15 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className={`${styles.section} ${styles.sectionRight}`}>
-        <h3 className={styles.sectionTitle}>SHARE</h3>
-        <p className={`${styles.sectionContent} ${styles.content}`}>
-          내 위키 만들고
-          <br />
-          친구에게 공유해요
-        </p>
+      <div className={styles.middleSection}>
+        <div className={`${styles.section} ${styles.sectionRight}`}>
+          <h3 className={styles.sectionTitle}>SHARE</h3>
+          <p className={`${styles.sectionContent} ${styles.content}`}>
+            내 위키 만들고
+            <br />
+            친구에게 공유해요
+          </p>
+        </div>
       </div>
       <div className={styles.imageContainerWrapper}>
         <div className={styles.imageContainer8}></div>
@@ -107,15 +109,21 @@ function Home() {
       </div>
       <div className={styles.footerContainer}>
         <p className={styles.copyright}>Copyright ⓒ Wikied. All Rights Reserved</p>
-        <p>
+        <p className={styles.address}>
           사업자등록번호 000-00-00000 | 통신판매신고 제2020-서울-00000호 | 대표 : 이지은
           <br />
           서울특별시 중구 청계천로 123, 위키드빌딩
         </p>
         <div className={styles.link}>
-          <Link href="/">서비스 이용약관</Link>
-          <Link href="/">개인정보 취급방침</Link>
-          <Link href="/">전자금융거래 기본약관</Link>
+          <Link href="/" className={styles.font}>
+            서비스 이용약관
+          </Link>
+          <Link href="/" className={styles.font}>
+            개인정보 취급방침
+          </Link>
+          <Link href="/" className={styles.font}>
+            전자금융거래 기본약관
+          </Link>
         </div>
       </div>
     </div>
