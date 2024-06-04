@@ -6,7 +6,7 @@ import Input from '../Input/Input';
 import styles from './Form.module.css';
 
 interface Props {
-  type: 'signup' | 'login';
+  type: 'signup' | 'login' | 'resetPassword';
 }
 
 function Form({ type }: Props) {
@@ -50,7 +50,7 @@ function Form({ type }: Props) {
             다음
           </Button>
         </form>
-      ) : (
+      ) : type === 'login' ? (
         <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
           <Input
             name="이메일"
@@ -68,6 +68,26 @@ function Form({ type }: Props) {
           />
           <Button isLink={false} type="submit">
             로그인
+          </Button>
+        </form>
+      ) : (
+        <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name="비밀번호"
+            placeholder="비밀번호를 입력해 주세요."
+            label="비밀번호"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            name="비밀번호 확인"
+            placeholder="비밀번호를 입력해 주세요."
+            label="비밀번호 확인"
+            register={register}
+            errors={errors}
+          />
+          <Button isLink={false} type="submit">
+            확인
           </Button>
         </form>
       )}
