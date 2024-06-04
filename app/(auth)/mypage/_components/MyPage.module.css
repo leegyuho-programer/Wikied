@@ -1,0 +1,18 @@
+.container {
+  margin-top: 80px;
+}
+
+.name {
+  color: #474d66;
+  font-size: 4.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.nodata {
+  width: 860px;
+  height: 192px;
+  border-radius: 10px;
+  background: #f7f7fa;
+  margin-top: 60px;
+}

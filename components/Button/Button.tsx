@@ -3,29 +3,17 @@ import { ReactNode } from 'react';
 import styles from './Button.module.css';
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'gray' | 'white';
+  variant: 'primary' | 'secondary' | 'gray' | 'white';
   isLink: boolean;
   destination?: string;
   children?: ReactNode;
   type?: 'button' | 'submit';
   onClick?: () => void;
-  isLittle?: boolean;
-  isMedium?: boolean;
+  size: 'XS' | 'S' | 'M' | 'L';
 }
 
-function Button({
-  variant = 'primary',
-  isLink = false,
-  destination,
-  children,
-  type,
-  onClick,
-  isLittle = false,
-  isMedium = false,
-}: Props) {
-  const className = `${styles.button} ${styles[variant]} ${isLittle ? styles.littleButton : ''} ${
-    isMedium ? styles.mediumButton : ''
-  }`;
+function Button({ variant, isLink, destination, children, type, onClick, size }: Props) {
+  const className = `${styles.button} ${styles[variant]} ${styles[size]}`;
 
   return (
     <>

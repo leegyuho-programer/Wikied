@@ -26,7 +26,7 @@ function ModalContainer({ children, type, text }: Props) {
       </div>
       {children}
       <div className={styles.button}>
-        <Button isLink={false} variant="primary" isLittle={true}>
+        <Button isLink={false} variant="primary" size="XS">
           {text}
         </Button>
       </div>
