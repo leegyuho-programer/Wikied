@@ -15,4 +15,15 @@
   border-radius: 10px;
   background: #f7f7fa;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.text {
+  color: #8f95b2;
+  font-size: 1.6rem;
+  line-height: 160%; /* 25.6px */
 }

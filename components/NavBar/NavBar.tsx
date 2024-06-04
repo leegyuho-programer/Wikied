@@ -19,7 +19,7 @@ function NavBar() {
         </Link>
       </div>
       <div className={styles.status}>
-        <Link href="/" className={styles.login}>
+        <Link href="/login" className={styles.login}>
           로그인
         </Link>
         <Button isLink={true} variant="primary" destination="/" size="S">

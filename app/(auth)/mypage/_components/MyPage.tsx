@@ -1,3 +1,4 @@
+import Button from '../../../../components/Button/Button';
 import Link from '../../../../components/Link/Link';
 import styles from './MyPage.module.css';
 
@@ -9,11 +10,14 @@ function MyPage() {
       <Link />
       {/* 데이터가 있는지 없는지에 따라 다르게 보이게 하기 */}
       <div className={styles.nodata}>
-        <p>
+        <p className={styles.text}>
           아직 작성된 내용이 없네요.
           <br />
           친구들을 위키로 초대해 보세요!
         </p>
+        <Button isLink={true} destination="/" variant="primary" size="XS">
+          초대하기
+        </Button>
       </div>
     </div>
   );
