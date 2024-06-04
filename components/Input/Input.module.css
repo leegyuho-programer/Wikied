@@ -1,5 +1,5 @@
 .container {
-  width: 400px;
+  width: 100%;
   height: 72px;
   display: flex;
   flex-direction: column;
@@ -19,10 +19,20 @@
   background-color: #f7f7fa;
   font-size: 1.4rem;
   border-radius: 10px;
+  outline: none;
 }
 
-@media (max-width: 768px) {
-  .container {
-    width: 335px;
-  }
+.input:focus {
+  border: 1px solid #4cbfa4;
+  background-color: #fff;
 }
+
+/* @media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+
+  .input {
+    max-width: 100%;
+  }
+} */

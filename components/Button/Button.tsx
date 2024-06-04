@@ -7,7 +7,7 @@ interface Props {
   isLink: boolean;
   destination?: string;
   children?: ReactNode;
-  type?: 'button';
+  type?: 'button' | 'submit';
   onClick?: () => void;
   isLittle?: boolean;
   isMedium?: boolean;
@@ -15,7 +15,7 @@ interface Props {
 
 function Button({
   variant = 'primary',
-  isLink,
+  isLink = false,
   destination,
   children,
   type,
