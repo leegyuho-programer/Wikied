@@ -6,7 +6,7 @@ import Input from '../Input/Input';
 import styles from './Form.module.css';
 
 interface Props {
-  type: string;
+  type: 'signup' | 'login';
 }
 
 function Form({ type }: Props) {

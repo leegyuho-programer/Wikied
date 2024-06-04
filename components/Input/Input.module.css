@@ -19,6 +19,11 @@
   background-color: #f7f7fa;
   font-size: 1.4rem;
   border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border: 1px solid #4cbfa4;
 }
 
 @media (max-width: 768px) {
