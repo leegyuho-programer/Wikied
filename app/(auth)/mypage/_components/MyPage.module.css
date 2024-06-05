@@ -77,4 +77,15 @@
   .section > div:first-child {
     margin-top: 0;
   }
+
+  .nodata {
+    margin-top: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    gap: 40px;
+  }
 }
