@@ -19,11 +19,11 @@ const data = [
 
 function SideBar() {
   const [showAll, setShowAll] = useState(false);
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth > 768);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth > 768);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsLargeScreen(window.innerWidth > 768);
+      setIsSmallScreen(window.innerWidth > 768);
     };
 
     window.addEventListener('resize', handleResize);
@@ -35,12 +35,12 @@ function SideBar() {
   }, []);
 
   useEffect(() => {
-    if (isLargeScreen) {
+    if (isSmallScreen) {
       setShowAll(true);
     } else {
       setShowAll(false);
     }
-  }, [isLargeScreen]);
+  }, [isSmallScreen]);
 
   const handleToggle = () => {
     setShowAll(!showAll);
@@ -58,9 +58,9 @@ function SideBar() {
           </div>
           <div className={styles.contentContainer}>
             <div className={styles.lineWrapper}>
-              <div className={styles.lineGroup}>
+              <div className={styles.lineGroup1}>
                 {data.slice(0, 4).map((item, index) => (
-                  <div className={styles.line} key={index} style={{ display: showAll || index < 3 ? 'flex' : 'none' }}>
+                  <div className={styles.line} key={index}>
                     <label className={styles.title} htmlFor="title">
                       {item.title}
                     </label>
@@ -68,13 +68,9 @@ function SideBar() {
                   </div>
                 ))}
               </div>
-              <div className={styles.lineGroup}>
+              <div className={`${styles.lineGroup2} ${showAll ? styles.show : ''}`}>
                 {data.slice(4).map((item, index) => (
-                  <div
-                    className={styles.line}
-                    key={index + 4}
-                    style={{ display: showAll || index < 3 ? 'flex' : 'none' }}
-                  >
+                  <div className={styles.line} key={index + 4}>
                     <label className={styles.title} htmlFor="title">
                       {item.title}
                     </label>
