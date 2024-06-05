@@ -9,7 +9,7 @@ interface Props {
   children?: ReactNode;
   type?: 'button' | 'submit';
   onClick?: () => void;
-  size: 'XS' | 'S' | 'M' | 'L';
+  size: 'XS' | 'S' | 'M' | 'ML' | 'L';
 }
 
 function Button({ variant, isLink, destination, children, type, onClick, size }: Props) {

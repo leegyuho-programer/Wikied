@@ -35,3 +35,5 @@ function Link() {
 }
 
 export default Link;
+
+// 눌렀을 때 스낵바 나오도록 수정해야함
