@@ -31,5 +31,4 @@ function UserPage() {
 
 export default UserPage;
 
-// 내 위키 페이지
-// 유저 위키 페이지
+// 로그인 했을 때와 로그아웃 했을 때 다르게 해야함 @@@@@@@@@@@@@@@@
