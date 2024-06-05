@@ -1,9 +1,8 @@
 .container {
   height: 30px;
-  padding: 0px 10px 0px 0px;
   display: flex;
   align-items: center;
-  background: var(--main-main50, #eef9f6);
+  background: #eef9f6;
   color: #4cbfa4;
   border-radius: 10px;
 }

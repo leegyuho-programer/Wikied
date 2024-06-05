@@ -1,13 +1,9 @@
 .button {
-  width: 400px;
-  height: 45px;
-  padding: 13px 175px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  gap: 10px;
-  font-size: 1.4rem;
+  /* gap: 10px; */
+  /* font-size: 1.4rem; */
   font-weight: 600;
   color: #fff;
   border: none;
@@ -36,29 +32,46 @@
   color: #474d66;
 }
 
-.mediumButton {
+.XS {
+  width: 89px;
+  height: 40px;
+  /* padding: 11px 20px; */
+}
+
+.S {
+  width: 120px;
+  height: 40px;
+  /* padding: 11px 20px; */
+}
+
+.M {
   font-size: 2rem;
   font-weight: 700;
   width: 170px;
   height: 59px;
-  padding: 15px 30px;
+  /* padding: 15px 30px; */
 }
 
-.littleButton {
-  width: 120px;
-  height: 40px;
-  padding: 11px 20px;
+.ML {
+  width: 300px;
+  height: 45px;
+}
+
+.L {
+  width: 400px;
+  height: 45px;
+  /* padding: 13px 175px; */
 }
 
 @media (max-width: 768px) {
   .button {
     width: 335px;
-    padding: 13px 14px;
+    /* padding: 13px 14px; */
   }
 
   .littleButton {
     width: 120px;
-    padding: 11px 20px;
+    /* padding: 11px 20px; */
   }
 
   .mediumButton {

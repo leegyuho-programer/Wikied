@@ -23,7 +23,7 @@ function Home() {
           <span className={styles.titleHighlight}>나만의 위키</span>
         </p>
         <div className={styles.buttonContainer}>
-          <Button isLink={true} destination="/" isMedium={true} variant="gray">
+          <Button isLink={true} destination="/" variant="gray" size="M">
             위키 만들기
           </Button>
         </div>
@@ -103,7 +103,7 @@ function Home() {
       </div>
       <div className={styles.lastSection}>
         <p className={styles.lastTitle}>나만의 위키 만들어 보기</p>
-        <Button isLink={true} isMedium={true} destination="/" variant="white">
+        <Button isLink={true} destination="/" variant="white" size="M">
           지금 시작하기
         </Button>
       </div>

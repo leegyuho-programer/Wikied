@@ -46,7 +46,7 @@ function Form({ type }: Props) {
             register={register}
             errors={errors}
           />
-          <Button isLink={false} type="submit">
+          <Button isLink={false} type="submit" size="L" variant="primary">
             다음
           </Button>
         </form>
@@ -66,7 +66,7 @@ function Form({ type }: Props) {
             register={register}
             errors={errors}
           />
-          <Button isLink={false} type="submit">
+          <Button isLink={false} type="submit" size="L" variant="primary">
             로그인
           </Button>
         </form>
@@ -86,7 +86,7 @@ function Form({ type }: Props) {
             register={register}
             errors={errors}
           />
-          <Button isLink={false} type="submit">
+          <Button isLink={false} type="submit" size="L" variant="primary">
             확인
           </Button>
         </form>
