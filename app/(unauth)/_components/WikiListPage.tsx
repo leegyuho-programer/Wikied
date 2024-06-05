@@ -1,6 +1,7 @@
 import Link from '../../../components/Link/Link';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import ProfileIcon from '../../../components/SvgComponents/ProfileIcon/ProfileIcon';
+import Pagination from './Pagination/Pagenation';
 import styles from './WikiListPage.module.css';
 
 function WikiListPage() {
@@ -25,6 +26,7 @@ function WikiListPage() {
           <Link />
         </div>
       </div>
+      <Pagination />
     </div>
   );
 }
