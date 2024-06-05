@@ -1,6 +1,6 @@
-import Button from '../../../../components/Button/Button';
-import Link from '../../../../components/Link/Link';
-import SideBar from '../../../../components/SideBar/SideBar';
+import Button from '../../../components/Button/Button';
+import Link from '../../../components/Link/Link';
+import SideBar from '../../../components/SideBar/SideBar';
 import styles from './MyPage.module.css';
 
 function MyPage() {
