@@ -1,9 +1,9 @@
-import Button from '../../../components/Button/Button';
-import Link from '../../../components/Link/Link';
-import SideBar from '../../../components/SideBar/SideBar';
-import styles from './UserPage.module.css';
+import Button from '../../../../components/Button/Button';
+import Link from '../../../../components/Link/Link';
+import SideBar from '../../../../components/SideBar/SideBar';
+import styles from './MyPage.module.css';
 
-function UserPage() {
+function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -20,8 +20,8 @@ function UserPage() {
             <br />
             친구들을 위키로 초대해 보세요!
           </p>
-          <Button isLink={true} destination="/signup" variant="primary" size="XS">
-            시작하기
+          <Button isLink={true} destination="/" variant="primary" size="XS">
+            초대하기
           </Button>
         </div>
       </div>
@@ -29,6 +29,7 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default MyPage;
 
-// 로그인 했을 때와 로그아웃 했을 때 다르게 해야함 @@@@@@@@@@@@@@@@
+// 내 위키 페이지
+// 유저 위키 페이지

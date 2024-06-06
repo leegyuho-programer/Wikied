@@ -1,11 +1,11 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import Input from '../../../components/Input/Input';
+import Input from '../../../../components/Input/Input';
 import styles from './MyAccountPage.module.css';
-import Button from '../../../components/Button/Button';
-import DropDown from '../../../components/DropDown/DropDown';
-import StrokeIcon from '../../../components/SvgComponents/StrokeIcon/StrokeIcon';
+import Button from '../../../../components/Button/Button';
+import DropDown from '../../../../components/DropDown/DropDown';
+import StrokeIcon from '../../../../components/SvgComponents/StrokeIcon/StrokeIcon';
 
 function MyAccountPage() {
   const {

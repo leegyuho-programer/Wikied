@@ -1,4 +1,4 @@
-import MyPage from '../_components/MyPage';
+import MyPage from '../_components/MyPage/MyPage';
 
 function Home() {
   return <MyPage />;
