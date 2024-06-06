@@ -1,7 +1,7 @@
 import UserPage from '../../_components/UserPage';
 
-function Home() {
+function User() {
   return <UserPage />;
 }
 
-export default Home;
+export default User;

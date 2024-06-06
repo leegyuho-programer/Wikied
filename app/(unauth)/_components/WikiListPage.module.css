@@ -1,0 +1,87 @@
+.container {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 20px;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 860px;
+  width: 100%;
+}
+
+.text {
+  font-size: 1.6rem;
+  color: #8f95b2;
+}
+
+.wikiBox {
+  width: 100%;
+  max-width: 860px;
+  height: 145px;
+  padding: 15px 30px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 10px;
+  margin-top: 60px;
+  margin-bottom: 120px;
+}
+
+.profile {
+  display: flex;
+  gap: 30px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name {
+  font-size: 30px;
+  font-weight: 600;
+  color: #474d66;
+}
+
+.data {
+  color: #8f95b2;
+}
+
+.link {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+@media (max-width: 768px) {
+  .wikiBox {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    flex-direction: column;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .data {
+    font-size: 1.2rem;
+  }
+
+  .link {
+    flex-direction: row-reverse;
+  }
+}
