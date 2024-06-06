@@ -64,6 +64,7 @@
   .wikiBox {
     margin-top: 40px;
     margin-bottom: 40px;
+    flex-direction: column;
   }
 
   .name {
@@ -72,5 +73,9 @@
 
   .data {
     font-size: 1.2rem;
+  }
+
+  .link {
+    flex-direction: row-reverse;
   }
 }
