@@ -7,9 +7,13 @@ import LinkContent from './LinkContent';
 import { usePathname, useSearchParams } from 'next/navigation';
 import SnackBar from '../SnackBar/SnackBar';
 
+interface Props {
+  onCopy: (isCopied: boolean) => void;
+}
+
 const URL = 'https://www.wikied.kr';
 
-function Link({ onCopy }) {
+function Link({ onCopy }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const ID = '2gyuho_295';
