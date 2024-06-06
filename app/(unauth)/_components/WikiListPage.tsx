@@ -13,7 +13,7 @@ function WikiListPage() {
       </div>
       <div className={styles.wikiBox}>
         <div className={styles.profile}>
-          <div>
+          <div className={styles.icon}>
             <WikiIcon />
           </div>
           <div className={styles.intro}>
