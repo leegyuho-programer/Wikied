@@ -4,6 +4,14 @@
   margin-top: 60px;
 }
 
+.snackBar {
+  position: fixed;
+  top: 110px;
+  left: 50%; /* 중앙으로 설정 */
+  transform: translateX(-50%); /* 가로 방향으로 중앙 정렬 */
+  z-index: 1000;
+}
+
 .title {
   display: flex;
   flex-direction: column;
@@ -58,6 +66,10 @@
     margin-top: 0;
   }
 
+  .snackBar {
+    top: 100px;
+  }
+
   .title {
     width: 100%;
     display: flex;
@@ -88,5 +100,10 @@
 @media (max-width: 768px) {
   .section {
     gap: 40px;
+  }
+
+  .snackBar {
+    top: auto;
+    bottom: 80px;
   }
 }
