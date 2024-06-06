@@ -1,30 +1,3 @@
-// 'use client';
-
-// import { useState } from 'react';
-// import DropDownIcon from '../SvgComponents/DropDownIcon';
-// import styles from './DropDown.module.css';
-
-// function DropDown() {
-//   const [isOpen, SetIsOpen] = useState(false);
-
-//   const toggleButton = () => {
-//     SetIsOpen(!isOpen);
-//   };
-
-//   return (
-//     <div className={styles.containerWrapper}>
-//       <div className={styles.container}>
-//         <input type="text" placeholder={isOpen ? '질문 선택하기' : '질문 없음'} className={styles.input} />
-//         <button className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleButton}>
-//           <DropDownIcon />
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DropDown;
-
 'use client';
 
 import { useState } from 'react';
@@ -47,8 +20,8 @@ function DropDown() {
   };
 
   return (
-    <div className={`${styles.containerWrapper} ${isOpen ? styles.backgroundWhite : ''}`}>
-      <div className={`${styles.container} ${isOpen ? styles.backgroundWhite : ''}`}>
+    <div className={styles.containerWrapper}>
+      <div className={styles.container}>
         <input
           type="text"
           value={selectedOption}

@@ -36,6 +36,7 @@ function Form({ type }: Props) {
             name="비밀번호"
             placeholder="비밀번호를 입력해 주세요."
             label="비밀번호"
+            type="password"
             register={register}
             errors={errors}
           />
@@ -43,6 +44,7 @@ function Form({ type }: Props) {
             name="비밀번호 확인"
             placeholder="비밀번호를 입력해 주세요."
             label="비밀번호 확인"
+            type="password"
             register={register}
             errors={errors}
           />
@@ -63,6 +65,7 @@ function Form({ type }: Props) {
             name="비밀번호"
             placeholder="비밀번호를 입력해 주세요."
             label="비밀번호"
+            type="password"
             register={register}
             errors={errors}
           />
@@ -76,6 +79,7 @@ function Form({ type }: Props) {
             name="비밀번호"
             placeholder="비밀번호를 입력해 주세요."
             label="비밀번호"
+            type="password"
             register={register}
             errors={errors}
           />
@@ -83,6 +87,7 @@ function Form({ type }: Props) {
             name="비밀번호 확인"
             placeholder="비밀번호를 입력해 주세요."
             label="비밀번호 확인"
+            type="password"
             register={register}
             errors={errors}
           />

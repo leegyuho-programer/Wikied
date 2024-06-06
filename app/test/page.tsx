@@ -42,6 +42,7 @@ function Test() {
         <ModalHeader type="quiz" />
         <ModalBody />
       </ModalContainer>
+      <DropDown />
     </div>
   );
 }
