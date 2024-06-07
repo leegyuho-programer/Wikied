@@ -1,15 +1,20 @@
+'use client';
+
+import { useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Link from '../../../../components/Link/Link';
 import SideBar from '../../../../components/SideBar/SideBar';
 import styles from './UserPage.module.css';
 
 function UserPage() {
+  const [isCopied, setIsCopied] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         {/* 이름 데이터 가져오기 */}
         <p className={styles.name}>이지동</p>
-        <Link />
+        <Link onCopy={setIsCopied} />
       </div>
       <div className={styles.section}>
         {/* 데이터가 있는지 없는지에 따라 다르게 보이게 하기 */}
