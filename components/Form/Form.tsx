@@ -16,7 +16,7 @@ function Form({ type }: Props) {
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log('login', data);
   };
 

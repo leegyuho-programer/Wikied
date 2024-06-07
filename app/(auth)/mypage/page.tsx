@@ -1,7 +1,7 @@
 import MyPage from '../_components/MyPage/MyPage';
 
-function Home() {
+function MyInformation() {
   return <MyPage />;
 }
 
-export default Home;
+export default MyInformation;
