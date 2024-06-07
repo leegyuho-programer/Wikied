@@ -1,10 +1,15 @@
-import Link from '../../../components/Link/Link';
-import SearchBar from '../../../components/SearchBar/SearchBar';
-import WikiIcon from '../../../components/SvgComponents/WikiIcon/WikiIcon';
-import Pagination from './Pagination/Pagination';
+'use client';
+
+import { useState } from 'react';
+import Link from '../../../../components/Link/Link';
+import SearchBar from '../../../../components/SearchBar/SearchBar';
+import WikiIcon from '../../../../components/SvgComponents/WikiIcon/WikiIcon';
+import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
 
 function WikiListPage() {
+  const [isCopied, setIsCopied] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.search}>
@@ -26,7 +31,7 @@ function WikiListPage() {
           </div>
         </div>
         <div className={styles.link}>
-          <Link />
+          <Link onCopy={setIsCopied} />
         </div>
       </div>
       <Pagination />
