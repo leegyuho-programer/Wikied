@@ -1,4 +1,4 @@
-import WikiListPage from '../_components/WikiListPage';
+import WikiListPage from '../_components/WikiListPage/WikiListPage';
 
 function WikiList() {
   return <WikiListPage />;
