@@ -1,10 +1,10 @@
 'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { PostSignUp } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { PostSignUp } from '../../types/auth';
 
 function SignUpForm() {
   const {
@@ -12,10 +12,6 @@ function SignUpForm() {
     register,
     formState: { errors },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
-
-  // const onSubmit = (data: any) => {
-  //   console.log('login', data);
-  // };
 
   const handleSignUp = async (data: PostSignUp) => {
     try {
