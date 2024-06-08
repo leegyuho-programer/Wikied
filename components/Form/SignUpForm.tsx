@@ -5,8 +5,10 @@ import { PostSignUp } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
+import { redirect, useRouter } from 'next/navigation';
 
 function SignUpForm() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -25,6 +27,8 @@ function SignUpForm() {
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
+      } else {
+        router.replace('/login');
       }
 
       const responseData = await response.json(); // 응답 데이터를 JSON 형식으로 파싱
