@@ -2,7 +2,7 @@ import Link from 'next/link';
 import SignUpForm from '../../../components/Form/SignUpForm';
 import styles from './SignUpPage.module.css';
 
-async function SignUpPage() {
+function SignUpPage() {
   return (
     <div className={styles.container}>
       <div className={styles.form}>
