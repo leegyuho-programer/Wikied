@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Form from '../../../components/Form/Form';
+import ResetPasswordForm from '../../../components/Form/ResetPasswordForm';
 import styles from './ResetPasswordPage.module.css';
 
 function ResetPasswordPage() {
@@ -7,7 +7,7 @@ function ResetPasswordPage() {
     <div className={styles.container}>
       <div className={styles.form}>
         <p className={styles.title}>비밀번호 재설정</p>
-        <Form type="resetPassword" />
+        <ResetPasswordForm />
       </div>
     </div>
   );
