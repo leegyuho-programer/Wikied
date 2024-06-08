@@ -3,21 +3,12 @@ import styles from './NavBar.module.css';
 import Link from 'next/link';
 import MenuIcon from '../SvgComponents/MenuIcon';
 import Button from '../Button/Button';
+import Gnb from './Gnb';
 
 function NavBar() {
   return (
     <div className={styles.container}>
-      <div className={styles.gnbs}>
-        <Link href="/">
-          <Image src="/images/logo.png" alt="로고 이미지" width={107} height={30} />
-        </Link>
-        <Link href="/" className={styles.gnb}>
-          위키목록
-        </Link>
-        <Link href="/" className={styles.gnb}>
-          자유게시판
-        </Link>
-      </div>
+      <Gnb />
       <div className={styles.status}>
         <Link href="/login" className={styles.login}>
           로그인
