@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import SideBar from '../../components/SideBar/SideBar';
 import DropDown from '../../components/DropDown/DropDown';
 import Menu from '../../components/Menu/Menu';
-import Link from '../../components/Link/Link';
+import LinkCopy from '../../components/LinkCopy/LinkCopy';
 import SnackBar from '../../components/SnackBar/SnackBar';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Modal from '../../components/Modal';
@@ -27,7 +27,7 @@ function Test() {
       <SideBar /> */}
       {/* <DropDown />
       <Menu />
-      <Link />
+      <LinkCopy />
       <SnackBar type="true" /> */}
       {/* <Button isLink={false} variant="primary" isLittle={true}>
         로그인

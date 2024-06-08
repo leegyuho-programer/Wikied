@@ -1,24 +1,19 @@
-'use client';
-
-import { useState } from 'react';
-import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
-import styles from './Link.module.css';
-import LinkContent from './LinkContent';
 import { usePathname, useSearchParams } from 'next/navigation';
-import SnackBar from '../SnackBar/SnackBar';
+import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
+import LinkContent from './LinkContent';
+import styles from './LinkCopy.module.css';
 
 interface Props {
   onCopy: (isCopied: boolean) => void;
 }
 
-const URL = 'https://www.wikied.kr';
+const BASE_URL = 'https://www.wikied.kr';
 
-function Link({ onCopy }: Props) {
+function LinkCopy({ onCopy }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const ID = '2gyuho_295';
-  const linkText = `https://www.wikied.kr/${ID}`;
-  const currentURL = `${URL}${pathname}?${searchParams.toString()}${ID}`;
+  const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
   // const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -27,7 +22,7 @@ function Link({ onCopy }: Props) {
       onCopy(true);
       setTimeout(() => onCopy(false), 2000);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -39,6 +34,4 @@ function Link({ onCopy }: Props) {
   );
 }
 
-export default Link;
-
-// 눌렀을 때 스낵바 나오도록 수정해야함
+export default LinkCopy;

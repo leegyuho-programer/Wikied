@@ -5,7 +5,7 @@ import styles from './MyPage.module.css';
 import Button from '../../../../components/Button/Button';
 import SideBar from '../../../../components/SideBar/SideBar';
 import SnackBar from '../../../../components/SnackBar/SnackBar';
-import Link from '../../../../components/Link/Link';
+import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 
 function MyPage() {
   const [isCopied, setIsCopied] = useState(false);
@@ -20,7 +20,7 @@ function MyPage() {
       <div className={styles.title}>
         {/* 이름 데이터 가져오기 */}
         <p className={styles.name}>이지동</p>
-        <Link onCopy={setIsCopied} />
+        <LinkCopy onCopy={setIsCopied} />
       </div>
       <div className={styles.section}>
         {/* 데이터가 있는지 없는지에 따라 다르게 보이게 하기 */}
