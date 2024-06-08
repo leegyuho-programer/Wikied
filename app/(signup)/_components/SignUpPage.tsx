@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Form from '../../../components/Form/Form';
+import SignUpForm from '../../../components/Form/SignUpForm';
 import styles from './SignUpPage.module.css';
 
 function SignUpPage() {
@@ -7,7 +7,7 @@ function SignUpPage() {
     <div className={styles.container}>
       <div className={styles.form}>
         <p className={styles.title}>회원가입</p>
-        <Form type="signup" />
+        <SignUpForm />
         <div className={styles.text}>
           <p>이미 회원이신가요?</p>
           <Link href="/login" className={styles.link}>

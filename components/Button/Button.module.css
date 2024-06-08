@@ -55,9 +55,15 @@
 }
 
 .L {
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   height: 45px;
 }
 
 @media (max-width: 768px) {
+  .L {
+    max-width: 335px;
+    width: 100%;
+    height: 45px;
+  }
 }
