@@ -1,11 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { PostSignUp } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { redirect, useRouter } from 'next/navigation';
 
 function SignUpForm() {
   const router = useRouter();

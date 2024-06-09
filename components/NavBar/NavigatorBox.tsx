@@ -6,7 +6,7 @@ import MenuIcon from '../SvgComponents/MenuIcon';
 import styles from './NavigatorBox.module.css';
 import { useState } from 'react';
 import Menu from '../Menu/Menu';
-
+// @@@@@@@@@@@@@@@ 로그인 했을 때 데이터 받아와서 프로필 사진 보이도록
 function NavigatorBox() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

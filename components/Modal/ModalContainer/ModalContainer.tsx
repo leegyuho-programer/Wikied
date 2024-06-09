@@ -1,10 +1,10 @@
 'use client';
 
-import { PropsWithChildren, ReactNode } from 'react';
-import CloseIcon from '../../SvgComponents/CloseIcon/CloseIcon';
 import { useRouter } from 'next/navigation';
-import styles from './ModalContainer.module.css';
+import { ReactNode } from 'react';
 import Button from '../../Button/Button';
+import CloseIcon from '../../SvgComponents/CloseIcon/CloseIcon';
+import styles from './ModalContainer.module.css';
 
 type TitleType = 'alert' | 'form' | 'quiz';
 interface Props {
