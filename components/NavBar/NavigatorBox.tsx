@@ -10,12 +10,17 @@ import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileI
 import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   console.log(user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -24,7 +29,7 @@ function NavigatorBox() {
         <div>
           <div className={styles.profile}>
             <NavBarProfileIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu />}
+            {isMenuOpen && <Menu onClick={handleLogout} />}
           </div>
         </div>
       ) : (
@@ -39,7 +44,7 @@ function NavigatorBox() {
           </div>
           <div className={styles.dropdown}>
             <MenuIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu />}
+            {isMenuOpen && <Menu onClick={logout} />}
           </div>
         </div>
       )}
