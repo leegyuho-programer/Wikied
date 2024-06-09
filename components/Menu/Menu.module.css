@@ -17,10 +17,7 @@
 
 .menuItem {
   color: #474d66;
-}
-
-.menuItem:hover {
-  color: #8f95b2;
+  cursor: pointer;
 }
 
 .menuItem:hover {
