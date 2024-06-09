@@ -12,7 +12,7 @@ function SignUpForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
 
   const handleSignUp = async (data: PostSignUp) => {
@@ -60,7 +60,7 @@ function SignUpForm() {
           register={register}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary">
+        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
           다음
         </Button>
       </form>
