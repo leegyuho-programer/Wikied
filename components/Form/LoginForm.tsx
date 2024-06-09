@@ -6,9 +6,11 @@ import { PostLogin } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
+import { useAuth } from '../../context/AuthContext';
 
 function LoginForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const {
     handleSubmit,
     register,
@@ -31,15 +33,17 @@ function LoginForm() {
 
       const responseData = await response.json(); // 응답 데이터를 JSON 형식으로 파싱
 
-      // 토큰을 로컬 스토리지에 저장
-      if (responseData.accessToken) {
-        localStorage.setItem('token', responseData.accessToken);
-      }
+      // // 토큰을 로컬 스토리지에 저장
+      // if (responseData.accessToken) {
+      //   localStorage.setItem('token', responseData.accessToken);
+      // }
 
-      router.replace('/mypage');
+      if (responseData.accessToken) {
+        login(responseData.accessToken);
+      }
     } catch (error: any) {
       console.error('Error:', error);
-      throw error; // 에러를 호출자에게 전달
+      throw error;
     }
   };
 

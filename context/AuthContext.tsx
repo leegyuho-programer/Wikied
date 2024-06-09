@@ -1,9 +1,11 @@
+'use client';
+
 import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface AuthContextType {
-  isLoggedIn: boolean;
+  token: string | null;
   login: (token: string) => void;
   logout: () => void;
 }
@@ -11,26 +13,22 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!cookies().get('token'));
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    setIsLoggedIn(!!cookies().get('token'));
-  }, []);
-
   const login = (token: string) => {
-    document.cookie = `token=${token}; path=/; max-age=${1 * 24 * 60 * 60}`; // 1일 동안 쿠키 저장
-    setIsLoggedIn(true);
+    setToken(token);
+    localStorage.setItem('token', token);
     router.replace('/mypage');
   };
 
   const logout = () => {
-    document.cookie = 'token=; path=/; max-age=0'; // 쿠키 삭제
-    setIsLoggedIn(false);
+    setToken(null);
+    localStorage.removeItem('token');
     router.replace('/');
   };
 
-  return <AuthContext.Provider value={{ isLoggedIn, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
