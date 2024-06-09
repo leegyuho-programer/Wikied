@@ -7,7 +7,7 @@ export interface PostSignUp {
 
 export interface PostLogin {
   email: string;
-  name: string;
+  password: string;
 }
 
 export interface PostRefreshToken {

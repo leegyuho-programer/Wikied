@@ -1,5 +1,4 @@
 import styles from './Input.module.css';
-import { useForm } from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -18,7 +17,7 @@ function Input({ name, label, type = 'text', placeholder, register, errors }: Pr
           {label}
         </label>
       )}
-      <input className={styles.input} id={name} type={type} placeholder={placeholder} {...register(name)} />
+      <input className={styles.input} id={name} type={type} placeholder={placeholder} {...register} />
       {errors[name] && <span className={styles.error}>{errors[name]?.message}</span>}
     </div>
   );

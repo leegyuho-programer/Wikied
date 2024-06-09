@@ -6,14 +6,23 @@ import { PostSignUp } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
+import {
+  emailRules,
+  nicknameRules,
+  signUpPasswordCheckRules,
+  signUpPasswordRules,
+} from '../../constants/inputErrorRules';
 
 function SignUpForm() {
   const router = useRouter();
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
+
+  const passwordValue = watch('password');
 
   const handleSignUp = async (data: PostSignUp) => {
     try {
@@ -38,18 +47,31 @@ function SignUpForm() {
       throw error; // 에러를 호출자에게 전달
     }
   };
+  console.log(errors);
 
   return (
     <div>
       <form className={styles.container} onSubmit={handleSubmit(handleSignUp)}>
-        <Input name="name" placeholder="이름을 입력해 주세요." label="이름" register={register} errors={errors} />
-        <Input name="email" placeholder="이메일을 입력해 주세요." label="이메일" register={register} errors={errors} />
+        <Input
+          name="name"
+          placeholder="이름을 입력해 주세요."
+          label="이름"
+          register={register('name', nicknameRules)}
+          errors={errors}
+        />
+        <Input
+          name="email"
+          placeholder="이메일을 입력해 주세요."
+          label="이메일"
+          register={register('email', emailRules)}
+          errors={errors}
+        />
         <Input
           name="password"
           placeholder="비밀번호를 입력해 주세요."
           label="비밀번호"
           type="password"
-          register={register}
+          register={register('password', signUpPasswordRules)}
           errors={errors}
         />
         <Input
@@ -57,7 +79,7 @@ function SignUpForm() {
           placeholder="비밀번호를 입력해 주세요."
           label="비밀번호 확인"
           type="password"
-          register={register}
+          register={register('passwordConfirmation', signUpPasswordCheckRules(passwordValue))}
           errors={errors}
         />
         <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
