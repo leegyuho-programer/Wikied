@@ -27,12 +27,13 @@
   background-color: #fff;
 }
 
+.error {
+  color: #d14343;
+  font-size: 1.2rem;
+}
+
 @media (max-width: 768px) {
   .container {
     width: 335px;
   }
-
-  /* .input {
-    max-width: 100%;
-  } */
 }

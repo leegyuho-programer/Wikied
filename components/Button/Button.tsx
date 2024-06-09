@@ -10,10 +10,11 @@ interface Props {
   type?: 'button' | 'submit';
   onClick?: () => void;
   size: 'XS' | 'S' | 'M' | 'ML' | 'L';
+  disabled?: boolean;
 }
 
-function Button({ variant, isLink, destination, children, type, onClick, size }: Props) {
-  const className = `${styles.button} ${styles[variant]} ${styles[size]}`;
+function Button({ variant, isLink, destination, children, type, onClick, size, disabled }: Props) {
+  const className = `${styles.button} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ''}`;
 
   return (
     <>
@@ -22,7 +23,7 @@ function Button({ variant, isLink, destination, children, type, onClick, size }:
           {children}
         </Link>
       ) : (
-        <button className={className} type={type} onClick={onClick}>
+        <button className={className} type={type} onClick={onClick} disabled={disabled}>
           {children}
         </button>
       )}

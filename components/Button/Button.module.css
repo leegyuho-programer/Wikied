@@ -9,6 +9,10 @@
   border: none;
 }
 
+.disabled {
+  background-color: #c6cada;
+}
+
 .primary {
   background-color: #4cbfa4;
   border-radius: 10px;
