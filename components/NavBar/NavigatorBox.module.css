@@ -1,0 +1,50 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.login {
+  color: #8f95b2;
+}
+
+.button {
+  width: 120px;
+  height: 40px;
+  padding: 11px 20px;
+  border: none;
+  background-color: #4cbfa4;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.dropdown {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px 20px;
+  }
+
+  .status {
+    display: none;
+  }
+
+  .dropdown {
+    display: block;
+  }
+}

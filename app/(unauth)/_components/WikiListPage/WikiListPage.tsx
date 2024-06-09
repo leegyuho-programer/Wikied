@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from '../../../../components/Link/Link';
+import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SearchBar from '../../../../components/SearchBar/SearchBar';
 import WikiIcon from '../../../../components/SvgComponents/WikiIcon/WikiIcon';
 import Pagination from '../Pagination/Pagination';
@@ -15,7 +15,7 @@ function WikiListPage() {
       <div className={styles.search}>
         <SearchBar />
         {/* 이름 데이터 가져와서 넣기 */}
-        <p className={styles.text}>&8quot 동욱 &ldquo님을 총 3명 찾았습니다.</p>
+        <p className={styles.text}>동욱님을 총 3명 찾았습니다.</p>
       </div>
       <div className={styles.wikiBox}>
         <div className={styles.profile}>
@@ -32,7 +32,7 @@ function WikiListPage() {
           </div>
         </div>
         <div className={styles.link}>
-          <Link onCopy={setIsCopied} />
+          <LinkCopy onCopy={setIsCopied} />
         </div>
       </div>
       <Pagination />

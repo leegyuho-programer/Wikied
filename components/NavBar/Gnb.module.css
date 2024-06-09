@@ -1,0 +1,11 @@
+.gnbs {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .gnb {
+    display: none;
+  }
+}

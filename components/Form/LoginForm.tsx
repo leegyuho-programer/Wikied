@@ -1,27 +1,53 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { PostLogin } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
+import { useAuth } from '../../context/AuthContext';
 
 function LoginForm() {
+  const router = useRouter();
+  const { login } = useAuth();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm<PostLogin>({ mode: 'onBlur' });
 
-  const onSubmit = (data: any) => {
-    console.log('login', data);
+  const handleLogin = async (data: PostLogin) => {
+    try {
+      const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signIn`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+
+      if (responseData) {
+        login(responseData.accessToken, responseData.refreshToken, responseData.user);
+      }
+    } catch (error: any) {
+      console.error('Error:', error);
+      throw error;
+    }
   };
 
   return (
     <div>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-        <Input name="이메일" placeholder="이메일을 입력해 주세요." label="이메일" register={register} errors={errors} />
+      <form className={styles.container} onSubmit={handleSubmit(handleLogin)}>
+        <Input name="email" placeholder="이메일을 입력해 주세요." label="이메일" register={register} errors={errors} />
         <Input
-          name="비밀번호"
+          name="password"
           placeholder="비밀번호를 입력해 주세요."
           label="비밀번호"
           type="password"

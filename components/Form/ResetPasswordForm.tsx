@@ -20,7 +20,7 @@ function ResetPasswordForm() {
     <div>
       <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <Input
-          name="비밀번호"
+          name="password"
           placeholder="비밀번호를 입력해 주세요."
           label="비밀번호"
           type="password"
@@ -28,7 +28,7 @@ function ResetPasswordForm() {
           errors={errors}
         />
         <Input
-          name="비밀번호 확인"
+          name="passwordConfirmation"
           placeholder="비밀번호를 입력해 주세요."
           label="비밀번호 확인"
           type="password"

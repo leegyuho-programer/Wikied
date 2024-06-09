@@ -1,21 +1,19 @@
 'use client';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { PostSignUp } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { PostSignUp } from '../../types/auth';
 
 function SignUpForm() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
-
-  // const onSubmit = (data: any) => {
-  //   console.log('login', data);
-  // };
 
   const handleSignUp = async (data: PostSignUp) => {
     try {
@@ -29,6 +27,8 @@ function SignUpForm() {
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
+      } else {
+        router.replace('/login');
       }
 
       const responseData = await response.json(); // 응답 데이터를 JSON 형식으로 파싱

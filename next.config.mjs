@@ -27,6 +27,8 @@ const nextConfig = {
         hostname: '*.kr',
       },
     ],
+    // loader: 'imgix',
+    // path: '/',
   },
   async rewrites() {
     return [
