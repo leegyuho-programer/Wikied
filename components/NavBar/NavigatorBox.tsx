@@ -1,14 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import Button from '../Button/Button';
-import MenuIcon from '../SvgComponents/MenuIcon';
-import styles from './NavigatorBox.module.css';
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import Button from '../Button/Button';
 import Menu from '../Menu/Menu';
-// @@@@@@@@@@@@@@@ 로그인 했을 때 데이터 받아와서 프로필 사진 보이도록
+import MenuIcon from '../SvgComponents/MenuIcon';
+import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileIcon';
+import styles from './NavigatorBox.module.css';
+
 function NavigatorBox() {
+  const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log(user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,18 +20,29 @@ function NavigatorBox() {
 
   return (
     <>
-      <div className={styles.status}>
-        <Link href="/login" className={styles.login}>
-          로그인
-        </Link>
-        <Button isLink={true} variant="primary" destination="/" size="S">
-          내 위키 만들기
-        </Button>
-      </div>
-      <div className={styles.dropdown}>
-        <MenuIcon onClick={toggleMenu} />
-        {isMenuOpen && <Menu />}
-      </div>
+      {user ? (
+        <div>
+          <div className={styles.profile}>
+            <NavBarProfileIcon onClick={toggleMenu} />
+            {isMenuOpen && <Menu />}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div className={styles.status}>
+            <Link href="/login" className={styles.login}>
+              로그인
+            </Link>
+            <Button isLink={true} variant="primary" destination="/" size="S">
+              내 위키 만들기
+            </Button>
+          </div>
+          <div className={styles.dropdown}>
+            <MenuIcon onClick={toggleMenu} />
+            {isMenuOpen && <Menu />}
+          </div>
+        </div>
+      )}
     </>
   );
 }
