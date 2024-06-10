@@ -7,8 +7,21 @@ import SideBar from '../../../../components/SideBar/SideBar';
 import SnackBar from '../../../../components/SnackBar/SnackBar';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 
+const BASE_URL = 'https://www.wikied.kr';
+
 function MyPage() {
   const [isCopied, setIsCopied] = useState(false);
+
+  const handleInvite = async () => {
+    try {
+      const currentURL = window.location.href;
+      await navigator.clipboard.writeText(currentURL);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -31,7 +44,7 @@ function MyPage() {
             <br />
             친구들을 위키로 초대해 보세요!
           </p>
-          <Button isLink={true} destination="/" variant="primary" size="XS">
+          <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
             초대하기
           </Button>
         </div>
