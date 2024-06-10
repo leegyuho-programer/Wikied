@@ -8,15 +8,16 @@ import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
 import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileIcon';
 import styles from './NavigatorBox.module.css';
+import { useRouter } from 'next/navigation';
 
 function NavigatorBox() {
+  const router = useRouter();
   const { isLogin, user, setLogout } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
     setLogout: state.setLogout,
   }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,6 +25,7 @@ function NavigatorBox() {
 
   const handleLogout = () => {
     setLogout();
+    router.replace('/login');
     setIsMenuOpen(false);
   };
 

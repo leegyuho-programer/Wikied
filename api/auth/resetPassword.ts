@@ -1,24 +1,18 @@
-import { PatchPassword } from '../../types/auth';
+import { PatchPassword, PatchPasswordResponse } from '../../types/auth';
+import { authBasedRequest } from '../fetchRequestHandler';
 
-const resetPassword = async (data: PatchPassword, accessToken: string | null) => {
+const resetPassword = async (data: PatchPassword, token: string): Promise<PatchPasswordResponse> => {
   try {
-    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/users/me/password`, {
+    const response = await authBasedRequest<PatchPasswordResponse>({
+      url: 'users/me/password',
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
+      body: data,
+      token,
     });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const responseData = await response.json();
-    return responseData;
-  } catch (error: any) {
-    console.error('Error:', error);
+    console.log('비밀번호 변경 성공:', response);
+    return response;
+  } catch (error) {
+    console.error('비밀번호 변경 실패:', error);
     throw error;
   }
 };

@@ -19,11 +19,8 @@ import { useStore } from '../../../../store';
 
 function MyAccountPage() {
   const router = useRouter();
-  const { user, accessToken, storedPassword } = useStore((state) => ({
-    user: state.user,
-    accessToken: state.userAccessToken,
-    storedPassword: state.password,
-  }));
+  const accessToken = useStore((state) => state.userAccessToken);
+  const storedPassword = useStore((state) => state.password);
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
 
@@ -52,9 +49,8 @@ function MyAccountPage() {
     }
 
     try {
-      const responseData = await resetPassword(data, accessToken);
-      router.replace('/login'); // 비밀번호 변경 후 로그인 페이지로 이동
-      return responseData;
+      await resetPassword(data, accessToken);
+      router.replace('/login');
     } catch (error) {
       console.error('Error:', error);
     }

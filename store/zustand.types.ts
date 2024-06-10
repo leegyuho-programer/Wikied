@@ -5,7 +5,7 @@ export interface User {
   teamId: string;
   updatedAt: string;
   createdAt: string;
-  password: string;
+  password?: string;
   profile: {
     id: number;
     code: string;

@@ -19,3 +19,32 @@ export interface PatchPassword {
   password: string;
   currentPassword?: string;
 }
+
+export interface PostLoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+    teamId: string;
+    updatedAt: string;
+    createdAt: string;
+    profile: {
+      id: number;
+      code: string;
+    };
+  };
+}
+
+export interface PatchPasswordResponse {
+  profile: {
+    code: string;
+    id: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  teamId: string;
+  name: string;
+  id: number;
+}

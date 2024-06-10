@@ -22,12 +22,11 @@ function LoginForm() {
 
   const handleLogin = async (data: PostLogin) => {
     try {
-      const responseData = await login(data); // Use the login function
+      const response = await login(data);
+      console.log('Response Data:', response);
 
-      if (responseData) {
-        setLogin(responseData.user, responseData.accessToken, responseData.refreshToken, data.password);
-        router.replace('/mypage');
-      }
+      setLogin(response.user, response.accessToken, response.refreshToken, data.password);
+      router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);
     }

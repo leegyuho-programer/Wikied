@@ -1,9 +1,49 @@
-export type RequestType = {
+type AuthBasedRequestType = {
   url: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   params?: { [key: string]: any };
+  token: string;
   body?: any;
-  token?: string;
+};
+
+type RequestType = Omit<AuthBasedRequestType, 'token'>;
+
+/** token based request handler
+ * @param url request url
+ * @param method http method type
+ * @param params request parameters
+ * @param token auth token
+ * @param body request body
+ */
+
+export const authBasedRequest = async <T>({ url, method = 'GET', params, token, body }: AuthBasedRequestType) => {
+  if (!token) {
+    const storedToken = localStorage.getItem('store');
+    if (!storedToken) {
+      throw new Error('Token not found in localStorage');
+    }
+    token = JSON.parse(storedToken).state.userAccessToken;
+  }
+
+  const baseURL = 'https://wikied-api.vercel.app/0-이규호';
+  const queryString = new URLSearchParams(params).toString();
+
+  const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
+
+  const response = await fetch(fullUrl, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body) ?? '',
+  });
+
+  if (!response.ok) {
+    throw new Error('something went to wrong');
+  }
+
+  return (await response.json()) as T;
 };
 
 /** request handler
@@ -13,44 +53,23 @@ export type RequestType = {
  * @param body request body
  */
 
-export const request = async ({ url, method, params, body, token }: RequestType) => {
+export const request = async <T>({ url, method = 'GET', params, body }: RequestType) => {
   const baseURL = 'https://wikied-api.vercel.app/0-이규호';
   const queryString = new URLSearchParams(params).toString();
-  // let token = '';
 
-  // // token
-  // if (typeof window !== 'undefined') {
-  //   const userAuth = window.localStorage.getItem('store');
-  //   if (!userAuth) return;
-  //   const {
-  //     state: { userAccessToken },
-  //   } = JSON.parse(userAuth);
-  //   token = userAccessToken;
-  // }
+  const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
-  // fullUrl
-  const fullUrl = queryString ? `${baseURL}${url}?${queryString}` : `${baseURL}${url}`;
-
-  // options
-  const options: RequestInit = {
+  const response = await fetch(fullUrl, {
     method,
-  };
-
-  // Only include body if it exists and if the method is not GET
-  if (body && method !== 'GET') {
-    options.body = JSON.stringify(body);
-  }
-
-  // include token when it exists
-  if (token) {
-    options.headers = { Authorization: `Bearer ${token}` };
-  }
-
-  const response = await fetch(fullUrl, options);
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body) ?? '',
+  });
 
   if (!response.ok) {
-    // 가장 가까운 Error Boundary의 error.tsx를 활성화 시킴
-    console.log(response.status);
+    throw new Error('something went to wrong');
   }
-  return await response.json();
+
+  return (await response.json()) as T;
 };

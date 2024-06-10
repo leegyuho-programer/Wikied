@@ -1,23 +1,17 @@
-import { PostLogin } from '../../types/auth';
+import { PostLogin, PostLoginResponse } from '../../types/auth';
+import { request } from '../fetchRequestHandler';
 
-const login = async (data: PostLogin) => {
+const login = async (data: PostLogin): Promise<PostLoginResponse> => {
   try {
-    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signIn`, {
+    const response = await request<PostLoginResponse>({
+      url: 'auth/signIn',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body: data,
     });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const responseData = await response.json();
-    return responseData;
-  } catch (error: any) {
-    console.error('Error:', error);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('로그인 실패:', error);
     throw error;
   }
 };
