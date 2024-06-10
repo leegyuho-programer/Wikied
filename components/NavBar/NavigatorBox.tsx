@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useStore } from '../../store';
 import Button from '../Button/Button';
 import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
@@ -10,7 +10,11 @@ import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileI
 import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {
-  const { user, logout } = useAuth();
+  const { isLogin, user, setLogout } = useStore((state) => ({
+    isLogin: state.isLogin,
+    user: state.user,
+    setLogout: state.setLogout,
+  }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   console.log(user);
 
@@ -19,13 +23,13 @@ function NavigatorBox() {
   };
 
   const handleLogout = () => {
-    logout();
+    setLogout();
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      {user ? (
+      {isLogin ? (
         <div>
           <div className={styles.profile}>
             <NavBarProfileIcon onClick={toggleMenu} />

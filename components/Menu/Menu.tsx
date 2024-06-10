@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import styles from './Menu.module.css';
-import { useAuth } from '../../context/AuthContext';
 
 interface Props {
   onMenuClick: () => void;

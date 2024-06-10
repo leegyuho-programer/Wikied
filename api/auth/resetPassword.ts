@@ -1,11 +1,12 @@
-import { PostSignUp } from '../../types/auth';
+import { PatchPassword } from '../../types/auth';
 
-const signUp = async (data: PostSignUp) => {
+const resetPassword = async (data: PatchPassword, accessToken: string | null) => {
   try {
-    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signUp`, {
-      method: 'POST',
+    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/users/me/password`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(data),
     });
@@ -22,4 +23,4 @@ const signUp = async (data: PostSignUp) => {
   }
 };
 
-export default signUp;
+export default resetPassword;

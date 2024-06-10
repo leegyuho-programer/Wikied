@@ -1,8 +1,8 @@
-import { PostSignUp } from '../../types/auth';
+import { PostLogin } from '../../types/auth';
 
-const signUp = async (data: PostSignUp) => {
+const login = async (data: PostLogin) => {
   try {
-    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signUp`, {
+    const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signIn`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,4 +22,4 @@ const signUp = async (data: PostSignUp) => {
   }
 };
 
-export default signUp;
+export default login;
