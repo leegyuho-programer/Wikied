@@ -7,10 +7,10 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
 import {
-  emailRules,
   nicknameRules,
-  signUpPasswordCheckRules,
+  emailRules,
   signUpPasswordRules,
+  signUpPasswordCheckRules,
 } from '../../constants/inputErrorRules';
 
 function SignUpForm() {
@@ -47,7 +47,6 @@ function SignUpForm() {
       throw error; // 에러를 호출자에게 전달
     }
   };
-  console.log(errors);
 
   return (
     <div>

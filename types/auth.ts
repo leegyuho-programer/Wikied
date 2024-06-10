@@ -13,3 +13,9 @@ export interface PostLogin {
 export interface PostRefreshToken {
   refreshToken: string;
 }
+
+export interface PatchPassword {
+  passwordConfirmation: string;
+  password: string;
+  currentPassword?: string;
+}

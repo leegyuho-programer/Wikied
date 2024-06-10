@@ -29,7 +29,7 @@ function NavigatorBox() {
         <div>
           <div className={styles.profile}>
             <NavBarProfileIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu onClick={handleLogout} />}
+            {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
       ) : (
@@ -44,7 +44,7 @@ function NavigatorBox() {
           </div>
           <div className={styles.dropdown}>
             <MenuIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu onClick={logout} />}
+            {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
       )}

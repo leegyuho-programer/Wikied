@@ -19,7 +19,8 @@ interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
   user: User | null;
-  login: (accessToken: string, refreshToken: string, user: User) => void;
+  password: string | null;
+  login: (accessToken: string, refreshToken: string, user: User, password: string) => void;
   logout: () => void;
 }
 
@@ -29,14 +30,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
   const router = useRouter();
 
-  const login = (accessToken: string, refreshToken: string, user: User) => {
+  const login = (accessToken: string, refreshToken: string, user: User, password: string) => {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
     setUser(user);
+    setPassword(password);
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('password', password);
     router.replace('/mypage');
   };
 
@@ -46,15 +50,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('password');
     router.replace('/');
   };
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
     const storedRefreshToken = localStorage.getItem('refreshToken');
+    const storedPassword = localStorage.getItem('password');
     if (storedAccessToken && storedRefreshToken) {
       setAccessToken(storedAccessToken);
       setRefreshToken(storedRefreshToken);
+      setPassword(storedPassword);
       // 여기서 토큰을 사용하여 사용자 정보를 가져오는 API 호출 등을 할 수 있습니다.
       const storedUser: User = {
         id: 123,
@@ -73,7 +80,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, user, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ accessToken, refreshToken, user, password, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

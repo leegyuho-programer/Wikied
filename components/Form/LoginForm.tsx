@@ -35,7 +35,8 @@ function LoginForm() {
       const responseData = await response.json();
 
       if (responseData) {
-        login(responseData.accessToken, responseData.refreshToken, responseData.user);
+        login(responseData.accessToken, responseData.refreshToken, responseData.user, data.password);
+        console.log(data.password);
       }
     } catch (error: any) {
       console.error('Error:', error);
