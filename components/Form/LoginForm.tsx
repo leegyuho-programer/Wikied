@@ -2,44 +2,33 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { emailRules, signUpPasswordRules } from '../../constants/inputErrorRules';
+import { useStore } from '../../store';
 import { PostLogin } from '../../types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { useAuth } from '../../context/AuthContext';
-import { emailRules, signUpPasswordRules } from '../../constants/inputErrorRules';
+import login from '../../api/auth/login';
 
 function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm<PostLogin>({ mode: 'onBlur' });
 
+  const setLogin = useStore((state) => state.setLogin);
+
   const handleLogin = async (data: PostLogin) => {
     try {
-      const response = await fetch(`https://wikied-api.vercel.app/0-이규호/auth/signIn`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await login(data);
+      console.log('Response Data:', response);
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const responseData = await response.json();
-
-      if (responseData) {
-        login(responseData.accessToken, responseData.refreshToken, responseData.user);
-      }
+      setLogin(response.user, response.accessToken, response.refreshToken, data.password);
+      router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);
-      throw error;
     }
   };
 

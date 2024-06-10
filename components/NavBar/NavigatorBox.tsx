@@ -2,34 +2,40 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useStore } from '../../store';
 import Button from '../Button/Button';
 import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
 import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileIcon';
 import styles from './NavigatorBox.module.css';
+import { useRouter } from 'next/navigation';
 
 function NavigatorBox() {
-  const { user, logout } = useAuth();
+  const router = useRouter();
+  const { isLogin, user, setLogout } = useStore((state) => ({
+    isLogin: state.isLogin,
+    user: state.user,
+    setLogout: state.setLogout,
+  }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(user);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLogout = () => {
-    logout();
+    setLogout();
+    router.replace('/login');
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      {user ? (
+      {isLogin ? (
         <div>
           <div className={styles.profile}>
             <NavBarProfileIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu onClick={handleLogout} />}
+            {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
       ) : (
@@ -44,7 +50,7 @@ function NavigatorBox() {
           </div>
           <div className={styles.dropdown}>
             <MenuIcon onClick={toggleMenu} />
-            {isMenuOpen && <Menu onClick={logout} />}
+            {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
       )}

@@ -1,56 +1,75 @@
-// export type RequestType = {
-//   url: string;
-//   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-//   params?: { [key: string]: any };
-//   body?: any;
-//   token?: string;
-// };
+type AuthBasedRequestType = {
+  url: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  params?: { [key: string]: any };
+  token: string;
+  body?: any;
+};
 
-// /** request handler
-//  * @param url request url
-//  * @param method http method type
-//  * @param params request parameters
-//  * @param body request body
-//  */
+type RequestType = Omit<AuthBasedRequestType, 'token'>;
 
-// export const request = async ({ url, method = 'GET', params, body }: RequestType) => {
-//   const baseURL = 'https://wikied-api.vercel.app/docs/#/0-이규호';
-//   const queryString = new URLSearchParams(params).toString();
-//   let token = '';
+/** token based request handler
+ * @param url request url
+ * @param method http method type
+ * @param params request parameters
+ * @param token auth token
+ * @param body request body
+ */
 
-//   // token
-//   if (typeof window !== 'undefined') {
-//     const userAuth = window.localStorage.getItem('store');
-//     if (!userAuth) return;
-//     const {
-//       state: { userAccessToken },
-//     } = JSON.parse(userAuth);
-//     token = userAccessToken;
-//   }
+export const authBasedRequest = async <T>({ url, method = 'GET', params, token, body }: AuthBasedRequestType) => {
+  if (!token) {
+    const storedToken = localStorage.getItem('store');
+    if (!storedToken) {
+      throw new Error('Token not found in localStorage');
+    }
+    token = JSON.parse(storedToken).state.userAccessToken;
+  }
 
-//   // fullUrl
-//   const fullUrl = queryString ? `${baseURL}${url}?${queryString}` : `${baseURL}${url}`;
+  const baseURL = 'https://wikied-api.vercel.app/0-이규호';
+  const queryString = new URLSearchParams(params).toString();
 
-//   // options
-//   const options: RequestInit = {
-//     method,
-//   };
+  const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
-//   // Only include body if it exists and if the method is not GET
-//   if (body && method !== 'GET') {
-//     options.body = JSON.stringify(body);
-//   }
+  const response = await fetch(fullUrl, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body) ?? '',
+  });
 
-//   // include token when it exists
-//   if (token) {
-//     options.headers = { Authorization: `Bearer ${token}` };
-//   }
+  if (!response.ok) {
+    throw new Error('something went to wrong');
+  }
 
-//   const response = await fetch(fullUrl, options);
+  return (await response.json()) as T;
+};
 
-//   if (!response.ok) {
-//     // 가장 가까운 Error Boundary의 error.tsx를 활성화 시킴
-//     console.log(response.status);
-//   }
-//   return await response.json();
-// };
+/** request handler
+ * @param url request url
+ * @param method http method type
+ * @param params request parameters
+ * @param body request body
+ */
+
+export const request = async <T>({ url, method = 'GET', params, body }: RequestType) => {
+  const baseURL = 'https://wikied-api.vercel.app/0-이규호';
+  const queryString = new URLSearchParams(params).toString();
+
+  const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
+
+  const response = await fetch(fullUrl, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body) ?? '',
+  });
+
+  if (!response.ok) {
+    throw new Error('something went to wrong');
+  }
+
+  return (await response.json()) as T;
+};

@@ -5,8 +5,10 @@ interface Props {
   label?: string;
   type?: string;
   placeholder: string;
-  register: any;
-  errors: any;
+  register?: any;
+  errors?: any;
+  value?: any;
+  onChange?: any;
 }
 
 function Input({ name, label, type = 'text', placeholder, register, errors }: Props) {
