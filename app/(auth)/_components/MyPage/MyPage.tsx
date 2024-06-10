@@ -6,10 +6,12 @@ import Button from '../../../../components/Button/Button';
 import SideBar from '../../../../components/SideBar/SideBar';
 import SnackBar from '../../../../components/SnackBar/SnackBar';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
+import { useStore } from '../../../../store';
 
 const BASE_URL = 'https://www.wikied.kr';
 
 function MyPage() {
+  const { user } = useStore();
   const [isCopied, setIsCopied] = useState(false);
 
   const handleInvite = async () => {
@@ -32,7 +34,7 @@ function MyPage() {
       )}
       <div className={styles.title}>
         {/* 이름 데이터 가져오기 */}
-        <p className={styles.name}>이지동</p>
+        <p className={styles.name}>{user?.name}</p>
         <LinkCopy onCopy={setIsCopied} />
       </div>
       <div className={styles.section}>
