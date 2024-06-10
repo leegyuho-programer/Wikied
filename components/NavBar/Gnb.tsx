@@ -8,7 +8,7 @@ function Gnb() {
       <Link href="/">
         <Image src="/images/logo.png" alt="로고 이미지" width={107} height={30} />
       </Link>
-      <Link href="/" className={styles.gnb}>
+      <Link href="/wikilist" className={styles.gnb}>
         위키목록
       </Link>
       <Link href="/" className={styles.gnb}>
