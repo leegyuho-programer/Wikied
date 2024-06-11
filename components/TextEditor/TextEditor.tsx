@@ -9,11 +9,11 @@ import './TextEditor.css';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface Props {
-  value?: string;
-  setValue: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<string | undefined>>;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
 }
 
-function TextEditor() {
+function TextEditor({ value, setValue }: Props) {
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -29,21 +29,9 @@ function TextEditor() {
 
   const formats = ['bold', 'italic', 'underline', 'blockquote', 'header', 'list', 'script', 'size'];
 
-  const formatsWithLabels = {
-    ...formats,
-    header: [{ header: '제목' }, { header: [1, 2, 3, 4, false] }],
-  };
-
   return (
     <div className={styles.container}>
-      <ReactQuill
-        theme="snow"
-        modules={modules}
-        formats={formatsWithLabels}
-        // value={value}
-        placeholder={'작품을 어필해보세요!'}
-        // onChange={setValue}
-      />
+      <ReactQuill theme="snow" modules={modules} formats={formats} value={value} onChange={setValue} />
     </div>
   );
 }
