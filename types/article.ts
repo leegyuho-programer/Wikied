@@ -1,10 +1,10 @@
-interface PostArticleRequestType {
+export interface PostArticleRequestType {
   image: string;
   content: string;
   title: string;
 }
 
-interface PostArticleResponseType {
+export interface PostArticleResponseType {
   updatedAt: string;
   createdAt: string;
   likeCount: number;
@@ -17,7 +17,7 @@ interface PostArticleResponseType {
   id: number;
 }
 
-interface GetArticleResponseType {
+export interface GetArticleResponseType {
   totalCount: number;
   list: [
     {
@@ -35,17 +35,17 @@ interface GetArticleResponseType {
   ];
 }
 
-interface GetArticleIdResponseType extends PostArticleResponseType {}
+export interface GetArticleIdResponseType extends PostArticleResponseType {}
 
-interface PatchArticleRequestType extends PostArticleRequestType {}
+export interface PatchArticleRequestType extends PostArticleRequestType {}
 
-interface PatchArticleResponseType extends PostArticleResponseType {
+export interface PatchArticleResponseType extends PostArticleResponseType {
   isLiked: boolean;
   content: string;
 }
 
-interface DeleteArticleIdRequestType {
+export interface DeleteArticleIdRequestType {
   articleId: number;
 }
 
-interface PostArticleLinkRequestType extends PatchArticleResponseType {}
+export interface PostArticleLinkRequestType extends PatchArticleResponseType {}
