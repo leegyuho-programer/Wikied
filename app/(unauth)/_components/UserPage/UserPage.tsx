@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '../../../../components/Button/Button';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
-import SideBar from '../../../../components/SideBar/SideBar';
 import styles from './UserPage.module.css';
 
 function UserPage() {

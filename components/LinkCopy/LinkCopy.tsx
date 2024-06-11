@@ -14,7 +14,6 @@ function LinkCopy({ onCopy }: Props) {
   const searchParams = useSearchParams();
   const ID = '2gyuho_295';
   const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
-  // const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
