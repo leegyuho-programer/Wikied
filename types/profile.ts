@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   updatedAt: string;
   job: string;
   nationality: string;
@@ -9,12 +9,12 @@ interface User {
   id: number;
 }
 
-interface PostProfileRequestType {
+export interface PostProfileRequestType {
   securityAnswer: string;
   securityQuestion: string;
 }
 
-interface PostProfileResponseType {
+export interface PostProfileResponseType {
   updatedAt: string;
   securityQuestion: string;
   teamId: string;
@@ -34,7 +34,7 @@ interface PostProfileResponseType {
   id: number;
 }
 
-interface GetProfileResponseType {
+export interface GetProfileResponseType {
   totalCount: number;
   list: User[];
 }
