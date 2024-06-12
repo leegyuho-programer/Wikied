@@ -1,0 +1,11 @@
+.container {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 16px;
+    height: 16px;
+  }
+}

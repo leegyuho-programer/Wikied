@@ -1,0 +1,43 @@
+.container {
+  max-width: 1060px;
+  margin-top: 60px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  max-height: 641px;
+  height: 100%;
+  padding: 40px 30px;
+}
+
+.headerWrapper {
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  color: #474d66;
+  font-size: 3.8rem;
+  font-weight: 600;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  color: #8f95b2;
+}
+
+.user {
+  display: flex;
+  gap: 10px;
+}
+
+.like {
+  display: flex;
+  justify-content: space-between;
+}
