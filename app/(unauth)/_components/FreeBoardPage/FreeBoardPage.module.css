@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+  max-width: 1060px;
+}
+
+.header {
+  display: flex;
+  align-items: space-between;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  color: #474d66;
+  font-size: 3.8rem;
+  font-weight: 600;
+}
+
+.card {
+  display: flex;
+  gap: 20px;
+}
+
+.search {
+  display: flex;
+  gap: 20px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1060px;
+  width: 100%;
+}
