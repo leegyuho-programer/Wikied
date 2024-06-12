@@ -1,0 +1,52 @@
+.container {
+  max-width: 1060px;
+  max-height: 641px;
+  margin: 0 auto;
+  margin-top: 60px;
+  padding: 40px 30px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 3.8rem;
+  font-weight: 600;
+  color: #474d66;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  color: #8f95b2;
+}
+
+.user {
+  display: flex;
+  gap: 10px;
+}
+
+.like {
+  display: flex;
+  justify-content: space-between;
+}

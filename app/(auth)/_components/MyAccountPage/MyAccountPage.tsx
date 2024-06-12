@@ -63,7 +63,7 @@ function MyAccountPage() {
     };
 
     try {
-      const response = await fetch(`https://wikied-api.vercel.app/0-이규호/profiles`, {
+      const response = await fetch(`https://wikied-api.vercel.app/1-99/profiles`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

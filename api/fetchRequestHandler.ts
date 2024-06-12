@@ -25,7 +25,7 @@ export const authBasedRequest = async <T>({ url, method = 'GET', params, token, 
     token = JSON.parse(storedToken).state.userAccessToken;
   }
 
-  const baseURL = 'https://wikied-api.vercel.app/0-이규호';
+  const baseURL = 'https://wikied-api.vercel.app/1-99';
   const queryString = new URLSearchParams(params).toString();
 
   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
@@ -54,7 +54,7 @@ export const authBasedRequest = async <T>({ url, method = 'GET', params, token, 
  */
 
 export const request = async <T>({ url, method = 'GET', params, body }: RequestType) => {
-  const baseURL = 'https://wikied-api.vercel.app/0-이규호';
+  const baseURL = 'https://wikied-api.vercel.app/1-99';
   const queryString = new URLSearchParams(params).toString();
 
   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
