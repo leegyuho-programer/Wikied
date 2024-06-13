@@ -1,0 +1,183 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1060px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1060px;
+  width: 100%;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.articleList {
+  margin-top: 10px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-weight: bold;
+}
+
+.articleItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 60px;
+  max-width: 1060px;
+}
+
+.header {
+  display: flex;
+  align-items: space-between;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title {
+  color: #474d66;
+  font-size: 3.8rem;
+  font-weight: 600;
+}
+
+.card {
+  display: flex;
+  gap: 20px;
+}
+
+.search {
+  display: flex;
+  gap: 20px;
+}
+
+.articleList {
+  max-width: 1060px;
+  width: 100%;
+}
+
+.id {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.articleTitle {
+  max-width: 650px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.articleWriter {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.like {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.day {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.top {
+  color: #8f95b2;
+  text-align: center;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1060px;
+  width: 100%;
+}
+/* 
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  color: #888;
+  font-size: 14px;
+}
+
+.move {
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.move a {
+  width: 50px;
+  display: block;
+  z-index: 10;
+  text-align: center;
+}
+
+.move a:hover {
+  text-decoration: underline;
+}
+
+.pages {
+  display: flex;
+}
+
+.page {
+  margin: 0 5px;
+  cursor: pointer;
+  width: 25px;
+  border-radius: 30px;
+  border: solid 1px rgba(0, 0, 0, 0);
+  text-align: center;
+  line-height: 25px;
+}
+
+.page:hover {
+  border: solid 1px #aaa;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.active {
+  font-weight: 700;
+  background: #2f5d62;
+  color: white;
+} */
