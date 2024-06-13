@@ -18,6 +18,7 @@ export default function PaginationPage() {
   const [articles, setArticles] = useState<GetArticleResponseType['list']>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalArticles, setTotalArticles] = useState(0);
+  const [sortOption, setSortOption] = useState('최신순');
   const articlesPerPage = 10;
   const pageCount = Math.ceil(totalArticles / articlesPerPage); // 한 번에 표시할 페이지 번호의 수
 
@@ -35,23 +36,28 @@ export default function PaginationPage() {
     fetchArticles(currentPage);
   }, [currentPage]);
 
-  // // 최신순으로 정렬
-  // const sortedArticles = useMemo(() => {
-  //   return [...articles].sort((a, b) => b.id - a.id);
-  // }, [articles]);
+  // 정렬 기준에 따라 articles 배열을 정렬하는 함수
+  const sortArticles = useCallback(
+    (option: string) => {
+      if (option === '최신순') {
+        const sorted = [...articles].sort((a, b) => b.id - a.id);
+        setArticles(sorted);
+      } else if (option === '인기순') {
+        const sorted = [...articles].sort((a, b) => b.likeCount - a.likeCount);
+        setArticles(sorted);
+      }
+    },
+    [articles]
+  );
 
-  // const handlePageChange = useCallback((pageNumber: number) => {
-  //   setCurrentPage(pageNumber);
-  // }, []);
-
-  // const currentArticles = useMemo(() => {
-  //   const indexOfLastArticle = currentPage * articlesPerPage;
-  //   const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  //   return sortedArticles.slice(indexOfFirstArticle, indexOfLastArticle);
-  // }, [sortedArticles, currentPage]);
   const handlePageChange = useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
   }, []);
+
+  // 정렬 기준이 변경되면 articles를 다시 정렬
+  useEffect(() => {
+    sortArticles(sortOption);
+  }, [sortOption, sortArticles]);
 
   return (
     <div className={styles.container}>
@@ -61,7 +67,7 @@ export default function PaginationPage() {
           <Button variant="primary" isLink={false} size="XS">
             검색
           </Button>
-          <Filter />
+          <Filter onSortChange={setSortOption} />
         </div>
         <div className={styles.articleList}>
           <LineStrokeIcon />
