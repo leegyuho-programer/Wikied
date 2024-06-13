@@ -10,7 +10,8 @@
 
 .image {
   height: 131px;
-  background-color: blanchedalmond;
+  width: 250px;
+  background-color: transparent;
 }
 
 .content {

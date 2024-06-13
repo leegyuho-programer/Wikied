@@ -1,15 +1,13 @@
-import { PostArticleResponseType } from '../../types/article';
+import { GetArticleResponseType } from '../../types/article';
 import { request } from '../fetchRequestHandler';
 
-const getArticle = async () => {
+const getArticle = async (): Promise<GetArticleResponseType> => {
   try {
-    const response = await request<PostArticleResponseType>({
-      url: 'articles',
-    });
+    const response = await fetch('https://wikied-api.vercel.app/1-99/articles', { method: 'GET' });
     console.log(response);
-    return response;
+    return response.json();
   } catch (error) {
-    console.error('로그인 실패:', error);
+    console.error(error);
     throw error;
   }
 };

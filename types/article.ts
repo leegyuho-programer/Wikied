@@ -17,22 +17,38 @@ export interface PostArticleResponseType {
   id: number;
 }
 
+// export interface GetArticleResponseType {
+//   totalCount: number;
+//   list: [
+//     {
+//       updatedAt: string;
+//       createdAt: string;
+//       likeCount: number;
+//       writer: {
+//         name: string;
+//         id: number;
+//       };
+//       image: string;
+//       title: string;
+//       id: number;
+//     }
+//   ];
+// }
+
 export interface GetArticleResponseType {
   totalCount: number;
-  list: [
-    {
-      updatedAt: string;
-      createdAt: string;
-      likeCount: number;
-      writer: {
-        name: string;
-        id: number;
-      };
-      image: string;
-      title: string;
+  list: {
+    updatedAt: string;
+    createdAt: string;
+    likeCount: number;
+    writer: {
+      name: string;
       id: number;
-    }
-  ];
+    };
+    image: string;
+    title: string;
+    id: number;
+  }[];
 }
 
 export interface GetArticleIdResponseType extends PostArticleResponseType {}
