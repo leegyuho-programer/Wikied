@@ -1,33 +1,26 @@
-// export const postImageFile = async (data: FormData) => {
-//   try {
-//     const response = await fetch('https://wikied-api.vercel.app/1-99/images/upload', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//       body: JSON.stringify(data),
-//     });
-//     return response;
-//   } catch (err: any) {
-//     return err.response;
-//   }
-// };
+import { PostImageResponseType } from '../../types/image';
 
-export const postImageFile = async (data: FormData) => {
+export const postImage = async (data: File, token: string): Promise<PostImageResponseType> => {
   try {
+    const formData = new FormData();
+    formData.append('image', data);
+
     const response = await fetch('https://wikied-api.vercel.app/1-99/images/upload', {
       method: 'POST',
-      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
     });
 
     if (!response.ok) {
-      throw new Error('Image upload failed');
+      throw new Error('Failed to upload image');
     }
 
     const responseData = await response.json();
-    return responseData;
-  } catch (err) {
-    console.error('Error uploading image:', err);
-    throw err;
+    return responseData as PostImageResponseType;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
   }
 };
