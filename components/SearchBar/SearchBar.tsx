@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import SearchIcon from '../SvgComponents/SearchIcon';
 import CancelIcon from '../SvgComponents/CancelIcon'; // x 버튼 아이콘 추가

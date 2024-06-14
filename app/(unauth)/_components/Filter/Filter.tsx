@@ -48,6 +48,8 @@
 
 // Filter.tsx
 
+'use client';
+
 import { useState } from 'react';
 import styles from './Filter.module.css';
 import DropDownIcon from '../../../../components/SvgComponents/DropDownIcon';

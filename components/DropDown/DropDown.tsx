@@ -4,6 +4,7 @@ import { useState } from 'react';
 import DropDownIcon from '../SvgComponents/DropDownIcon';
 import styles from './DropDown.module.css';
 import { useForm } from 'react-hook-form';
+import { PostProfileRequestType } from '../../types/profile';
 
 interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
@@ -15,7 +16,7 @@ function DropDown({ onSelectionChange }: DropDownProps) {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PostProfile>();
+  } = useForm<PostProfileRequestType>();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');

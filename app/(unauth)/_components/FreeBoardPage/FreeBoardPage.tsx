@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import getArticle from '../../../../api/article/getArticles';
+import getArticles from '../../../../api/article/getArticles';
 import Button from '../../../../components/Button/Button';
 import { GetArticleResponseType } from '../../../../types/article';
 import Card from '../Card/Card';
@@ -14,9 +14,9 @@ export default function FreeBoardPage() {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await getArticle();
+        const response = await getArticles(); // getArticles 호출
         console.log(response);
-        setArticles(response.list);
+        setArticles(response.list); // response.list를 설정
       } catch (error) {
         console.error('Failed to fetch articles:', error);
       }
@@ -37,6 +37,7 @@ export default function FreeBoardPage() {
         {articles.slice(0, 4).map((article) => (
           <Card
             key={article.id}
+            id={article.id}
             title={article.title}
             image={article.image}
             writerName={article.writer.name}

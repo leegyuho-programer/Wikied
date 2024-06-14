@@ -34,7 +34,7 @@
   margin-top: -140px;
 }
 
-.nodata {
+.noData {
   max-width: 1200px;
   width: 100%;
   height: 192px;
@@ -91,7 +91,7 @@
     margin-top: 0;
   }
 
-  .nodata {
+  .noData {
     margin-top: 0;
     max-width: 100%;
   }
