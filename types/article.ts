@@ -35,6 +35,7 @@ export interface GetArticleResponseType {
 
 export interface GetArticleIdResponseType extends PostArticleResponseType {
   content: string;
+  isLiked: boolean;
 }
 
 export interface PatchArticleRequestType {
@@ -53,3 +54,26 @@ export interface DeleteArticleIdRequestType {
 }
 
 export interface PostArticleLinkRequestType extends PatchArticleResponseType {}
+
+export interface PostLikeRequestType {
+  articledId: string;
+}
+
+export interface PostLikeResponseType {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  likeCount: number;
+  writer: {
+    id: number;
+    name: string;
+  };
+  image: string;
+  isLiked: boolean;
+}
+
+export interface DeleteLikeRequestType extends PostLikeRequestType {}
+
+export interface DeleteLikeResponseType extends PostLikeResponseType {}

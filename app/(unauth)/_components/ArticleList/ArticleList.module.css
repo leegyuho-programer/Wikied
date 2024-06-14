@@ -1,6 +1,7 @@
 .articleList {
   max-width: 1060px;
   width: 100%;
+  cursor: pointer;
 }
 
 .id {

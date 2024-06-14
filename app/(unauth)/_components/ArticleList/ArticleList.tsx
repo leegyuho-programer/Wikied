@@ -1,17 +1,24 @@
+import { useRouter } from 'next/navigation';
 import LineStrokeIcon from '../../../../components/SvgComponents/StrokeIcon/LineStroke';
 import styles from './ArticleList.module.css';
 
-export interface CardProps {
-  title: string;
+export interface ArticleListProps {
   id: number;
+  title: string;
   writerName: string;
-  createdAt: string;
   likeCount: number;
+  createdAt: string;
 }
 
-export default function ArticleList({ id, title, writerName, likeCount, createdAt }: CardProps) {
+export default function ArticleList({ id, title, writerName, likeCount, createdAt }: ArticleListProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/article/${id}`);
+  };
+
   return (
-    <div className={styles.articleList}>
+    <div className={styles.articleList} onClick={handleClick}>
       <div className={styles.top}>
         <div className={styles.id}>{id}</div>
         <div className={styles.articleTitle}>{title}</div>
