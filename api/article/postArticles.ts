@@ -1,5 +1,5 @@
 import { PostArticleRequestType, PostArticleResponseType } from '../../types/article';
-import { authBasedRequest, request } from '../fetchRequestHandler';
+import { authBasedRequest } from '../fetchRequestHandler';
 
 const postArticle = async (data: PostArticleRequestType, token: string): Promise<PostArticleResponseType> => {
   try {
