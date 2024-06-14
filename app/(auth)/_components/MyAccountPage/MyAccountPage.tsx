@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import patchPassword from '../../../../api/auth/patchPassword';
 import Button from '../../../../components/Button/Button';
 import DropDown from '../../../../components/DropDown/DropDown';
 import Input from '../../../../components/Input/Input';
@@ -11,11 +13,9 @@ import {
   signUpPasswordCheckRules,
   signUpPasswordRules,
 } from '../../../../constants/inputErrorRules';
+import { useStore } from '../../../../store';
 import { PatchPassword } from '../../../../types/auth';
 import styles from './MyAccountPage.module.css';
-import { useState } from 'react';
-import resetPassword from '../../../../api/auth/resetPassword';
-import { useStore } from '../../../../store';
 
 function MyAccountPage() {
   const router = useRouter();
@@ -23,6 +23,7 @@ function MyAccountPage() {
   const storedPassword = useStore((state) => state.password);
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
+  const { setLogout } = useStore((state) => ({ setLogout: state.setLogout }));
 
   const {
     handleSubmit,
@@ -49,8 +50,8 @@ function MyAccountPage() {
     }
 
     try {
-      await resetPassword(data, accessToken);
-      router.replace('/login');
+      await patchPassword(data, accessToken);
+      setLogout();
     } catch (error) {
       console.error('Error:', error);
     }

@@ -1,7 +1,7 @@
 import { PatchPassword, PatchPasswordResponse } from '../../types/auth';
 import { authBasedRequest } from '../fetchRequestHandler';
 
-const resetPassword = async (data: PatchPassword, token: string): Promise<PatchPasswordResponse> => {
+const patchPassword = async (data: PatchPassword, token: string): Promise<PatchPasswordResponse> => {
   try {
     const response = await authBasedRequest<PatchPasswordResponse>({
       url: 'users/me/password',
@@ -17,4 +17,4 @@ const resetPassword = async (data: PatchPassword, token: string): Promise<PatchP
   }
 };
 
-export default resetPassword;
+export default patchPassword;

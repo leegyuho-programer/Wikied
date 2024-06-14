@@ -13,7 +13,7 @@ import Link from 'next/link';
 import CommentContainer from '../Comment/CommentContainer';
 
 import deleteLike from '../../../../api/article/deleteLike';
-import postLike from '../../../../api/article/PostLike';
+import postLike from '../../../../api/article/postLike';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
