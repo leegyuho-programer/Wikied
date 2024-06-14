@@ -55,7 +55,7 @@ function MyPage() {
         {/* 데이터가 있는지 없는지에 따라 다르게 보이게 하기 */}
         <SideBar />
         <TextEditor value={editorContent} setValue={setEditorContent} />
-        <div className={styles.nodata}>
+        <div className={styles.noData}>
           <p className={styles.text}>
             아직 작성된 내용이 없네요.
             <br />

@@ -19,25 +19,30 @@ export interface PostArticleResponseType {
 
 export interface GetArticleResponseType {
   totalCount: number;
-  list: [
-    {
-      updatedAt: string;
-      createdAt: string;
-      likeCount: number;
-      writer: {
-        name: string;
-        id: number;
-      };
-      image: string;
-      title: string;
+  list: {
+    updatedAt: string;
+    createdAt: string;
+    likeCount: number;
+    writer: {
+      name: string;
       id: number;
-    }
-  ];
+    };
+    image: string;
+    title: string;
+    id: number;
+  }[];
 }
 
-export interface GetArticleIdResponseType extends PostArticleResponseType {}
+export interface GetArticleIdResponseType extends PostArticleResponseType {
+  content: string;
+  isLiked: boolean;
+}
 
-export interface PatchArticleRequestType extends PostArticleRequestType {}
+export interface PatchArticleRequestType {
+  image?: string;
+  content?: string;
+  title?: string;
+}
 
 export interface PatchArticleResponseType extends PostArticleResponseType {
   isLiked: boolean;
@@ -49,3 +54,26 @@ export interface DeleteArticleIdRequestType {
 }
 
 export interface PostArticleLinkRequestType extends PatchArticleResponseType {}
+
+export interface PostLikeRequestType {
+  articledId: string;
+}
+
+export interface PostLikeResponseType {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  likeCount: number;
+  writer: {
+    id: number;
+    name: string;
+  };
+  image: string;
+  isLiked: boolean;
+}
+
+export interface DeleteLikeRequestType extends PostLikeRequestType {}
+
+export interface DeleteLikeResponseType extends PostLikeResponseType {}

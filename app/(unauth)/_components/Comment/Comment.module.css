@@ -1,0 +1,53 @@
+.container {
+  max-width: 1060px;
+  width: 100%;
+  height: 144px;
+  display: flex;
+  gap: 20px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  padding: 30px;
+}
+
+.image {
+  width: 54px;
+  height: 50px;
+  border-radius: 100%;
+  background-color: black;
+  position: relative;
+  top: -15px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  display: flex;
+  gap: 20px;
+}
+
+.name {
+  color: #474d66;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.comment {
+  color: #474d66;
+  font-size: 1.6rem;
+}
+
+.day {
+  color: #8f95b2;
+}

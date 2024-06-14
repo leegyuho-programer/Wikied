@@ -4,6 +4,8 @@
   display: flex;
   gap: 10px;
   background-color: transparent;
+  justify-content: center;
+  margin-bottom: 120px;
 }
 
 .button {

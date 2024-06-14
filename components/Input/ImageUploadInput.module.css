@@ -1,0 +1,73 @@
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileInputWrapper {
+  position: relative;
+  height: 95px;
+  width: 95px;
+}
+
+@media (min-width: 768px) {
+  .fileInputWrapper {
+    height: 70px;
+    width: 70px;
+  }
+}
+
+.image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  height: 95px;
+  width: 95px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+@media (min-width: 768px) {
+  .imagePlaceholder {
+    height: 70px;
+    width: 70px;
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlayHover {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.overlayHover:hover {
+  opacity: 0.7;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.fileInputLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.labelText {
+  margin-top: 10px;
+  font-size: 12px;
+}

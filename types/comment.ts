@@ -1,0 +1,45 @@
+export interface PostCommentRequestType {
+  content: string;
+}
+
+export interface PostCommentResponseType {
+  writer: {
+    image: string;
+    name: string;
+    id: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+  content: string;
+  id: number;
+}
+
+export interface GetCommentRequestType {
+  limit: number;
+  cursor: number;
+}
+
+export interface GetCommentResponseType {
+  nextCursor: number;
+  list: {
+    writer: {
+      image: string;
+      name: string;
+      id: number;
+    };
+    updatedAt: string;
+    createdAt: string;
+    content: string;
+    id: number;
+  };
+}
+
+export interface PatchCommentRequestType {
+  commentId: number;
+}
+
+export interface PatchCommentResponseType extends PostCommentResponseType {}
+
+export interface DeleteCommentRequestType {
+  commentId: number;
+}

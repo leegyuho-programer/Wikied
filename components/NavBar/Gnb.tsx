@@ -11,7 +11,7 @@ function Gnb() {
       <Link href="/wikilist" className={styles.gnb}>
         위키목록
       </Link>
-      <Link href="/" className={styles.gnb}>
+      <Link href="/freeBoard" className={styles.gnb}>
         자유게시판
       </Link>
     </div>

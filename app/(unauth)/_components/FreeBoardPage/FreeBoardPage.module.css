@@ -32,6 +32,54 @@
   gap: 20px;
 }
 
+.articleList {
+  max-width: 1060px;
+  width: 100%;
+}
+
+.id {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.articleTitle {
+  max-width: 650px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.articleWriter {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.like {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.day {
+  max-width: 90px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.top {
+  color: #8f95b2;
+  text-align: center;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+}
+
 .body {
   display: flex;
   flex-direction: column;

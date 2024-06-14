@@ -30,3 +30,8 @@ export interface ArtworkState {
   clickedArtworkId: number;
   setClickedArtworkId: (id: number) => void;
 }
+
+export interface ArticleState {
+  articleId: number;
+  setArticleId: (id: number) => void;
+}

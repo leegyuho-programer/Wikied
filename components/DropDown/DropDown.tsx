@@ -4,6 +4,7 @@ import { useState } from 'react';
 import DropDownIcon from '../SvgComponents/DropDownIcon';
 import styles from './DropDown.module.css';
 import { useForm } from 'react-hook-form';
+import { PostProfileRequestType } from '../../types/profile';
 
 interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
@@ -15,7 +16,7 @@ function DropDown({ onSelectionChange }: DropDownProps) {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PostProfile>();
+  } = useForm<PostProfileRequestType>();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -39,7 +40,7 @@ function DropDown({ onSelectionChange }: DropDownProps) {
 
   // const handleSignUp = async (data: PostProfile) => {
   //   try {
-  //     const response = await fetch(`https://wikied-api.vercel.app/0-이규호/profile`, {
+  //     const response = await fetch(`https://wikied-api.vercel.app/1-99/profile`, {
   //       method: 'POST', // HTTP 메서드를 명시적으로 설정
   //       headers: {
   //         'Content-Type': 'application/json', // JSON 형식의 데이터를 보내기 위해 Content-Type 헤더 설정
