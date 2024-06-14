@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { ArtworkState, AuthState, User } from './zustand.types';
+import { ArtworkState, AuthState, ArticleState } from './zustand.types';
 import { createAuthSlice } from './authSlice';
 import { createArtworkSlice } from './artworkSlice';
+import { createArticleSlice } from './articleSlice';
 
-type SliceType = AuthState & ArtworkState;
+type SliceType = AuthState & ArtworkState & ArticleState;
 
 export const useStore = create<SliceType>()(
   devtools(
@@ -12,6 +13,7 @@ export const useStore = create<SliceType>()(
       (...a) => ({
         ...createAuthSlice(...a),
         ...createArtworkSlice(...a),
+        ...createArticleSlice(...a),
       }),
       {
         name: 'store',
@@ -23,6 +25,7 @@ export const useStore = create<SliceType>()(
           isLogin: state.isLogin,
           clickedArtworkId: state.clickedArtworkId,
           password: state.password,
+          articleId: state.articleId,
         }),
       }
     )

@@ -37,7 +37,11 @@ export interface GetArticleIdResponseType extends PostArticleResponseType {
   content: string;
 }
 
-export interface PatchArticleRequestType extends PostArticleRequestType {}
+export interface PatchArticleRequestType {
+  image?: string;
+  content?: string;
+  title?: string;
+}
 
 export interface PatchArticleResponseType extends PostArticleResponseType {
   isLiked: boolean;
