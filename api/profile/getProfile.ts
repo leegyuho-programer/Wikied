@@ -15,7 +15,7 @@
 
 import { GetProfileResponseType } from '../../types/profile';
 
-const getProfile = async (page: number, pageSize: number, name: string): Promise<GetProfileResponseType> => {
+const getProfile = async (page: number, pageSize: number, name?: string): Promise<GetProfileResponseType> => {
   const url = new URL('https://wikied-api.vercel.app/1-99/profiles');
   url.searchParams.append('page', page.toString());
   url.searchParams.append('pageSize', pageSize.toString());

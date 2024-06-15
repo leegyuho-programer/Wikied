@@ -39,10 +39,10 @@ export interface ArticleState {
 }
 
 export interface ProfileState {
-  profile: GetProfileResponseType | null;
-  setProfile: (profile: GetProfileResponseType | null) => void;
-  profileCode: string | null;
-  setProfileCode: (code: string | null) => void;
+  profileId: number | null;
+  setProfileId: (profileId: number | null) => void;
+  profileImage: string | null;
+  setProfileImage: (profileImage: string | null) => void;
 }
 
 export interface Profile {

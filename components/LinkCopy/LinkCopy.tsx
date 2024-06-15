@@ -5,17 +5,18 @@ import styles from './LinkCopy.module.css';
 import { useStore } from '../../store';
 
 interface Props {
+  profileId: number;
   onCopy: (isCopied: boolean) => void;
 }
 
 const BASE_URL = `http://localhost:3000`;
 
-function LinkCopy({ onCopy }: Props) {
+function LinkCopy({ profileId, onCopy }: Props) {
   const { user } = useStore();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   // const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
-  const currentURL = `${BASE_URL}/user/${user?.id}`;
+  const currentURL = `${BASE_URL}/user/${profileId}`;
 
   const handleCopy = async () => {
     try {

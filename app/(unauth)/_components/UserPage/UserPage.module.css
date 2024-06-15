@@ -14,6 +14,14 @@
 
 .title {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 902px;
+  width: 100%;
+}
+
+.nameLink {
+  display: flex;
   flex-direction: column;
 }
 
@@ -22,6 +30,19 @@
   font-size: 4.8rem;
   font-weight: 600;
   color: #474d66;
+}
+
+.button {
+  width: 160px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #4cbfa4;
+  font-weight: 600;
+  color: #fff;
+  border: none;
 }
 
 .section {

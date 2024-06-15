@@ -38,6 +38,7 @@
   display: flex;
   background: #fff;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .profile {
@@ -56,6 +57,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 9999px;
+}
+
+.image {
+  border-radius: 9999px;
+  width: 85px;
+  height: 85px;
 }
 
 .intro {

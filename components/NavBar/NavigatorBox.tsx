@@ -1,21 +1,24 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
 import { useStore } from '../../store';
 import Button from '../Button/Button';
 import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
-import NavBarProfileIcon from '../SvgComponents/NavBarProfileIcon/NavBarProfileIcon';
 import styles from './NavigatorBox.module.css';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import defaultIMG from '../../public/images/default.jpg';
 
 function NavigatorBox() {
   const router = useRouter();
-  const { isLogin, user, setLogout } = useStore((state) => ({
+  const { isLogin, user, setLogout, profileImage, profileId } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
     setLogout: state.setLogout,
+    profileImage: state.profileImage,
+    profileId: state.profileId,
   }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,7 +37,25 @@ function NavigatorBox() {
       {isLogin ? (
         <div>
           <div className={styles.profile}>
-            <NavBarProfileIcon onClick={toggleMenu} />
+            {profileImage ? (
+              <Image
+                src={profileImage}
+                alt="프로필 이미지"
+                width={32}
+                height={32}
+                className={styles.profileImage}
+                onClick={toggleMenu}
+              />
+            ) : (
+              <Image
+                src={defaultIMG}
+                alt="기본 이미지"
+                width={32}
+                height={32}
+                className={styles.profileImage}
+                onClick={toggleMenu}
+              />
+            )}
             {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>

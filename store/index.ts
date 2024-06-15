@@ -28,8 +28,8 @@ export const useStore = create<SliceType>()(
           clickedArtworkId: state.clickedArtworkId,
           password: state.password,
           articleId: state.articleId,
-          profile: state.profile,
-          profileCode: state.profileCode,
+          profileId: state.profileId,
+          profileImage: state.profileImage,
         }),
       }
     )

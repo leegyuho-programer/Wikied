@@ -9,12 +9,16 @@ import { GetProfileResponseType, GetProfileCodeResponseType } from '../../../../
 import getProfile from '../../../../api/profile/getProfile';
 import getProfileCode from '../../../../api/profile/getProfileCode';
 import { useStore } from '../../../../store';
+import Image from 'next/image';
+import defaultIMG from '../../../../public/images/default.jpg';
 
 function MyPage() {
-  const { user, profile, setProfile } = useStore((state) => ({
+  const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({
     user: state.user,
-    profile: state.profile,
-    setProfile: state.setProfile,
+    profileId: state.profileId,
+    profileImage: state.profileImage,
+    setProfileId: state.setProfileId,
+    setProfileImage: state.setProfileImage,
   }));
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
@@ -30,6 +34,8 @@ function MyPage() {
         console.log('getProfileCode', profileCodeResponse);
 
         // 프로필 상태 업데이트
+        setProfileId(profileCodeResponse.id || null);
+        setProfileImage(profileCodeResponse.image || null);
         setProfileCodeResponse(profileCodeResponse);
       } catch (error) {
         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
@@ -39,7 +45,7 @@ function MyPage() {
     if (user?.name) {
       fetchProfile();
     }
-  }, [user, setProfile]);
+  }, [user, setProfileId, setProfileImage]);
 
   const handleInvite = async () => {
     try {
@@ -61,7 +67,7 @@ function MyPage() {
       )}
       <div className={styles.title}>
         <p className={styles.name}>{user?.name}</p>
-        <LinkCopy onCopy={setIsCopied} />
+        {profileId && <LinkCopy onCopy={setIsCopied} profileId={profileId} />}
       </div>
       <div className={styles.section}>
         <SideBar profileData={profileCodeResponse} showEditButton={user?.name === profileCodeResponse?.name} />
