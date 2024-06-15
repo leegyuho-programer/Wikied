@@ -2,22 +2,19 @@
 
 import { useState } from 'react';
 import DropDownIcon from '../SvgComponents/DropDownIcon';
+import Button from '../Button/Button';
 import styles from './DropDown.module.css';
-import { useForm } from 'react-hook-form';
 import { PostProfileRequestType } from '../../types/profile';
 
 interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
+  onSubmit: (data: PostProfileRequestType) => void;
+  isSubmitting: boolean;
 }
 
-const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+const options = ['싫어하는 음식은?', '좋아하는 음식은?', '좋아하는 운동은?', '내 별명은?'];
 
-function DropDown({ onSelectionChange }: DropDownProps) {
-  const {
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<PostProfileRequestType>();
-
+function DropDown({ onSelectionChange, onSubmit, isSubmitting }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const [additionalInput, setAdditionalInput] = useState('');
@@ -35,42 +32,26 @@ function DropDown({ onSelectionChange }: DropDownProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAdditionalInput(value);
-    onSelectionChange(selectedOption, value); // 입력 변경 시 부모 컴포넌트로 데이터 전달
+    onSelectionChange(selectedOption, value);
   };
 
-  // const handleSignUp = async (data: PostProfile) => {
-  //   try {
-  //     const response = await fetch(`https://wikied-api.vercel.app/1-99/profile`, {
-  //       method: 'POST', // HTTP 메서드를 명시적으로 설정
-  //       headers: {
-  //         'Content-Type': 'application/json', // JSON 형식의 데이터를 보내기 위해 Content-Type 헤더 설정
-  //       },
-  //       body: JSON.stringify(data), // 데이터를 JSON 문자열로 변환하여 body에 설정
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const responseData = await response.json(); // 응답 데이터를 JSON 형식으로 파싱
-  //     return responseData; // 필요한 경우 응답 데이터를 반환
-  //   } catch (error: any) {
-  //     console.error('Error:', error);
-  //     throw error; // 에러를 호출자에게 전달
-  //   }
-  // };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ securityQuestion: selectedOption, securityAnswer: additionalInput });
+  };
 
   return (
-    <div className={styles.containerWrapper}>
+    <form className={styles.containerWrapper} onSubmit={handleSubmit}>
       <div className={styles.container}>
         <input
+          name="securityQuestion"
           type="text"
           value={selectedOption}
           placeholder={isOpen ? '질문 선택하기' : '질문 없음'}
           readOnly
           className={`${styles.input} ${isOpen ? styles.focus : ''}`}
         />
-        <button className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleDropdown}>
+        <button type="button" className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleDropdown}>
           <DropDownIcon />
         </button>
       </div>
@@ -83,6 +64,7 @@ function DropDown({ onSelectionChange }: DropDownProps) {
       </div>
       {selectedOption && (
         <input
+          name="securityAnswer"
           type="text"
           placeholder="추가 입력"
           value={additionalInput}
@@ -90,7 +72,12 @@ function DropDown({ onSelectionChange }: DropDownProps) {
           className={styles.additionalInput}
         />
       )}
-    </div>
+      <div className={styles.buttonWrapper}>
+        <Button isLink={false} type="submit" size="XS" variant="primary" disabled={isSubmitting}>
+          저장하기
+        </Button>
+      </div>
+    </form>
   );
 }
 

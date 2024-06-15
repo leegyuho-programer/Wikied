@@ -9,6 +9,7 @@
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   background-color: #fff;
   border-radius: 10px;
@@ -18,6 +19,45 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 40px;
+}
+
+.profileImage {
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: filter 0.3s ease;
+}
+
+.imageWrapper {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.profileContainer:hover .profileImage {
+  filter: brightness(80%); /* 호버 시 이미지 어둡게 처리 */
+}
+
+.cameraIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  fill: rgba(0, 0, 0, 0); /* 초기에는 투명하게 설정 */
+  transition: fill 0.3s ease; /* 호버 시 효과를 위한 transition 추가 */
+  display: none;
+}
+
+.profileContainer:hover .cameraIcon {
+  display: block; /* 호버 시 보이도록 설정 */
+  fill: rgba(0, 0, 0, 0.5); /* 호버 시 카메라 아이콘 색상 변경 */
 }
 
 .arrowButtonWrapper {
@@ -42,31 +82,32 @@
 .profileContainer {
   display: flex;
   justify-content: center;
+  width: 200px;
+  height: 200px;
 }
 
-/*
 .label {
   width: 200px;
   height: 200px;
-  margin: 60px 0;
   position: relative;
-  background-color: gray;
   cursor: pointer;
   border-radius: 100%;
 }
 
 .input {
-  width: 200px;
+  display: none;
+}
+
+.imageWrapper {
+  position: relative;
   height: 200px;
-  position: absolute;
-  cursor: pointer;
-  border-radius: 100%;
-  opacity: 0;
-} */
+  width: 200px;
+  border-radius: 9999px;
+}
 
 .contentContainer {
   width: 300px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: center;

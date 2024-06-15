@@ -2,18 +2,20 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
 import LinkContent from './LinkContent';
 import styles from './LinkCopy.module.css';
+import { useStore } from '../../store';
 
 interface Props {
   onCopy: (isCopied: boolean) => void;
 }
 
-const BASE_URL = 'https://www.wikied.kr';
+const BASE_URL = `http://localhost:3000`;
 
 function LinkCopy({ onCopy }: Props) {
+  const { user } = useStore();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const ID = '2gyuho_295';
-  const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
+  // const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
+  const currentURL = `${BASE_URL}/user/${user?.id}`;
 
   const handleCopy = async () => {
     try {

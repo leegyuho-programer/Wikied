@@ -1,3 +1,5 @@
+import { GetProfileResponseType, PostProfileResponseType } from '../types/profile';
+
 export interface User {
   id: number;
   email: string;
@@ -34,4 +36,31 @@ export interface ArtworkState {
 export interface ArticleState {
   articleId: number;
   setArticleId: (id: number) => void;
+}
+
+export interface ProfileState {
+  profile: GetProfileResponseType | null;
+  setProfile: (profile: GetProfileResponseType | null) => void;
+  profileCode: string | null;
+  setProfileCode: (code: string | null) => void;
+}
+
+export interface Profile {
+  updatedAt: string;
+  securityQuestion: string;
+  teamId: string;
+  content: string;
+  nationality: string;
+  family: string;
+  bloodType: string;
+  nickname: string;
+  birthday: string;
+  sns: string;
+  job: string;
+  mbti: string;
+  city: string;
+  image: string;
+  code: string;
+  name: string;
+  id: number;
 }
