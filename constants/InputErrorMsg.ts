@@ -38,4 +38,5 @@ export const ERROR_MSG = {
   signUpFailedAlert: '회원가입에 실패했습니다. 다시 시도해 주세요.',
   emptyDashboardName: '대시보드 이름은 1글자 이상 입력해 주세요.',
   emptyCurrentPassword: '기존 비밀번호를 입력해 주세요.',
+  emptyQuizModal: '정답을 입력해주세요.',
 };

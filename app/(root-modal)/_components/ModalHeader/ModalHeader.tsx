@@ -1,4 +1,4 @@
-import LockIcon from '../../SvgComponents/LockIcon';
+import LockIcon from '../../../../components/SvgComponents/LockIcon';
 import styles from './ModalHeader.module.css';
 
 interface Props {

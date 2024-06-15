@@ -16,7 +16,7 @@ export interface User {
 
 export interface AuthState {
   isLogin?: boolean;
-  setLogin: (user: User, accessToken: string, refreshToken: string, password: string) => void;
+  setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) => void;
   setLogout: () => void;
   userId: number;
   user: User | null;
@@ -26,6 +26,9 @@ export interface AuthState {
   setUserAccessToken?: (data: string) => void;
   userRefreshToken: string;
   setUserRefreshToken?: (data: string) => void;
+  codeId: string;
+  setSecurityQuestion?: string;
+  setSecurityAnswer?: string;
 }
 
 export interface ArtworkState {

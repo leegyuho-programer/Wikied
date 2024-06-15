@@ -25,7 +25,7 @@ function LoginForm() {
       const response = await login(data);
       console.log('Response Data:', response);
 
-      setLogin(response.user, response.accessToken, response.refreshToken, data.password);
+      setLogin(response.user, response.accessToken, response.refreshToken, data.password, response.user.profile.code);
       router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);

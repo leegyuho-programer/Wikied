@@ -1,4 +1,4 @@
-import { CONTENT, HEADER } from '../../../constants/ModalText';
+import { CONTENT, HEADER } from '../../../../constants/ModalText';
 import styles from './ModalBody.module.css';
 
 function ModalBody() {

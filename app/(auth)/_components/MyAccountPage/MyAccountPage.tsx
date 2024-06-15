@@ -23,9 +23,10 @@ function MyAccountPage() {
   const router = useRouter();
   const accessToken = useStore((state) => state.userAccessToken);
   const storedPassword = useStore((state) => state.password);
-  const { setLogout, setProfile } = useStore((state) => ({
+  const { setLogout, setSecurityQuestion, setSecurityAnswer } = useStore((state) => ({
     setLogout: state.setLogout,
-    setProfile: state.setProfile,
+    setSecurityQuestion: state.setSecurityQuestion,
+    setSecurityAnswer: state.setSecurityAnswer,
   }));
 
   const {
@@ -36,8 +37,8 @@ function MyAccountPage() {
     formState: { errors, isSubmitting },
   } = useForm<PatchPassword>({ mode: 'onBlur' });
 
-  const [securityQuestion, setSecurityQuestion] = useState('');
-  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [securityQuestionLocal, setSecurityQuestionLocal] = useState('');
+  const [securityAnswerLocal, setSecurityAnswerLocal] = useState('');
 
   const passwordValue = watch('password');
 
@@ -58,11 +59,6 @@ function MyAccountPage() {
     }
   };
 
-  const handleQuestionChange = (question: string, answer: string) => {
-    setSecurityQuestion(question);
-    setSecurityAnswer(answer);
-  };
-
   const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
     console.log('profileData', profileData);
     try {
@@ -72,6 +68,11 @@ function MyAccountPage() {
     } catch (error) {
       console.error('Failed to update profile', error);
     }
+  };
+
+  const handleQuestionChange = (question: string, answer: string) => {
+    setSecurityQuestionLocal(question);
+    setSecurityAnswerLocal(answer);
   };
 
   return (
@@ -113,6 +114,8 @@ function MyAccountPage() {
         onSelectionChange={handleQuestionChange}
         onSubmit={handleSecurityQuestionSubmit}
         isSubmitting={isSubmitting}
+        initialQuestion={securityQuestionLocal} // 초기 질문 값 설정
+        initialAnswer={securityAnswerLocal} // 초기 답변 값 설정
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { ERROR_MSG } from './inputErrorMsg';
+import { ERROR_MSG } from './InputErrorMsg';
 
 export const colorCodeRules = {
   required: '값을 입력해주세요.',
@@ -34,6 +34,10 @@ export const signUpPasswordRules = {
     value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/,
     message: ERROR_MSG.invalidPassword,
   },
+};
+
+export const quizModalRules = {
+  required: ERROR_MSG.emptyQuizModal,
 };
 
 export const signUpPasswordCheckRules = (target: any) => ({

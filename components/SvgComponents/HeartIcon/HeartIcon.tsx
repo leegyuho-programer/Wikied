@@ -3,7 +3,7 @@ import styles from './HeartIcon.module.css';
 import { useState } from 'react'; // React에서 useState 가져오기
 
 interface HeartIconProps {
-  filled: boolean;
+  filled?: boolean;
 }
 
 export default function HeartIcon({ filled }: HeartIconProps) {

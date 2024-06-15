@@ -10,23 +10,25 @@ interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
   onSubmit: (data: PostProfileRequestType) => void;
   isSubmitting: boolean;
+  initialQuestion?: string; // 초기 질문 값
+  initialAnswer?: string; // 초기 답변 값
 }
 
-const options = ['싫어하는 음식은?', '좋아하는 음식은?', '좋아하는 운동은?', '내 별명은?'];
+const options = ['직접 입력', '싫어하는 음식은?', '좋아하는 음식은?', '좋아하는 운동은?', '내 별명은?'];
 
-function DropDown({ onSelectionChange, onSubmit, isSubmitting }: DropDownProps) {
+function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, initialAnswer }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-  const [additionalInput, setAdditionalInput] = useState('');
+  const [selectedOption, setSelectedOption] = useState(initialQuestion || ''); // 초기 질문 값 설정
+  const [additionalInput, setAdditionalInput] = useState(initialAnswer || ''); // 초기 답변 값 설정
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
+    setSelectedOption(option === '직접 입력' ? '' : option);
     setIsOpen(false);
-    onSelectionChange(option, additionalInput);
+    onSelectionChange(option === '직접 입력' ? '' : option, additionalInput);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +48,10 @@ function DropDown({ onSelectionChange, onSubmit, isSubmitting }: DropDownProps) 
         <input
           name="securityQuestion"
           type="text"
-          value={selectedOption}
-          placeholder={isOpen ? '질문 선택하기' : '질문 없음'}
-          readOnly
+          value={selectedOption === '직접 입력' ? '' : selectedOption}
+          onChange={(e) => setSelectedOption(e.target.value)}
           className={`${styles.input} ${isOpen ? styles.focus : ''}`}
+          placeholder={isOpen ? '질문 선택하기' : '직접 입력'}
         />
         <button type="button" className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleDropdown}>
           <DropDownIcon />
@@ -62,11 +64,11 @@ function DropDown({ onSelectionChange, onSubmit, isSubmitting }: DropDownProps) 
           </div>
         ))}
       </div>
-      {selectedOption && (
+      {selectedOption && selectedOption !== '직접 입력' && (
         <input
           name="securityAnswer"
           type="text"
-          placeholder="추가 입력"
+          placeholder="답변 입력"
           value={additionalInput}
           onChange={handleInputChange}
           className={styles.additionalInput}
