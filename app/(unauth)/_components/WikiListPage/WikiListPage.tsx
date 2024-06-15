@@ -54,23 +54,27 @@ function WikiListPage() {
     <div className={styles.container}>
       <div className={styles.search}>
         <SearchBar onSearch={handleSearch} />
-        <p className={styles.text}>{`${searchTerm ? `${searchTerm}을(를) ` : ''}총 ${totalProfiles}명 찾았습니다.`}</p>
+        <p className={styles.text}>{`${
+          searchTerm ? `"${searchTerm}"님을(를) ` : ''
+        }총 ${totalProfiles}명 찾았습니다.`}</p>
       </div>
       <div className={styles.wikiBoxContainer}>
         {profiles.length > 0 ? (
           profiles.map((profile) => (
             <div key={profile.id} className={styles.wikiBox}>
               <div className={styles.profile}>
-                <div className={styles.icon}>
-                  <WikiIcon />
-                </div>
-                <div className={styles.intro}>
-                  <p className={styles.name}>{profile.name}</p>
-                  <p className={styles.data}>
-                    {profile.city}, {profile.nationality}
-                    <br />
-                    {profile.job}
-                  </p>
+                <div className={styles.info}>
+                  <div className={styles.icon}>
+                    <WikiIcon />
+                  </div>
+                  <div className={styles.intro}>
+                    <p className={styles.name}>{profile.name}</p>
+                    <p className={styles.data}>
+                      {profile.city} {profile.nationality}
+                      <br />
+                      {profile.job}
+                    </p>
+                  </div>
                 </div>
                 <div className={styles.link}>
                   <LinkCopy onCopy={setIsCopied} />
