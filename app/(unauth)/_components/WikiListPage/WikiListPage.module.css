@@ -19,6 +19,16 @@
   color: #8f95b2;
 }
 
+.wikiBoxContainer {
+  margin-top: 60px;
+  margin-bottom: 120px;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 860px;
+  flex-direction: column;
+}
+
 .wikiBox {
   width: 100%;
   max-width: 860px;
@@ -29,8 +39,6 @@
   justify-content: space-between;
   background: #fff;
   border-radius: 10px;
-  margin-top: 60px;
-  margin-bottom: 120px;
 }
 
 .profile {
@@ -64,6 +72,21 @@
 .link {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.noResultContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 120px;
+}
+
+.noResults {
+  color: #8f95b2;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

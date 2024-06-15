@@ -21,19 +21,19 @@ function SideBar({ profileData, showEditButton }: Props) {
   const accessToken = useStore((state) => state.userAccessToken);
   const [showAll, setShowAll] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth > 768);
-  const [profileImage, setProfileImage] = useState<string | null>(profileData.image || null);
+  const [profileImage, setProfileImage] = useState<string | null>(profileData?.image || null);
   const [formData, setFormData] = useState({
-    id: profileData.id,
-    code: profileData.code,
-    image: profileData.image || '',
-    city: profileData.city || '',
-    mbti: profileData.mbti || '',
-    job: profileData.job || '',
-    sns: profileData.sns || '',
-    birthday: profileData.birthday || '',
-    nickname: profileData.nickname || '',
-    bloodType: profileData.bloodType || '',
-    nationality: profileData.nationality || '',
+    id: profileData?.id,
+    code: profileData?.code,
+    image: profileData?.image || '',
+    city: profileData?.city || '',
+    mbti: profileData?.mbti || '',
+    job: profileData?.job || '',
+    sns: profileData?.sns || '',
+    birthday: profileData?.birthday || '',
+    nickname: profileData?.nickname || '',
+    bloodType: profileData?.bloodType || '',
+    nationality: profileData?.nationality || '',
   });
   console.log('formData', formData);
 
