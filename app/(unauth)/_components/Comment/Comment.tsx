@@ -6,8 +6,15 @@ import styles from './Comment.module.css';
 import patchComment from '../../../../api/comment/patchComment';
 import deleteComment from '../../../../api/comment/deleteComment';
 import { useStore } from '../../../../store';
+import { GetCommentResponseType } from '../../../../types/comment';
 
-export default function Comment({ comment, onUpdate, onDelete }) {
+interface CommentProps {
+  comment: GetCommentResponseType['list'][number];
+  onUpdate: (updatedComment: GetCommentResponseType['list'][number]) => void;
+  onDelete: (commentId: number) => void;
+}
+
+export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const accessToken = useStore((state) => state.userAccessToken);

@@ -31,11 +31,11 @@ export interface GetCommentResponseType {
     createdAt: string;
     content: string;
     id: number;
-  };
+  }[];
 }
 
 export interface PatchCommentRequestType {
-  commentId: number;
+  content: string;
 }
 
 export interface PatchCommentResponseType extends PostCommentResponseType {}
