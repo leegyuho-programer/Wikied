@@ -1,16 +1,15 @@
 'use client';
+
 import { useEffect, useState } from 'react';
+import getProfile from '../../../../api/profile/getProfile';
+import getProfileCode from '../../../../api/profile/getProfileCode';
 import Button from '../../../../components/Button/Button';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SideBar from '../../../../components/SideBar/SideBar';
 import SnackBar from '../../../../components/SnackBar/SnackBar';
-import styles from './MyPage.module.css';
-import { GetProfileResponseType, GetProfileCodeResponseType } from '../../../../types/profile';
-import getProfile from '../../../../api/profile/getProfile';
-import getProfileCode from '../../../../api/profile/getProfileCode';
 import { useStore } from '../../../../store';
-import Image from 'next/image';
-import defaultIMG from '../../../../public/images/default.jpg';
+import { GetProfileCodeResponseType, GetProfileResponseType } from '../../../../types/profile';
+import styles from './MyPage.module.css';
 
 function MyPage() {
   const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({

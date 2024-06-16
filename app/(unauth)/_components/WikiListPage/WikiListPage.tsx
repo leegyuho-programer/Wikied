@@ -27,6 +27,11 @@ function WikiListPage() {
   const [pageSize] = useState(3); // 페이지 크기 고정 (필요에 따라 조정 가능)
   const [totalProfiles, setTotalProfiles] = useState(0); // 총 프로필 수
 
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    setPage(1); // 검색 시 페이지를 처음으로 리셋
+  };
+
   useEffect(() => {
     const fetchProfiles = async (page: number, pageSize: number, searchTerm: string) => {
       try {
@@ -63,11 +68,6 @@ function WikiListPage() {
 
     fetchProfiles(page, pageSize, searchTerm);
   }, [page, pageSize, searchTerm, setProfileId, setProfileImage]);
-
-  const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-    setPage(1); // 검색 시 페이지를 처음으로 리셋
-  };
 
   return (
     <div className={styles.container}>
