@@ -3,8 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import getProfile from '../../../../api/profile/getProfile';
-import getProfileCode from '../../../../api/profile/getProfileCode';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SearchBar from '../../../../components/SearchBar/SearchBar';
 import defaultIMG from '../../../../public/images/default.jpg';
@@ -13,6 +11,8 @@ import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
 import { useStore } from '../../../../store';
 import { GetProfileCodeResponseType } from '../../../../types/profile';
+import { getProfile } from '../../../../api/profile/profile';
+import { getProfileCode } from '../../../../api/profile/profileCode';
 
 function WikiListPage() {
   const { setProfileId, setProfileImage } = useStore((state) => ({

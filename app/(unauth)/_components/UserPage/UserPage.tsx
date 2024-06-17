@@ -1,92 +1,5 @@
-// 'use client';
-// import { useEffect, useState } from 'react';
-// import getProfile from '../../../../api/profile/getProfile';
-// import getProfileCode from '../../../../api/profile/getProfileCode';
-// import Button from '../../../../components/Button/Button';
-// import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
-// import SideBar from '../../../../components/SideBar/SideBar';
-// import SnackBar from '../../../../components/SnackBar/SnackBar';
-// import { useStore } from '../../../../store';
-// import { GetProfileCodeResponseType } from '../../../../types/profile';
-// import styles from './UserPage.module.css'; // 유저 페이지의 CSS 모듈 파일
-
-// function UserPage() {
-//   const [isCopied, setIsCopied] = useState(false);
-//   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
-//   const { profileId, profileImage, setProfileImage, setProfileId } = useStore((state) => ({
-//     profileImage: state.profileImage,
-//     setProfileImage: state.setProfileImage,
-//     profileId: state.profileId,
-//     setProfileId: state.setProfileId,
-//   }));
-
-//   useEffect(() => {
-//     async function fetchProfile() {
-//       try {
-//         const response = await getProfile(1, 10);
-//         const codeId = response.list[0].code;
-
-//         const profileCodeResponse = await getProfileCode(codeId);
-//         setProfileId(profileCodeResponse.id || null);
-//         setProfileImage(profileCodeResponse.image || null);
-//         setProfileCodeResponse(profileCodeResponse);
-//       } catch (error) {
-//         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
-//       }
-//     }
-//     fetchProfile(); // 컴포넌트가 마운트되면 프로필 데이터 가져오기
-//   }, [setProfileId, setProfileImage]);
-
-//   const handleInvite = async () => {
-//     try {
-//       const currentURL = window.location.href;
-//       await navigator.clipboard.writeText(currentURL);
-//       setIsCopied(true);
-//       setTimeout(() => setIsCopied(false), 2000);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-//   console.log('profileCodeResponse', profileCodeResponse);
-
-//   return (
-//     <div className={styles.container}>
-//       {isCopied && (
-//         <div className={styles.snackBar}>
-//           <SnackBar type="success" />
-//         </div>
-//       )}
-//       <div className={styles.title}>
-//         <p className={styles.name}>{profileCodeResponse?.name}</p>
-//         {profileId && <LinkCopy onCopy={setIsCopied} profileId={profileId} />}
-//       </div>
-//       <div className={styles.section}>
-//         <SideBar profileData={profileCodeResponse} showEditButton={false} /> {/* 편집 버튼 비활성화 */}
-//         {profileCodeResponse?.content ? (
-//           <div>hi</div> // 데이터가 있을 때의 UI
-//         ) : (
-//           <div className={styles.noData}>
-//             <p className={styles.text}>
-//               아직 작성된 내용이 없네요.
-//               <br />
-//               친구의 첫 위키를 작성해 보세요!
-//             </p>
-//             <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
-//               시작하기
-//             </Button>
-//           </div> // 데이터가 없을 때의 UI
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default UserPage;
-
 'use client';
 import { useEffect, useState } from 'react';
-import getProfile from '../../../../api/profile/getProfile';
-import getProfileCode from '../../../../api/profile/getProfileCode';
 import Button from '../../../../components/Button/Button';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SideBar from '../../../../components/SideBar/SideBar';
@@ -95,6 +8,8 @@ import { useStore } from '../../../../store';
 import { GetProfileCodeResponseType } from '../../../../types/profile';
 import styles from './UserPage.module.css';
 import { useParams } from 'next/navigation';
+import { getProfile } from '../../../../api/profile/profile';
+import { getProfileCode } from '../../../../api/profile/profileCode';
 
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);

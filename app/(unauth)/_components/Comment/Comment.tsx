@@ -3,10 +3,9 @@ import Image from 'next/image';
 import DeleteIcon from '../../../../components/SvgComponents/DeleteIcon/DeleteIcon';
 import EditIcon from '../../../../components/SvgComponents/EditIcon/EditIcon';
 import styles from './Comment.module.css';
-import patchComment from '../../../../api/comment/patchComment';
-import deleteComment from '../../../../api/comment/deleteComment';
 import { useStore } from '../../../../store';
 import { GetCommentResponseType } from '../../../../types/comment';
+import { deleteComment, patchComment } from '../../../../api/comment/comment';
 
 interface CommentProps {
   comment: GetCommentResponseType['list'][number];

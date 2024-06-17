@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import getArticles from '../../../../api/article/getArticles';
 import Button from '../../../../components/Button/Button';
 import { GetArticleResponseType } from '../../../../types/article';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';
+import { getArticles } from '../../../../api/article/articles';
 
 export default function FreeBoardPage() {
   const [articles, setArticles] = useState<GetArticleResponseType['list']>([]);
@@ -16,7 +16,7 @@ export default function FreeBoardPage() {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await getArticles(); // getArticles 호출
+        const response = await getArticles();
         console.log(response);
         setArticles(response.list); // response.list를 설정
       } catch (error) {

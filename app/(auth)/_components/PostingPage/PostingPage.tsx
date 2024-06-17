@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import postArticle from '../../../../api/article/postArticles';
 import { postImage } from '../../../../api/image/postImage';
 import { useStore } from '../../../../store';
 import styles from './PostingPage.module.css';
+import { postArticles } from '../../../../api/article/articles';
 
 export default function PostingPage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -42,7 +42,7 @@ export default function PostingPage() {
         image: imageUrl,
       };
 
-      const response = await postArticle(requestBody, accessToken);
+      const response = await postArticles(requestBody, accessToken);
       console.log('Article upload response:', response);
       alert('게시물이 성공적으로 업로드되었습니다.');
       return response;

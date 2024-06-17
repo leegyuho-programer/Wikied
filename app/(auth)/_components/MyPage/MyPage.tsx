@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import getProfile from '../../../../api/profile/getProfile';
-import getProfileCode from '../../../../api/profile/getProfileCode';
 import Button from '../../../../components/Button/Button';
 import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SideBar from '../../../../components/SideBar/SideBar';
@@ -10,6 +8,8 @@ import SnackBar from '../../../../components/SnackBar/SnackBar';
 import { useStore } from '../../../../store';
 import { GetProfileCodeResponseType, GetProfileResponseType } from '../../../../types/profile';
 import styles from './MyPage.module.css';
+import { getProfile } from '../../../../api/profile/profile';
+import { getProfileCode } from '../../../../api/profile/profileCode';
 
 function MyPage() {
   const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({
