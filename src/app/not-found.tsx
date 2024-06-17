@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './not-found.module.css';
 import Button from '@/components/Button/Button';
-import notFound from '../public/images/notFound.png';
+import notFound from '../../public/images/notFound.png';
 
 function NotFound() {
   return (

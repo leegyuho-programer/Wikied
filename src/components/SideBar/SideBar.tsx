@@ -6,7 +6,7 @@ import ArrowDownIcon from '../SvgComponents/ArrowDownIcon/ArrowDownIcon';
 import ProfileIcon from '../SvgComponents/ProfileIcon/ProfileIcon';
 import styles from './SideBar.module.css';
 import { useStore } from '@/store';
-import defaultIMG from '@/public/images/default.jpg';
+import defaultIMG from '../../../public/images/default.jpg';
 import Image from 'next/image';
 import { postImage } from '@/api/image/postImage';
 import CameraIcon from '../SvgComponents/CameraIcon/CameraIcon';

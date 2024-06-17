@@ -9,7 +9,7 @@ import MenuIcon from '../SvgComponents/MenuIcon';
 import styles from './NavigatorBox.module.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import defaultIMG from '../../public/images/default.jpg';
+import defaultIMG from '../../../public/images/default.jpg';
 
 function NavigatorBox() {
   const router = useRouter();
