@@ -1,0 +1,26 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/freeBoard"
+  to = "/freeBoard.html"
+  status = 200
+
+[[redirects]]
+  from = "/wikilist"
+  to = "/wikilist.html"
+  status = 200

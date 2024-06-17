@@ -8,13 +8,13 @@ type PortalProps = {
 
 function ModalPortal({ children, container }: PortalProps) {
   const [mountNode, setMountNode] = useState<Element | DocumentFragment | null>(null);
-  const el = document.getElementById('modal') as HTMLElement;
 
   useLayoutEffect(() => {
+    const el = document.getElementById('modal') as HTMLElement;
     setMountNode(container || el);
   }, [container]);
 
-  return mountNode ? createPortal(children, mountNode) : mountNode;
+  return mountNode ? createPortal(children, mountNode) : null;
 }
 
 export default ModalPortal;
