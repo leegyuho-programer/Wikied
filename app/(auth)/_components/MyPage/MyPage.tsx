@@ -25,8 +25,7 @@ function MyPage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        if (typeof window !== 'undefined' && user?.name) {
-          // Check if window is defined and user is available
+        if (user?.name) {
           const response: GetProfileResponseType = await getProfile(1, 10, user.name);
           const codeId = response.list[0].code;
 
@@ -44,12 +43,13 @@ function MyPage() {
       }
     }
 
-    fetchProfile();
+    if (typeof window !== 'undefined') {
+      fetchProfile();
+    }
   }, [user, setProfileId, setProfileImage]);
 
   const handleInvite = async () => {
     if (typeof window !== 'undefined') {
-      // Check if window is defined
       try {
         const currentURL = window.location.href;
         await navigator.clipboard.writeText(currentURL);
