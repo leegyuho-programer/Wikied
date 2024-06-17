@@ -3,10 +3,9 @@
 import styles from '../ArticlePage/ArticlePage.module.css';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import patchArticle from '../../../../api/article/patchArticle';
 import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '../../../../types/article';
 import { useStore } from '../../../../store';
-import getArticle from '../../../../api/article/getArticle';
+import { getArticle, patchArticle } from '../../../../api/article/article';
 
 export default function ArticleEditPage() {
   const accessToken = useStore((state) => state.userAccessToken);

@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import getArticle from '../../../../api/article/getArticle';
 import Button from '../../../../components/Button/Button';
 import HeartIcon from '../../../../components/SvgComponents/HeartIcon/HeartIcon';
 import ArticleStrokeIcon from '../../../../components/SvgComponents/StrokeIcon/ArticleStrokeIcon';
@@ -11,9 +10,8 @@ import { GetArticleIdResponseType } from '../../../../types/article';
 import styles from './ArticlePage.module.css';
 import Link from 'next/link';
 import CommentContainer from '../Comment/CommentContainer';
-
-import deleteLike from '../../../../api/article/deleteLike';
-import postLike from '../../../../api/article/postLike';
+import { getArticle } from '../../../../api/article/article';
+import { deleteLike, postLike } from '../../../../api/article/like';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);

@@ -16,8 +16,8 @@ import {
 import { useStore } from '../../../../store';
 import { PatchPassword } from '../../../../types/auth';
 import { PostProfileRequestType, PostProfileResponseType } from '../../../../types/profile';
-import postProfile from '../../../../api/profile/postProfile';
 import styles from './MyAccountPage.module.css';
+import { postProfile } from '../../../../api/profile/profile';
 
 function MyAccountPage() {
   const router = useRouter();
