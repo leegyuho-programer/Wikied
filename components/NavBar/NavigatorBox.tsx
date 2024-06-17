@@ -65,7 +65,7 @@ function NavigatorBox() {
             <Link href="/login" className={styles.login}>
               로그인
             </Link>
-            <Button isLink={true} variant="primary" destination="/" size="S">
+            <Button isLink={true} variant="primary" destination="/mypage" size="S">
               내 위키 만들기
             </Button>
           </div>
