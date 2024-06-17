@@ -43,7 +43,7 @@ function MyPage() {
       }
     }
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && user) {
       fetchProfile();
     }
   }, [user, setProfileId, setProfileImage]);
