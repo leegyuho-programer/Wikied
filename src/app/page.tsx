@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
-import Image1 from '../public/images/landing1.png';
-import Image10 from '../public/images/landing10.png';
-import Image2 from '../public/images/landing2.png';
-import Image3 from '../public/images/landing3.png';
-import Image4 from '../public/images/landing4.png';
-import Image5 from '../public/images/landing5.png';
-import Image6 from '../public/images/landing6.png';
-import Image7 from '../public/images/landing7.png';
-import Image8 from '../public/images/landing8.png';
-import Image9 from '../public/images/landing9.png';
+import Image1 from '../../public/images/landing1.png';
+import Image10 from '../../public/images/landing10.png';
+import Image2 from '../../public/images/landing2.png';
+import Image3 from '../../public/images/landing3.png';
+import Image4 from '../../public/images/landing4.png';
+import Image5 from '../../public/images/landing5.png';
+import Image6 from '../../public/images/landing6.png';
+import Image7 from '../../public/images/landing7.png';
+import Image8 from '../../public/images/landing8.png';
+import Image9 from '../../public/images/landing9.png';
 import styles from './page.module.css';
 
 function Home() {

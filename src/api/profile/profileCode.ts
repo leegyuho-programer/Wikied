@@ -1,8 +1,4 @@
-import {
-  GetProfileCodeResponseType,
-  PatchProfileCodeRequestType,
-  PatchProfileCodeResponseType,
-} from '../../types/profile';
+import { GetProfileCodeResponseType, PatchProfileCodeRequestType, PatchProfileCodeResponseType } from '@/types/profile';
 import { authBasedRequest } from '../fetchRequestHandler';
 
 export const getProfileCode = async (code: string): Promise<GetProfileCodeResponseType> => {
