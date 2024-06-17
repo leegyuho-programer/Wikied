@@ -6,16 +6,6 @@
   package = "@netlify/plugin-nextjs"
 
 [[redirects]]
-  from = "/login"
-  to = "/login.html"
-  status = 200
-
-[[redirects]]
-  from = "/freeBoard"
-  to = "/freeBoard.html"
-  status = 200
-
-[[redirects]]
-  from = "/wikilist"
-  to = "/wikilist.html"
+  from = "/*"
+  to = "/.netlify/functions/next_index"
   status = 200
