@@ -25,35 +25,39 @@ function MyPage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const response: GetProfileResponseType = await getProfile(1, 10, user?.name as string);
-        const codeId = response.list[0].code;
+        if (typeof window !== 'undefined' && user?.name) {
+          // Check if window is defined and user is available
+          const response: GetProfileResponseType = await getProfile(1, 10, user.name);
+          const codeId = response.list[0].code;
 
-        // Profile 데이터를 가져온 후 code를 사용해 추가 데이터를 가져옴
-        const profileCodeResponse: GetProfileCodeResponseType = await getProfileCode(codeId);
-        console.log('getProfileCode', profileCodeResponse);
+          // Profile 데이터를 가져온 후 code를 사용해 추가 데이터를 가져옴
+          const profileCodeResponse: GetProfileCodeResponseType = await getProfileCode(codeId);
+          console.log('getProfileCode', profileCodeResponse);
 
-        // 프로필 상태 업데이트
-        setProfileId(profileCodeResponse.id || null);
-        setProfileImage(profileCodeResponse.image || null);
-        setProfileCodeResponse(profileCodeResponse);
+          // 프로필 상태 업데이트
+          setProfileId(profileCodeResponse.id || null);
+          setProfileImage(profileCodeResponse.image || null);
+          setProfileCodeResponse(profileCodeResponse);
+        }
       } catch (error) {
         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
       }
     }
 
-    if (user?.name) {
-      fetchProfile();
-    }
+    fetchProfile();
   }, [user, setProfileId, setProfileImage]);
 
   const handleInvite = async () => {
-    try {
-      const currentURL = window.location.href;
-      await navigator.clipboard.writeText(currentURL);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    } catch (error) {
-      console.error(error);
+    if (typeof window !== 'undefined') {
+      // Check if window is defined
+      try {
+        const currentURL = window.location.href;
+        await navigator.clipboard.writeText(currentURL);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
