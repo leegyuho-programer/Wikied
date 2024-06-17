@@ -1,3 +1,5 @@
+import { GetProfileResponseType, PostProfileResponseType } from '../types/profile';
+
 export interface User {
   id: number;
   email: string;
@@ -14,7 +16,7 @@ export interface User {
 
 export interface AuthState {
   isLogin?: boolean;
-  setLogin: (user: User, accessToken: string, refreshToken: string, password: string) => void;
+  setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) => void;
   setLogout: () => void;
   userId: number;
   user: User | null;
@@ -24,6 +26,9 @@ export interface AuthState {
   setUserAccessToken?: (data: string) => void;
   userRefreshToken: string;
   setUserRefreshToken?: (data: string) => void;
+  codeId: string;
+  setSecurityQuestion?: string;
+  setSecurityAnswer?: string;
 }
 
 export interface ArtworkState {
@@ -34,4 +39,31 @@ export interface ArtworkState {
 export interface ArticleState {
   articleId: number;
   setArticleId: (id: number) => void;
+}
+
+export interface ProfileState {
+  profileId: number | null;
+  setProfileId: (profileId: number | null) => void;
+  profileImage: string | null;
+  setProfileImage: (profileImage: string | null) => void;
+}
+
+export interface Profile {
+  updatedAt: string;
+  securityQuestion: string;
+  teamId: string;
+  content: string;
+  nationality: string;
+  family: string;
+  bloodType: string;
+  nickname: string;
+  birthday: string;
+  sns: string;
+  job: string;
+  mbti: string;
+  city: string;
+  image: string;
+  code: string;
+  name: string;
+  id: number;
 }

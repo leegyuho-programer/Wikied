@@ -1,24 +1,50 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './MyPage.module.css';
+import getProfile from '../../../../api/profile/getProfile';
+import getProfileCode from '../../../../api/profile/getProfileCode';
 import Button from '../../../../components/Button/Button';
+import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import SideBar from '../../../../components/SideBar/SideBar';
 import SnackBar from '../../../../components/SnackBar/SnackBar';
-import LinkCopy from '../../../../components/LinkCopy/LinkCopy';
 import { useStore } from '../../../../store';
-import { PostArticleResponseType } from '../../../../types/article';
-import getArticle from '../../../../api/article/getArticles';
-import TextEditor from '../../../../components/TextEditor/TextEditor';
-
-const BASE_URL = 'https://www.wikied.kr';
+import { GetProfileCodeResponseType, GetProfileResponseType } from '../../../../types/profile';
+import styles from './MyPage.module.css';
 
 function MyPage() {
-  const { user } = useStore();
+  const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({
+    user: state.user,
+    profileId: state.profileId,
+    profileImage: state.profileImage,
+    setProfileId: state.setProfileId,
+    setProfileImage: state.setProfileImage,
+  }));
   const [isCopied, setIsCopied] = useState(false);
-  const [editorContent, setEditorContent] = useState(
-    '<h1>Welcome to My Page</h1><p>This is a template text. You can start editing here...</p>'
-  );
+  const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const response: GetProfileResponseType = await getProfile(1, 10, user?.name as string);
+        const codeId = response.list[0].code;
+
+        // Profile 데이터를 가져온 후 code를 사용해 추가 데이터를 가져옴
+        const profileCodeResponse: GetProfileCodeResponseType = await getProfileCode(codeId);
+        console.log('getProfileCode', profileCodeResponse);
+
+        // 프로필 상태 업데이트
+        setProfileId(profileCodeResponse.id || null);
+        setProfileImage(profileCodeResponse.image || null);
+        setProfileCodeResponse(profileCodeResponse);
+      } catch (error) {
+        console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
+      }
+    }
+
+    if (user?.name) {
+      fetchProfile();
+    }
+  }, [user, setProfileId, setProfileImage]);
 
   const handleInvite = async () => {
     try {
@@ -31,14 +57,6 @@ function MyPage() {
     }
   };
 
-  const getArticles = async () => {
-    try {
-      const response = await getArticle();
-    } catch (error) {
-      console.error('글 가져오기 실패:', error);
-    }
-  };
-
   return (
     <div className={styles.container}>
       {isCopied && (
@@ -47,24 +65,25 @@ function MyPage() {
         </div>
       )}
       <div className={styles.title}>
-        {/* 이름 데이터 가져오기 */}
         <p className={styles.name}>{user?.name}</p>
-        <LinkCopy onCopy={setIsCopied} />
+        {profileId && <LinkCopy onCopy={setIsCopied} profileId={profileId} />}
       </div>
       <div className={styles.section}>
-        {/* 데이터가 있는지 없는지에 따라 다르게 보이게 하기 */}
-        <SideBar />
-        <TextEditor value={editorContent} setValue={setEditorContent} />
-        <div className={styles.noData}>
-          <p className={styles.text}>
-            아직 작성된 내용이 없네요.
-            <br />
-            친구들을 위키로 초대해 보세요!
-          </p>
-          <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
-            초대하기
-          </Button>
-        </div>
+        <SideBar profileData={profileCodeResponse} showEditButton={user?.name === profileCodeResponse?.name} />
+        {profileCodeResponse?.content ? (
+          <div>hi</div>
+        ) : (
+          <div className={styles.noData}>
+            <p className={styles.text}>
+              아직 작성된 내용이 없네요.
+              <br />
+              친구들을 위키로 초대해 보세요!
+            </p>
+            <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
+              초대하기
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

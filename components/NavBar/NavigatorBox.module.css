@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .status {
@@ -12,6 +13,10 @@
 
 .login {
   color: #8f95b2;
+}
+
+.profileImage {
+  border-radius: 100%;
 }
 
 .button {

@@ -8,7 +8,10 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
   userAccessToken: '',
   userRefreshToken: '',
   password: '',
-  setLogin: (user: User, accessToken: string, refreshToken: string, password: string) =>
+  codeId: '',
+  setSecurityQuestion: '',
+  setSecurityAnswer: '',
+  setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) =>
     set(() => ({
       isLogin: true,
       user,
@@ -16,6 +19,7 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
       userAccessToken: accessToken,
       userRefreshToken: refreshToken,
       password,
+      codeId,
     })),
   setLogout: () =>
     set(() => ({
@@ -25,5 +29,8 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
       userAccessToken: '',
       userRefreshToken: '',
       password: '',
+      codeId: '',
+      setSecurityQuestion: '',
+      setSecurityAnswer: '',
     })),
 });

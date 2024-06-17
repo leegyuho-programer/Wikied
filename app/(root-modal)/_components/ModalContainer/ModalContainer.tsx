@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
-import Button from '../../Button/Button';
-import CloseIcon from '../../SvgComponents/CloseIcon/CloseIcon';
+
 import styles from './ModalContainer.module.css';
+import Button from '../../../../components/Button/Button';
+import CloseIcon from '../../../../components/SvgComponents/CloseIcon/CloseIcon';
 
 type TitleType = 'alert' | 'form' | 'quiz';
 interface Props {

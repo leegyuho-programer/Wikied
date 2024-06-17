@@ -5,12 +5,16 @@ import SearchIcon from '../SvgComponents/SearchIcon';
 import CancelIcon from '../SvgComponents/CancelIcon'; // x 버튼 아이콘 추가
 import styles from './SearchBar.module.css';
 import Button from '../Button/Button';
+import classNames from 'classnames/bind';
+
+const cn = classNames.bind(styles);
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
+  className?: string;
 }
 
-function SearchBar({ onSearch }: SearchBarProps) {
+function SearchBar({ onSearch, className }: SearchBarProps) {
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +37,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, className)}>
       <SearchIcon />
       <input
         type="text"

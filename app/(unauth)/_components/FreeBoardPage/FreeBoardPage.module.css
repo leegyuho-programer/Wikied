@@ -1,30 +1,76 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  max-width: 1060px;
   margin: 0 auto;
+  margin-top: 60px;
+  display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 60px;
-  margin-top: 60px;
-  max-width: 1060px;
 }
 
 .header {
+  width: 100%;
   display: flex;
   align-items: space-between;
   justify-content: space-between;
-  width: 100%;
 }
 
 .title {
-  color: #474d66;
   font-size: 3.8rem;
+  font-weight: 600;
+  color: #474d66;
+}
+
+.button {
+  width: 160px;
+  height: 45px;
+  font-size: 1.4rem;
   font-weight: 600;
 }
 
+.cardWrapper {
+  width: 100%;
+  max-width: 1060px;
+  overflow-x: auto;
+  position: relative;
+  display: flex;
+}
+
 .card {
+  max-width: 1060px;
+  width: 100%;
+  overflow-x: hidden;
   display: flex;
   gap: 20px;
+  scroll-behavior: smooth;
+}
+
+.scrollButton {
+  padding: 10px;
+  border: none;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  background-color: #fff;
+  font-size: 2rem;
+  color: #474d66;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border-radius: 100%;
+  transform: translateY(-50%);
+}
+
+.scrollButton:hover {
+  background-color: #cfbcbc;
+}
+
+.scrollButton:nth-of-type(1) {
+  left: 0;
+}
+
+.scrollButton:nth-of-type(2) {
+  right: 0;
 }
 
 .search {
@@ -33,57 +79,99 @@
 }
 
 .articleList {
-  max-width: 1060px;
   width: 100%;
+  max-width: 1060px;
 }
 
 .id {
+  width: 100%;
   max-width: 90px;
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .articleTitle {
-  max-width: 650px;
   width: 100%;
+  max-width: 650px;
   display: flex;
   justify-content: center;
 }
 
 .articleWriter {
+  width: 100%;
   max-width: 90px;
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .like {
+  width: 100%;
   max-width: 90px;
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .day {
+  width: 100%;
   max-width: 90px;
   display: flex;
   justify-content: center;
-  width: 100%;
 }
 
 .top {
-  color: #8f95b2;
-  text-align: center;
-  font-size: 1.6rem;
   display: flex;
   justify-content: center;
+  font-size: 1.6rem;
+  color: #8f95b2;
+  text-align: center;
 }
 
 .body {
+  width: 100%;
+  max-width: 1060px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 1060px;
-  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    max-width: 624px;
+  }
+  .card {
+    width: 100%;
+    max-width: 624px;
+  }
+
+  .cardWrapper {
+    max-width: 624px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .cardWrapper {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+  }
+
+  .card {
+    width: max-content;
+    display: flex;
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 2.6rem;
+  }
+
+  .button {
+    width: 130px;
+  }
 }

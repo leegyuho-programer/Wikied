@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { ArtworkState, AuthState, ArticleState } from './zustand.types';
+import { ArtworkState, AuthState, ArticleState, ProfileState } from './zustand.types';
 import { createAuthSlice } from './authSlice';
 import { createArtworkSlice } from './artworkSlice';
 import { createArticleSlice } from './articleSlice';
+import { createProfileSlice } from './profileSlice';
 
-type SliceType = AuthState & ArtworkState & ArticleState;
+type SliceType = AuthState & ArtworkState & ArticleState & ProfileState;
 
 export const useStore = create<SliceType>()(
   devtools(
@@ -14,6 +15,7 @@ export const useStore = create<SliceType>()(
         ...createAuthSlice(...a),
         ...createArtworkSlice(...a),
         ...createArticleSlice(...a),
+        ...createProfileSlice(...a),
       }),
       {
         name: 'store',
@@ -25,7 +27,12 @@ export const useStore = create<SliceType>()(
           isLogin: state.isLogin,
           clickedArtworkId: state.clickedArtworkId,
           password: state.password,
+          codeId: state.codeId,
+          setSecurityQuestion: state.setSecurityQuestion,
+          setSecurityAnswer: state.setSecurityAnswer,
           articleId: state.articleId,
+          profileId: state.profileId,
+          profileImage: state.profileImage,
         }),
       }
     )

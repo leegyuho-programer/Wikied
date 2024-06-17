@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f7f7fa;
   border-radius: 10px;
 }
 
@@ -23,6 +22,29 @@
   background-color: #f7f7fa;
   color: #8f95b2;
   border-radius: 5px;
+}
+
+.additionalInput {
+  width: 100%;
+  height: 45px;
+  padding: 14px 20px;
+  background-color: #f7f7fa;
+  font-size: 1.4rem;
+  border-radius: 10px;
+  outline: none;
+  margin: 10px 0;
+  color: #8f95b2;
+}
+
+.additionalInput:focus {
+  border: 1px solid #4cbfa4;
+  background-color: #fff;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: end;
+  width: 100%;
 }
 
 .button {

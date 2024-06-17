@@ -1,7 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import patchPassword from '../../../../api/auth/patchPassword';
 import Button from '../../../../components/Button/Button';
 import DropDown from '../../../../components/DropDown/DropDown';
 import Input from '../../../../components/Input/Input';
@@ -11,18 +13,21 @@ import {
   signUpPasswordCheckRules,
   signUpPasswordRules,
 } from '../../../../constants/inputErrorRules';
-import { PatchPassword } from '../../../../types/auth';
-import styles from './MyAccountPage.module.css';
-import { useState } from 'react';
-import resetPassword from '../../../../api/auth/resetPassword';
 import { useStore } from '../../../../store';
+import { PatchPassword } from '../../../../types/auth';
+import { PostProfileRequestType, PostProfileResponseType } from '../../../../types/profile';
+import postProfile from '../../../../api/profile/postProfile';
+import styles from './MyAccountPage.module.css';
 
 function MyAccountPage() {
   const router = useRouter();
   const accessToken = useStore((state) => state.userAccessToken);
   const storedPassword = useStore((state) => state.password);
-  const [securityQuestion, setSecurityQuestion] = useState('');
-  const [securityAnswer, setSecurityAnswer] = useState('');
+  const { setLogout, setSecurityQuestion, setSecurityAnswer } = useStore((state) => ({
+    setLogout: state.setLogout,
+    setSecurityQuestion: state.setSecurityQuestion,
+    setSecurityAnswer: state.setSecurityAnswer,
+  }));
 
   const {
     handleSubmit,
@@ -32,12 +37,10 @@ function MyAccountPage() {
     formState: { errors, isSubmitting },
   } = useForm<PatchPassword>({ mode: 'onBlur' });
 
-  const passwordValue = watch('password');
+  const [securityQuestionLocal, setSecurityQuestionLocal] = useState('');
+  const [securityAnswerLocal, setSecurityAnswerLocal] = useState('');
 
-  const handleQuestionChange = (question: string, answer: string) => {
-    setSecurityQuestion(question);
-    setSecurityAnswer(answer);
-  };
+  const passwordValue = watch('password');
 
   const handleResetPassword = async (data: PatchPassword) => {
     if (data.currentPassword !== storedPassword) {
@@ -49,39 +52,27 @@ function MyAccountPage() {
     }
 
     try {
-      await resetPassword(data, accessToken);
-      router.replace('/login');
+      await patchPassword(data, accessToken);
+      setLogout();
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  const handleSecurityQuestionSubmit = async () => {
-    const data = {
-      securityQuestion,
-      securityAnswer,
-    };
-
+  const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
+    console.log('profileData', profileData);
     try {
-      const response = await fetch(`https://wikied-api.vercel.app/1-99/profiles`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`, // 인증 토큰 추가
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log(data);
-      const responseData = await response.json();
-      return responseData;
-    } catch (error: any) {
-      console.error('Error:', error);
-      throw error;
+      const response: PostProfileResponseType = await postProfile(profileData, accessToken);
+      // setProfile(response); // 프로필 상태 업데이트
+      console.log('Profile updated successfully', response);
+    } catch (error) {
+      console.error('Failed to update profile', error);
     }
+  };
+
+  const handleQuestionChange = (question: string, answer: string) => {
+    setSecurityQuestionLocal(question);
+    setSecurityAnswerLocal(answer);
   };
 
   return (
@@ -119,27 +110,13 @@ function MyAccountPage() {
         </form>
       </div>
       <StrokeIcon />
-      <div>
-        <form className={styles.formContainer} onSubmit={handleSubmit(handleSecurityQuestionSubmit)}>
-          <p>위키 인증하기</p>
-          {/* 드롭다운 질문 있으면 input 생기도록 하기 useState로 상태관리하면 될듯? */}
-          <DropDown onSelectionChange={handleQuestionChange} />
-          {/* {selectedOption && (
-            <Input
-              name="securityQuestion"
-              placeholder="추가 입력"
-              label="추가 입력"
-              value={additionalInput}
-              onChange={(e: any) => setAdditionalInput(e.target.value)}
-            />
-          )} */}
-          <div className={styles.buttonWrapper}>
-            <Button isLink={false} type="submit" size="XS" variant="primary" disabled={isSubmitting}>
-              저장하기
-            </Button>
-          </div>
-        </form>
-      </div>
+      <DropDown
+        onSelectionChange={handleQuestionChange}
+        onSubmit={handleSecurityQuestionSubmit}
+        isSubmitting={isSubmitting}
+        initialQuestion={securityQuestionLocal} // 초기 질문 값 설정
+        initialAnswer={securityAnswerLocal} // 초기 답변 값 설정
+      />
     </div>
   );
 }

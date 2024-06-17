@@ -1,4 +1,4 @@
-import { PostLikeRequestType, PostLikeResponseType } from '../../types/article';
+import { PostLikeResponseType } from '../../types/article';
 import { authBasedRequest } from '../fetchRequestHandler';
 
 const postLike = async (token: string, articleId: number): Promise<PostLikeResponseType> => {
@@ -6,7 +6,6 @@ const postLike = async (token: string, articleId: number): Promise<PostLikeRespo
     const response = await authBasedRequest<PostLikeResponseType>({
       url: `articles/${articleId}/like`,
       method: 'POST',
-      // body: data,
       token,
     });
     console.log(response);

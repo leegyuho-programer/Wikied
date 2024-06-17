@@ -47,3 +47,23 @@
   text-align: center;
   gap: 2px;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    width: 302px;
+  }
+
+  .image {
+    width: 302px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 250px;
+  }
+
+  .image {
+    width: 250px;
+  }
+}
