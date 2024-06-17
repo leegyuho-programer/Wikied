@@ -78,8 +78,19 @@
   background-color: #fff;
 }
 
+@media (max-width: 1200px) {
+  .containerWrapper {
+    max-width: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .containerWrapper {
-    width: 335px;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .container {
+    max-width: 700px;
   }
 }

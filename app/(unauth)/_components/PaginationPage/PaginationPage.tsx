@@ -75,10 +75,7 @@ export default function PaginationPage() {
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={styles.search}>
-          <SearchBar onSearch={handleSearch} />
-          {/* <Button variant="primary" isLink={false} size="XS">
-            검색
-          </Button> */}
+          <SearchBar onSearch={handleSearch} className={styles.searchBar} />
           <Filter onSortChange={setSortOption} />
         </div>
         <div className={styles.articleList}>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import styles from './Button.module.css';
+import classNames from 'classnames/bind';
 
 interface Props {
   variant: 'primary' | 'secondary' | 'gray' | 'white';
@@ -9,21 +10,24 @@ interface Props {
   children?: ReactNode;
   type?: 'button' | 'submit';
   onClick?: () => void;
-  size: 'XS' | 'S' | 'M' | 'ML' | 'L';
+  size?: 'XS' | 'S' | 'M' | 'ML' | 'L';
   disabled?: boolean;
+  classname?: string;
 }
 
-function Button({ variant, isLink, destination, children, type, onClick, size, disabled }: Props) {
-  const className = `${styles.button} ${styles[variant]} ${styles[size]} ${disabled ? styles.disabled : ''}`;
+const cn = classNames.bind(styles);
+
+function Button({ variant, isLink, destination, children, type, onClick, size, disabled, classname }: Props) {
+  const buttonClass = cn('button', variant, size, { disabled }, classname);
 
   return (
     <>
       {isLink ? (
-        <Link href={`${destination}`} className={className}>
+        <Link href={`${destination}`} className={buttonClass}>
           {children}
         </Link>
       ) : (
-        <button className={className} type={type} onClick={onClick} disabled={disabled}>
+        <button className={buttonClass} type={type} onClick={onClick} disabled={disabled}>
           {children}
         </button>
       )}
