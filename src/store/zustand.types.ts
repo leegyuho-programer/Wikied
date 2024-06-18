@@ -67,3 +67,20 @@ export interface Profile {
   name: string;
   id: number;
 }
+
+export type modalType =
+  | 'uploadModal'
+  | 'artModal'
+  | 'askForSignup'
+  | 'askForLogin'
+  | 'askForDelete'
+  | 'withdrawalModal'
+  | 'editModal'
+  | 'warningForBigImageModal';
+
+export interface ModalState {
+  modals: modalType[];
+  showModal: (type: modalType) => void;
+  hideModal: (type: modalType) => void;
+  clearModal: () => void;
+}
