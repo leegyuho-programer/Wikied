@@ -26,9 +26,11 @@ export interface AuthState {
   setUserAccessToken?: (data: string) => void;
   userRefreshToken: string;
   setUserRefreshToken?: (data: string) => void;
-  codeId: string;
-  setSecurityQuestion?: string;
-  setSecurityAnswer?: string;
+  codeId: string | null;
+  securityQuestion?: string | null;
+  setSecurityQuestion?: (data: string | null) => void;
+  securityAnswer?: string | null;
+  setSecurityAnswer?: (data: string | null) => void;
 }
 
 export interface ArtworkState {

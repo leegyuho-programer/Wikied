@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import Button from '@/components/Button/Button';
 import LinkCopy from '@/components/LinkCopy/LinkCopy';
@@ -15,20 +16,28 @@ import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
-  const [securityQuestion, setSecurityQuestion] = useState<string | null>(null);
   const { id } = useParams<{ id: string | string[] }>();
-  const { isLogin, user, profileId, profileImage, setProfileImage, setProfileId, modals, showModal } = useStore(
-    (state) => ({
-      isLogin: state.isLogin,
-      user: state.user,
-      profileImage: state.profileImage,
-      setProfileImage: state.setProfileImage,
-      profileId: state.profileId,
-      setProfileId: state.setProfileId,
-      modals: state.modals,
-      showModal: state.showModal,
-    })
-  );
+  const {
+    isLogin,
+    user,
+    profileId,
+    profileImage,
+    setProfileImage,
+    setProfileId,
+    setSecurityQuestion,
+    modals,
+    showModal,
+  } = useStore((state) => ({
+    isLogin: state.isLogin,
+    user: state.user,
+    profileImage: state.profileImage,
+    setProfileImage: state.setProfileImage,
+    profileId: state.profileId,
+    setProfileId: state.setProfileId,
+    setSecurityQuestion: state.setSecurityQuestion,
+    modals: state.modals,
+    showModal: state.showModal,
+  }));
 
   const handleClick = () => {
     showModal('quizModal');
@@ -47,7 +56,9 @@ function UserPage() {
           setProfileId(profileCodeResponse.id || null);
           setProfileImage(profileCodeResponse.image || null);
           setProfileCodeResponse(profileCodeResponse);
-          setSecurityQuestion(profileCodeResponse.securityQuestion || null);
+          if (setSecurityQuestion) {
+            setSecurityQuestion(profileCodeResponse.securityQuestion || null);
+          }
         } else {
           console.error('일치하는 데이터의 코드를 찾을 수 없습니다.');
         }
@@ -58,7 +69,7 @@ function UserPage() {
     if (id) {
       fetchProfile();
     }
-  }, [id, setProfileId, setProfileImage]);
+  }, [id, setProfileId, setProfileImage, setSecurityQuestion]);
 
   return (
     <div className={styles.container}>
@@ -95,7 +106,7 @@ function UserPage() {
           </div> // 데이터가 없을 때의 UI
         )}
       </div>
-      {modals[modals.length - 1] === 'quizModal' && <QuizModal securityQuestion={securityQuestion} />}
+      {modals[modals.length - 1] === 'quizModal' && <QuizModal />}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 'use client';
+
 import ModalBody from '../_components/ModalBody/ModalBody';
 import ModalContainer from '../_components/ModalContainer/ModalContainer';
 import ModalHeader from '../_components/ModalHeader/ModalHeader';
@@ -10,12 +11,9 @@ import styles from './QuizModal.module.css';
 import Button from '@/components/Button/Button';
 import { useStore } from '@/store';
 
-interface QuizModalProps {
-  securityQuestion: string | null;
-}
-
-export default function QuizModal({ securityQuestion }: QuizModalProps) {
+export default function QuizModal() {
   const clearModal = useStore((state) => state.clearModal);
+  const securityQuestion = useStore((state) => state.securityQuestion);
   const {
     handleSubmit,
     register,
@@ -29,7 +27,7 @@ export default function QuizModal({ securityQuestion }: QuizModalProps) {
   return (
     <ModalContainer type="form" text="확인">
       <ModalHeader type="" />
-      <p className={styles.question}>{securityQuestion || '질문을 불러오는 중입니다.'}</p>
+      <p className={styles.question}>{securityQuestion}</p>
       <form onSubmit={handleSubmit(handleQuiz)} className={styles.form}>
         <Input
           name="securityAnswer"
@@ -45,7 +43,7 @@ export default function QuizModal({ securityQuestion }: QuizModalProps) {
       <p className={styles.explain}>
         위키드는 지인들과 함께하는 즐거운 공간입니다.
         <br />
-        지인에게 상처를 주지 않도록 작성해 주세요.
+        지인에게 상처를 주지 않도록 적성해 주세요.
       </p>
     </ModalContainer>
   );
