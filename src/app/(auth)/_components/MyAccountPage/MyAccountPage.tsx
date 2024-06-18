@@ -59,7 +59,6 @@ function MyAccountPage() {
     console.log('profileData', profileData);
     try {
       const response: PostProfileResponseType = await postProfile(profileData, accessToken);
-      // setProfile(response); // 프로필 상태 업데이트
       console.log('Profile updated successfully', response);
     } catch (error) {
       console.error('Failed to update profile', error);
