@@ -26,11 +26,6 @@ function ModalContainer({ children, type, text }: Props) {
         <CloseIcon onClick={onClickClose} />
       </div>
       {children}
-      <div className={styles.button}>
-        <Button isLink={false} variant="primary" size="XS">
-          {text}
-        </Button>
-      </div>
     </div>
   );
 }

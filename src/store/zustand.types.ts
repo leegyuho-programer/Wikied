@@ -69,7 +69,7 @@ export interface Profile {
 }
 
 export type modalType =
-  | 'uploadModal'
+  | 'quizModal'
   | 'artModal'
   | 'askForSignup'
   | 'askForLogin'

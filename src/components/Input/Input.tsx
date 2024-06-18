@@ -1,3 +1,4 @@
+import classNames from 'classnames/bind';
 import styles from './Input.module.css';
 
 interface Props {
@@ -9,11 +10,14 @@ interface Props {
   errors?: any;
   value?: any;
   onChange?: any;
+  classname?: any;
 }
 
-function Input({ name, label, type = 'text', placeholder, register, errors }: Props) {
+const cn = classNames.bind(styles);
+
+function Input({ name, label, type = 'text', placeholder, register, errors, classname }: Props) {
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, classname)}>
       {label && (
         <label className={styles.label} htmlFor={name}>
           {label}

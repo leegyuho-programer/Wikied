@@ -6,13 +6,16 @@
 } */
 
 .container {
+  max-width: 395px;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  width: 395px;
+  width: 100%;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+  justify-content: center;
+  align-items: center;
 }
 
 .IconWrapper {
@@ -32,6 +35,10 @@
   width: 395px;
   height: 215px;
   flex-shrink: 0;
+}
+
+.quiz {
+  height: 435px;
 }
 
 /* .link {
