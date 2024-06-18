@@ -122,7 +122,7 @@ function MyPage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        if (user?.name) {
+        if (user?.name && typeof window !== 'undefined') {
           const response: GetProfileResponseType = await getProfile(1, 10, user.name);
           const codeId = response.list[0].code;
 
@@ -138,7 +138,7 @@ function MyPage() {
       }
     }
 
-    if (typeof window !== 'undefined' && user) {
+    if (user) {
       fetchProfile();
     }
   }, [user, setProfileId, setProfileImage]);
