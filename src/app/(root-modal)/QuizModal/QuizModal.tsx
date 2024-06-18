@@ -9,8 +9,10 @@ import Input from '@/components/Input/Input';
 import { quizModalRules } from '@/constants/inputErrorRules';
 import styles from './QuizModal.module.css';
 import Button from '@/components/Button/Button';
+import { useStore } from '@/store';
 
 export default function QuizModal() {
+  const clearModal = useStore((state) => state.clearModal);
   const {
     handleSubmit,
     register,
@@ -33,7 +35,7 @@ export default function QuizModal() {
           errors={errors}
           classname={styles.input}
         />
-        <Button isLink={false} variant="primary" classname={styles.button}>
+        <Button isLink={false} variant="primary" classname={styles.button} onClick={clearModal}>
           확인
         </Button>
       </form>

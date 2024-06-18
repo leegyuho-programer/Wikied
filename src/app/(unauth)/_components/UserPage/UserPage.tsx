@@ -10,19 +10,28 @@ import styles from './UserPage.module.css';
 import { useParams } from 'next/navigation';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
+import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
 
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
   const { id } = useParams<{ id: string | string[] }>();
-  const { isLogin, user, profileId, profileImage, setProfileImage, setProfileId } = useStore((state) => ({
-    isLogin: state.isLogin,
-    user: state.user,
-    profileImage: state.profileImage,
-    setProfileImage: state.setProfileImage,
-    profileId: state.profileId,
-    setProfileId: state.setProfileId,
-  }));
+  const { isLogin, user, profileId, profileImage, setProfileImage, setProfileId, modals, showModal } = useStore(
+    (state) => ({
+      isLogin: state.isLogin,
+      user: state.user,
+      profileImage: state.profileImage,
+      setProfileImage: state.setProfileImage,
+      profileId: state.profileId,
+      setProfileId: state.setProfileId,
+      modals: state.modals,
+      showModal: state.showModal,
+    })
+  );
+
+  const handleClick = () => {
+    showModal('quizModal');
+  };
 
   useEffect(() => {
     async function fetchProfile() {
@@ -50,17 +59,8 @@ function UserPage() {
     }
   }, [id, setProfileId, setProfileImage]);
 
-  const handleInvite = async () => {
-    try {
-      const currentURL = window.location.href;
-      await navigator.clipboard.writeText(currentURL);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   console.log(profileId);
+
   return (
     <div className={styles.container}>
       {isCopied && (
@@ -74,7 +74,7 @@ function UserPage() {
           {profileCodeResponse?.id && <LinkCopy onCopy={setIsCopied} profileId={profileCodeResponse.id} />}
         </div>
         {profileCodeResponse?.content && isLogin && user?.name !== profileCodeResponse?.name && (
-          <button onClick={handleInvite} className={styles.button}>
+          <button onClick={handleClick} className={styles.button}>
             위키 참여하기
           </button>
         )}
@@ -90,12 +90,13 @@ function UserPage() {
               <br />
               친구의 첫 위키를 작성해 보세요!
             </p>
-            <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
+            <Button isLink={false} variant="primary" size="XS" onClick={handleClick}>
               시작하기
             </Button>
           </div> // 데이터가 없을 때의 UI
         )}
       </div>
+      {modals[modals.length - 1] === 'quizModal' && <QuizModal />}
     </div>
   );
 }
