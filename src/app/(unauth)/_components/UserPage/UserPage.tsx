@@ -15,6 +15,7 @@ import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
+  const [securityQuestion, setSecurityQuestion] = useState<string | null>(null);
   const { id } = useParams<{ id: string | string[] }>();
   const { isLogin, user, profileId, profileImage, setProfileImage, setProfileId, modals, showModal } = useStore(
     (state) => ({
@@ -38,7 +39,6 @@ function UserPage() {
       try {
         const response = await getProfile(1, 100);
         console.log('getProfile', response);
-        // id와 일치하는 데이터의 코드 가져오기
         const codeId = response.list.find((item: any) => item.id === parseInt(Array.isArray(id) ? id[0] : id))?.code;
 
         if (codeId) {
@@ -47,6 +47,7 @@ function UserPage() {
           setProfileId(profileCodeResponse.id || null);
           setProfileImage(profileCodeResponse.image || null);
           setProfileCodeResponse(profileCodeResponse);
+          setSecurityQuestion(profileCodeResponse.securityQuestion || null);
         } else {
           console.error('일치하는 데이터의 코드를 찾을 수 없습니다.');
         }
@@ -55,11 +56,9 @@ function UserPage() {
       }
     }
     if (id) {
-      fetchProfile(); // 컴포넌트가 마운트되면 프로필 데이터 가져오기
+      fetchProfile();
     }
   }, [id, setProfileId, setProfileImage]);
-
-  console.log(profileId);
 
   return (
     <div className={styles.container}>
@@ -96,7 +95,7 @@ function UserPage() {
           </div> // 데이터가 없을 때의 UI
         )}
       </div>
-      {modals[modals.length - 1] === 'quizModal' && <QuizModal />}
+      {modals[modals.length - 1] === 'quizModal' && <QuizModal securityQuestion={securityQuestion} />}
     </div>
   );
 }

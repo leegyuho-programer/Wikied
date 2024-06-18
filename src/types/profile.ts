@@ -72,3 +72,14 @@ export interface PatchProfileCodeResponseType {
   image?: string;
   content?: string;
 }
+
+export interface PostProfilePingRequestType {
+  securityAnswer: string;
+}
+
+export interface PostProfilePingResponseType {
+  registeredAt: string;
+  userId: number;
+}
+
+export interface GetProfilePingResponseType extends PostProfilePingResponseType {}
