@@ -21,7 +21,7 @@ function Menu({ onMenuClick, onLogout }: Props) {
           <Link href="/myAccount" className={styles.menuItem} onClick={onMenuClick}>
             계정 설정
           </Link>
-          <Link href="/myPage" className={styles.menuItem} onClick={onMenuClick}>
+          <Link href="/mypage" className={styles.menuItem} onClick={onMenuClick}>
             내 위키
           </Link>
           <div className={styles.menuItem} onClick={onLogout}>

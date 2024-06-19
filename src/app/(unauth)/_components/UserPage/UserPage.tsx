@@ -8,7 +8,7 @@ import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
 import styles from './UserPage.module.css';
-import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation'; // Update to use next/navigation's useParams
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
@@ -16,7 +16,9 @@ import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
-  const { id } = useParams<{ id: string | string[] }>();
+  const [myCode, setMyCode] = useState<string | null>(null);
+  const { id } = useParams<{ id: string | string[] }>(); // Use useParams to get URL parameters
+
   const {
     isLogin,
     user,
@@ -48,9 +50,13 @@ function UserPage() {
       try {
         const response = await getProfile(1, 100);
         console.log('getProfile', response);
-        const codeId = response.list.find((item: any) => item.id === parseInt(Array.isArray(id) ? id[0] : id))?.code;
+        const profileId = parseInt(Array.isArray(id) ? id[0] : id); // Convert id to integer
+        const codeId = response.list.find((item: any) => item.id === profileId)?.code;
+        console.log('id', id);
+        console.log('codeId', codeId);
 
-        if (codeId) {
+        if (codeId !== undefined) {
+          setMyCode(codeId);
           const profileCodeResponse = await getProfileCode(codeId);
           console.log('profileCodeResponse', profileCodeResponse);
           setProfileId(profileCodeResponse.id || null);
@@ -106,7 +112,7 @@ function UserPage() {
           </div> // 데이터가 없을 때의 UI
         )}
       </div>
-      {modals[modals.length - 1] === 'quizModal' && <QuizModal />}
+      {modals[modals.length - 1] === 'quizModal' && <QuizModal codeId={myCode} />}
     </div>
   );
 }

@@ -26,7 +26,7 @@ function LoginForm() {
       console.log('Response Data:', response);
 
       setLogin(response.user, response.accessToken, response.refreshToken, data.password, response.user.profile?.code);
-      router.replace('/myPage');
+      router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);
     }

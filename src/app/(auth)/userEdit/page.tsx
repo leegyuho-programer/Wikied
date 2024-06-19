@@ -1,4 +1,4 @@
-import UserEditPage from '../../../_components/UserEditPage/UserEditPage';
+import UserEditPage from '../_components/UserEditPage/UserEditPage';
 
 function userEdit() {
   return <UserEditPage />;
