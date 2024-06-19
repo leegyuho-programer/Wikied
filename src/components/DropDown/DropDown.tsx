@@ -5,6 +5,7 @@ import DropDownIcon from '../SvgComponents/DropDownIcon';
 import Button from '../Button/Button';
 import styles from './DropDown.module.css';
 import { PostProfileRequestType } from '@/types/profile';
+import { useStore } from '@/store';
 
 interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
@@ -17,6 +18,9 @@ interface DropDownProps {
 const options = ['직접 입력', '싫어하는 음식은?', '좋아하는 음식은?', '좋아하는 운동은?', '내 별명은?'];
 
 function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, initialAnswer }: DropDownProps) {
+  const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
+  const setSecurityAnswer = useStore((state) => state.setSecurityAnswer);
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(initialQuestion || ''); // 초기 질문 값 설정
   const [additionalInput, setAdditionalInput] = useState(initialAnswer || ''); // 초기 답변 값 설정
@@ -26,15 +30,18 @@ function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, 
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option === '직접 입력' ? '' : option);
+    const newQuestion = option === '직접 입력' ? '' : option;
+    setSelectedOption(newQuestion);
     setIsOpen(false);
-    onSelectionChange(option === '직접 입력' ? '' : option, additionalInput);
+    onSelectionChange(newQuestion, additionalInput);
+    if (setSecurityQuestion) setSecurityQuestion(newQuestion);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAdditionalInput(value);
     onSelectionChange(selectedOption, value);
+    if (setSecurityAnswer) setSecurityAnswer(value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -50,7 +50,7 @@ function UserPage() {
       try {
         const response = await getProfile(1, 100);
         console.log('getProfile', response);
-        const profileId = parseInt(Array.isArray(id) ? id[0] : id); // Convert id to integer
+        const profileId = parseInt(Array.isArray(id) ? id[0] : id);
         const codeId = response.list.find((item: any) => item.id === profileId)?.code;
         console.log('id', id);
         console.log('codeId', codeId);

@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import patchPassword from '@/api/auth/patchPassword';
 import Button from '@/components/Button/Button';
@@ -33,9 +32,6 @@ function MyAccountPage() {
     formState: { errors, isSubmitting },
   } = useForm<PatchPassword>({ mode: 'onBlur' });
 
-  const [securityQuestionLocal, setSecurityQuestionLocal] = useState('');
-  const [securityAnswerLocal, setSecurityAnswerLocal] = useState('');
-
   const passwordValue = watch('password');
 
   const handleResetPassword = async (data: PatchPassword) => {
@@ -66,8 +62,8 @@ function MyAccountPage() {
   };
 
   const handleQuestionChange = (question: string, answer: string) => {
-    setSecurityQuestionLocal(question);
-    setSecurityAnswerLocal(answer);
+    if (setSecurityQuestion) setSecurityQuestion(question);
+    if (setSecurityAnswer) setSecurityAnswer(answer);
   };
 
   return (
@@ -109,8 +105,6 @@ function MyAccountPage() {
         onSelectionChange={handleQuestionChange}
         onSubmit={handleSecurityQuestionSubmit}
         isSubmitting={isSubmitting}
-        initialQuestion={securityQuestionLocal} // 초기 질문 값 설정
-        initialAnswer={securityAnswerLocal} // 초기 답변 값 설정
       />
     </div>
   );

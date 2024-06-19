@@ -23,9 +23,7 @@ function SideBar({ profileData, showEditButton }: Props) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth > 768);
   const [profileImage, setProfileImage] = useState<string | null>(profileData?.image || null);
   const [formData, setFormData] = useState({
-    id: profileData?.id,
-    code: profileData?.code,
-    image: profileData?.image || '',
+    // image: profileData?.image || '',
     city: profileData?.city || '',
     mbti: profileData?.mbti || '',
     job: profileData?.job || '',
@@ -46,11 +44,10 @@ function SideBar({ profileData, showEditButton }: Props) {
     if (!file) return;
 
     try {
-      const imageUrl = await handleImageUpload(file); // 이미지 업로드 및 URL 반환
-      setProfileImage(imageUrl); // 업로드된 이미지의 URL 설정
+      const imageUrl = await handleImageUpload(file);
+      setProfileImage(imageUrl);
     } catch (error) {
       console.error('이미지 업로드 중 오류:', error);
-      // 업로드 실패 시 처리
     }
   };
 
@@ -62,19 +59,14 @@ function SideBar({ profileData, showEditButton }: Props) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 기본 제출 동작 방지
-    handleUpdateProfile();
-  };
-
   const handleImageUpload = async (image: File) => {
     try {
       const response = await postImage(image, accessToken);
       console.log('Image upload response:', response);
-      return response.url; // 업로드된 이미지의 URL 반환
+      return response.url;
     } catch (error) {
       console.error('이미지 업로드 중 오류:', error);
-      throw error; // 오류를 다시 던져서 호출자에서 처리하도록 함
+      throw error;
     }
   };
 
@@ -82,13 +74,16 @@ function SideBar({ profileData, showEditButton }: Props) {
     try {
       // formData에 업로드된 프로필 이미지의 URL을 추가합니다.
       const updatedFormData = { ...formData, image: profileImage || undefined };
-      const response = await patchProfileCode(updatedFormData, profileData.code, accessToken);
+      const response = await patchProfileCode(updatedFormData, profileData?.code, accessToken);
       console.log('Profile Updated:', response);
-      // 필요하다면 성공 메시지를 보여줄 수 있음
     } catch (error) {
       console.error('프로필을 업데이트하는 데 실패했습니다:', error);
-      // 실패한 경우에 대한 처리
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleUpdateProfile();
   };
 
   useEffect(() => {

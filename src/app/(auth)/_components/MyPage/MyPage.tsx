@@ -6,19 +6,24 @@ import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SideBar from '@/components/SideBar/SideBar';
 import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
-import { GetProfileCodeResponseType, GetProfileResponseType } from '@/types/profile';
+import { GetProfileCodeResponseType, GetProfileResponseType, PostProfilePingRequestType } from '@/types/profile';
 import styles from './MyPage.module.css';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
+import { postProfilePing } from '@/api/profile/profilePing';
 
 function MyPage() {
-  const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({
-    user: state.user,
-    profileId: state.profileId,
-    profileImage: state.profileImage,
-    setProfileId: state.setProfileId,
-    setProfileImage: state.setProfileImage,
-  }));
+  const { user, profileId, profileImage, setProfileId, setProfileImage, securityAnswer, accessToken } = useStore(
+    (state: any) => ({
+      user: state.user,
+      profileId: state.profileId,
+      profileImage: state.profileImage,
+      setProfileId: state.setProfileId,
+      setProfileImage: state.setProfileImage,
+      securityAnswer: state.securityAnswer,
+      accessToken: state.userAccessToken,
+    })
+  );
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
 
@@ -35,6 +40,14 @@ function MyPage() {
           setProfileId(profileCodeResponse.id || null);
           setProfileImage(profileCodeResponse.image || null);
           setProfileCodeResponse(profileCodeResponse);
+
+          const pingRequest: PostProfilePingRequestType = {
+            securityAnswer,
+          };
+
+          const pingResponse = await postProfilePing(pingRequest, codeId, accessToken);
+          console.log('Profile Ping Response:', pingResponse);
+          return pingResponse;
         }
       } catch (error) {
         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
@@ -44,7 +57,7 @@ function MyPage() {
     if (user) {
       fetchProfile();
     }
-  }, [user, setProfileId, setProfileImage]);
+  }, [user, setProfileId, setProfileImage, securityAnswer, accessToken]);
 
   const handleInvite = async () => {
     if (typeof window !== 'undefined') {
@@ -105,22 +118,37 @@ export default MyPage;
 // import styles from './MyPage.module.css';
 // import { getProfile } from '@/api/profile/profile';
 // import { getProfileCode } from '@/api/profile/profileCode';
+// import { postProfilePing } from '@/api/profile/profilePing';
+// import { useRouter } from 'next/navigation';
 
 // function MyPage() {
-//   const { user, profileId, profileImage, setProfileId, setProfileImage } = useStore((state) => ({
+//   const { user, profileId, profileImage, setProfileId, setProfileImage, userAccessToken, securityAnswer } = useStore((state) => ({
 //     user: state.user,
 //     profileId: state.profileId,
 //     profileImage: state.profileImage,
 //     setProfileId: state.setProfileId,
 //     setProfileImage: state.setProfileImage,
+//     userAccessToken: state.userAccessToken,
+//     securityAnswer: state.securityAnswer,
 //   }));
 //   const [isCopied, setIsCopied] = useState(false);
 //   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
 
+//   const handleQuiz = async () => {
+//     try {
+//       console.log('Security Answer:', data.securityAnswer, 'Code ID:', codeId);
+//       const pingResponse = await postProfilePing(securityAnswer, user?.id, userAccessToken);
+//       console.log('response', pingResponse);
+//     } catch (error) {
+//       console.error(error)
+//       };
+//     }
+//   }
+
 //   useEffect(() => {
 //     async function fetchProfile() {
 //       try {
-//         if (user?.name) {
+//         if (user?.name && typeof window !== 'undefined') {
 //           const response: GetProfileResponseType = await getProfile(1, 10, user.name);
 //           const codeId = response.list[0].code;
 
@@ -132,7 +160,7 @@ export default MyPage;
 //           setProfileCodeResponse(profileCodeResponse);
 //         }
 //       } catch (error) {
-//         console.error(error);
+//         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
 //       }
 //     }
 
@@ -141,17 +169,17 @@ export default MyPage;
 //     }
 //   }, [user, setProfileId, setProfileImage]);
 
-//   const handleInvite = () => {
-//     const currentURL = window.location.href;
-//     navigator.clipboard
-//       .writeText(currentURL)
-//       .then(() => {
+//   const handleInvite = async () => {
+//     if (typeof window !== 'undefined') {
+//       try {
+//         const currentURL = window.location.href;
+//         await navigator.clipboard.writeText(currentURL);
 //         setIsCopied(true);
 //         setTimeout(() => setIsCopied(false), 2000);
-//       })
-//       .catch((error) => {
-//         console.error('Failed to copy: ', error);
-//       });
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     }
 //   };
 
 //   return (
