@@ -15,3 +15,24 @@
   color: #8f95b2;
   font-size: 1.6rem;
 }
+
+.buttonWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+
+.button {
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #4cbfa4;
+  margin-top: 40px;
+  width: 65px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+}

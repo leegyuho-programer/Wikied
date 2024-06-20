@@ -1,54 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import TextEditor from '@/components/TextEditor/TextEditor';
-import styles from './UserEditPage.module.css';
-import 'react-quill/dist/quill.snow.css';
-import Button from '@/components/Button/Button';
-import LinkCopy from '@/components/LinkCopy/LinkCopy';
-import SideBar from '@/components/SideBar/SideBar';
-import SnackBar from '@/components/SnackBar/SnackBar';
-import { useStore } from '@/store';
-import { GetProfileCodeResponseType } from '@/types/profile';
-import { useParams } from 'next/navigation';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
-import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
+import SideBar from '@/components/SideBar/SideBar';
+import TextEditor from '@/components/TextEditor/TextEditor';
+import { useStore } from '@/store';
+import { GetProfileCodeResponseType } from '@/types/profile';
+import { useEffect, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import styles from './UserEditPage.module.css';
 
 function UserEditPage() {
   const [text, setText] = useState('');
-  const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
   const [myCode, setMyCode] = useState<string | null>(null);
 
-  const {
-    isLogin,
-    user,
-    profileId,
-    profileImage,
-    setProfileImage,
-    setProfileId,
-    setSecurityQuestion,
-    modals,
-    pageId,
-    showModal,
-  } = useStore((state) => ({
-    isLogin: state.isLogin,
-    user: state.user,
-    profileImage: state.profileImage,
-    setProfileImage: state.setProfileImage,
-    profileId: state.profileId,
-    setProfileId: state.setProfileId,
+  const { setSecurityQuestion, pageId } = useStore((state) => ({
     setSecurityQuestion: state.setSecurityQuestion,
-    modals: state.modals,
     pageId: state.pageId,
-    showModal: state.showModal,
   }));
-  console.log('pageId', pageId);
-
-  const handleClick = () => {
-    showModal('quizModal');
-  };
 
   useEffect(() => {
     async function fetchProfile() {
@@ -63,8 +33,6 @@ function UserEditPage() {
           setMyCode(codeId);
           const profileCodeResponse = await getProfileCode(codeId);
           console.log('profileCodeResponse', profileCodeResponse);
-          setProfileId(profileCodeResponse.id || null);
-          setProfileImage(profileCodeResponse.image || null);
           setProfileCodeResponse(profileCodeResponse);
           if (setSecurityQuestion) {
             setSecurityQuestion(profileCodeResponse.securityQuestion || null);
@@ -79,7 +47,7 @@ function UserEditPage() {
     if (pageId) {
       fetchProfile();
     }
-  }, [pageId, setProfileId, setProfileImage, setSecurityQuestion]);
+  }, [pageId, setSecurityQuestion]);
 
   return (
     <div className={styles.container}>

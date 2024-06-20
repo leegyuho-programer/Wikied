@@ -115,7 +115,7 @@ function UserPage() {
             <Button isLink={false} variant="primary" size="XS" onClick={handleClick}>
               시작하기
             </Button>
-          </div> // 데이터가 없을 때의 UI
+          </div>
         )}
       </div>
       {modals[modals.length - 1] === 'quizModal' && <QuizModal codeId={myCode} />}

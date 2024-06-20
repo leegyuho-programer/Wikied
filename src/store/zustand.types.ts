@@ -72,15 +72,7 @@ export interface Profile {
   id: number;
 }
 
-export type modalType =
-  | 'quizModal'
-  | 'artModal'
-  | 'askForSignup'
-  | 'askForLogin'
-  | 'askForDelete'
-  | 'withdrawalModal'
-  | 'editModal'
-  | 'warningForBigImageModal';
+export type modalType = 'quizModal' | 'overTimeModal';
 
 export interface ModalState {
   modals: modalType[];
