@@ -6,3 +6,32 @@
   align-items: center;
   justify-content: center; */
 }
+
+.header {
+  position: relative;
+}
+
+.info {
+  max-width: 1120px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  padding: 18px 30px;
+  top: 32px;
+  z-index: 10;
+}
+
+.name {
+  color: #474d66;
+  font-size: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+}

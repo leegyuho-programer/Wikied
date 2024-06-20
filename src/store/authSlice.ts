@@ -5,6 +5,8 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
   isLogin: false,
   user: null,
   userId: 0,
+  pageId: 0,
+  setPageId: (pageId: number) => set({ pageId }),
   userAccessToken: '',
   userRefreshToken: '',
   password: '',
@@ -33,6 +35,5 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
       password: '',
       codeId: '',
       securityQuestion: null,
-      securityAnswer: null,
     })),
 });

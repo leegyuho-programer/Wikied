@@ -8,7 +8,7 @@ import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
 import styles from './UserPage.module.css';
-import { useParams } from 'next/navigation'; // Update to use next/navigation's useParams
+import { useParams } from 'next/navigation';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
@@ -17,7 +17,7 @@ function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
   const [myCode, setMyCode] = useState<string | null>(null);
-  const { id } = useParams<{ id: string | string[] }>(); // Use useParams to get URL parameters
+  const { id } = useParams<{ id: string | string[] }>();
 
   const {
     isLogin,
@@ -29,6 +29,7 @@ function UserPage() {
     setSecurityQuestion,
     modals,
     showModal,
+    setPageId,
   } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
@@ -39,6 +40,7 @@ function UserPage() {
     setSecurityQuestion: state.setSecurityQuestion,
     modals: state.modals,
     showModal: state.showModal,
+    setPageId: state.setPageId,
   }));
 
   const handleClick = () => {
@@ -50,18 +52,21 @@ function UserPage() {
       try {
         const response = await getProfile(1, 100);
         console.log('getProfile', response);
-        const profileId = parseInt(Array.isArray(id) ? id[0] : id);
-        const codeId = response.list.find((item: any) => item.id === profileId)?.code;
-        console.log('id', id);
+        const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
+        const codeId = response.list.find((item: any) => item.id === parsedId)?.code;
+        setProfileId(parsedId);
+        if (setPageId) {
+          setPageId(parsedId);
+        }
+        console.log('id', parsedId);
         console.log('codeId', codeId);
 
         if (codeId !== undefined) {
           setMyCode(codeId);
           const profileCodeResponse = await getProfileCode(codeId);
           console.log('profileCodeResponse', profileCodeResponse);
-          setProfileId(profileCodeResponse.id || null);
-          setProfileImage(profileCodeResponse.image || null);
           setProfileCodeResponse(profileCodeResponse);
+          setProfileImage(profileCodeResponse.image || null);
           if (setSecurityQuestion) {
             setSecurityQuestion(profileCodeResponse.securityQuestion || null);
           }
@@ -96,9 +101,9 @@ function UserPage() {
         )}
       </div>
       <div className={styles.section}>
-        <SideBar profileData={profileCodeResponse} showEditButton={false} /> {/* 편집 버튼 비활성화 */}
+        <SideBar profileData={profileCodeResponse} showEditButton={false} />
         {profileCodeResponse?.content ? (
-          <div>hi</div> // 데이터가 있을 때의 UI
+          <div dangerouslySetInnerHTML={{ __html: profileCodeResponse.content }} /> // 데이터가 있을 때의 UI
         ) : (
           <div className={styles.noData}>
             <p className={styles.text}>

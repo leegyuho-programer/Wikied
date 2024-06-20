@@ -31,6 +31,8 @@ export interface AuthState {
   setSecurityQuestion?: (question: string | null) => void;
   securityAnswer?: string | null;
   setSecurityAnswer?: (answer: string | null) => void;
+  pageId?: number | null;
+  setPageId?: (data: number) => void;
 }
 
 export interface ArtworkState {

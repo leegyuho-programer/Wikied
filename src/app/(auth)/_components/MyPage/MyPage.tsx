@@ -35,7 +35,6 @@ function MyPage() {
           const codeId = response.list[0].code;
 
           const profileCodeResponse: GetProfileCodeResponseType = await getProfileCode(codeId);
-          console.log('getProfileCode', profileCodeResponse);
 
           setProfileId(profileCodeResponse.id || null);
           setProfileImage(profileCodeResponse.image || null);
@@ -44,6 +43,7 @@ function MyPage() {
           const pingRequest: PostProfilePingRequestType = {
             securityAnswer,
           };
+          console.log(pingRequest, codeId, accessToken);
 
           const pingResponse = await postProfilePing(pingRequest, codeId, accessToken);
           console.log('Profile Ping Response:', pingResponse);

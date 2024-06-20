@@ -46,9 +46,9 @@
 .quill {
   position: relative;
   max-width: 1120px;
-  width: 100%;
+  width: 1120px;
   height: 100vh;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 .ql-toolbar {
@@ -63,6 +63,8 @@
 .ql-toolbar.ql-snow {
   border: none;
   border-radius: 10px;
+  max-width: 1120px;
+  width: 100%;
 }
 
 .ql-container.ql-snow {
