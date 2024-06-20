@@ -10,6 +10,8 @@ import ModalHeader from '../_components/ModalHeader/ModalHeader';
 import styles from './QuizModal.module.css';
 import { useRouter } from 'next/navigation';
 import { postProfilePing } from '@/api/profile/profilePing';
+import { useEffect } from 'react';
+import { getProfileCode } from '@/api/profile/profileCode';
 
 interface Props {
   codeId: string | null;
@@ -20,10 +22,14 @@ interface FormValues {
 }
 
 export default function QuizModal({ codeId }: Props) {
-  const accessToken = useStore((state) => state.userAccessToken);
+  const { setSecurityQuestion, securityQuestion, accessToken } = useStore((state: any) => ({
+    setSecurityQuestion: state.setSecurityQuestion,
+    securityQuestion: state.securityQuestion,
+    accessToken: state.accessToken,
+  }));
+
   const router = useRouter();
   const clearModal = useStore((state) => state.clearModal);
-  const securityQuestion = useStore((state) => state.securityQuestion);
   const {
     handleSubmit,
     register,
@@ -46,6 +52,18 @@ export default function QuizModal({ codeId }: Props) {
       });
     }
   };
+
+  useEffect(() => {
+    if (codeId) {
+      getProfileCode(codeId)
+        .then((response) => {
+          setSecurityQuestion(response.securityQuestion);
+        })
+        .catch((error) => {
+          console.error('프로필 코드 가져오기 오류:', error);
+        });
+    }
+  }, [codeId]);
 
   return (
     <ModalContainer type="form" text="확인">
