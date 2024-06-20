@@ -8,7 +8,7 @@ import './TextEditor.css';
 import styles from './TextEditor.module.css';
 import { getProfile } from '@/api/profile/profile';
 import { GetProfileResponseType, PostProfilePingRequestType } from '@/types/profile';
-import { patchProfileCode } from '@/api/profile/profileCode';
+import { getProfileCode, patchProfileCode } from '@/api/profile/profileCode';
 import Button from '../Button/Button';
 import { postProfilePing } from '@/api/profile/profilePing';
 import { useRouter } from 'next/navigation';
@@ -44,8 +44,12 @@ function TextEditor({ value, setValue }: Props) {
 
         if (ProfileCodeId !== undefined) {
           setCodeId(ProfileCodeId);
+          const profileCodeResponse = await getProfileCode(ProfileCodeId);
+          console.log('profileCodeResponse', profileCodeResponse);
+          setValue(profileCodeResponse.content || defaultTemplate);
         } else {
           setCodeId(null);
+          setValue(defaultTemplate);
         }
         setName(profile?.name || null);
 
@@ -66,22 +70,23 @@ function TextEditor({ value, setValue }: Props) {
     }
   }, [user, securityAnswer, accessToken, pageId]);
 
-  useEffect(() => {
-    const defaultTemplate = `
-      <h1 style="color: #474D66; font-size: 2.4rem; font-weight: 600;">01. 개요</h1>
-      <p>여기에 간단한 소개를 적어주세요.</p>
-      <br/><br/><br/><br/>
-      <h1>02. 취미</h1>
-      <p>평소에 취미로 즐기는 것들을 알고 있다면 알려주세요.</p>
-      <br/><br/><br/><br/>
-      <h1>03. 여담</h1>
-      <p>나만 알고 있는 재미있는 여담을 공유해 보세요.</p>
-      <br/><br/><br/><br/>
-      <h1>04. 취향</h1>
-      <p>좋아하는 것 중에 알고 있는 게 있으신가요?</p>
-    `;
-    setValue(defaultTemplate);
-  }, [setValue, user?.name]);
+  const defaultTemplate = `
+    <h1 style="color: #474D66; font-size: 2.4rem; font-weight: 600;">01. 개요</h1>
+    <br/>
+    <p>여기에 간단한 소개를 적어주세요.</p>
+    <br/><br/><br/><br/>
+    <h1>02. 취미</h1>
+    <br/>
+    <p style="font-size: 18px;">평소에 취미로 즐기는 것들을 알고 있다면 알려주세요.</p>
+    <br/><br/><br/><br/>
+    <h1>03. 여담</h1>
+    <br/>
+    <p>나만 알고 있는 재미있는 여담을 공유해 보세요.</p>
+    <br/><br/><br/><br/>
+    <h1>04. 취향</h1>
+    <br/>
+    <p>좋아하는 것 중에 알고 있는 게 있으신가요?</p>
+  `;
 
   const handleUpdateProfile = async () => {
     if (!codeId) {
@@ -90,7 +95,7 @@ function TextEditor({ value, setValue }: Props) {
     }
     const payload = { content: value };
     try {
-      const response = await patchProfileCode(payload, codeId, accessToken); // codeId 사용
+      const response = await patchProfileCode(payload, codeId, accessToken);
       console.log('Profile Updated:', response);
       router.push(`/user/${pageId}`);
     } catch (error) {
@@ -102,16 +107,17 @@ function TextEditor({ value, setValue }: Props) {
     () => ({
       toolbar: [
         ['bold', 'italic', 'underline', 'blockquote'],
-        [{ header: [1, 2, 3, 4, false] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ indent: '-1' }],
         ['image', 'link'],
+        [{ size: ['small', false, 'large', 'huge'] }],
       ],
     }),
     []
   );
 
-  const formats = ['bold', 'italic', 'underline', 'blockquote', 'header', 'list', 'script', 'size'];
+  const formats = ['bold', 'italic', 'underline', 'blockquote', 'header', 'list', 'size'];
 
   return (
     <div className={styles.container}>

@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
+import DOMPurify from 'dompurify';
 
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
@@ -103,7 +104,7 @@ function UserPage() {
       <div className={styles.section}>
         <SideBar profileData={profileCodeResponse} showEditButton={false} />
         {profileCodeResponse?.content ? (
-          <div dangerouslySetInnerHTML={{ __html: profileCodeResponse.content }} /> // 데이터가 있을 때의 UI
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(profileCodeResponse.content) }} />
         ) : (
           <div className={styles.noData}>
             <p className={styles.text}>

@@ -63,8 +63,11 @@
 .ql-toolbar.ql-snow {
   border: none;
   border-radius: 10px;
-  max-width: 1120px;
+  max-width: 700px;
   width: 100%;
+  z-index: 10;
+  position: relative;
+  left: 150px;
 }
 
 .ql-container.ql-snow {

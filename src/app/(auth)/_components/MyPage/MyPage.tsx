@@ -11,6 +11,7 @@ import styles from './MyPage.module.css';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
+import DOMPurify from 'dompurify';
 
 function MyPage() {
   const { user, profileId, profileImage, setProfileId, setProfileImage, securityAnswer, accessToken } = useStore(
@@ -86,7 +87,7 @@ function MyPage() {
       <div className={styles.section}>
         <SideBar profileData={profileCodeResponse} showEditButton={user?.name === profileCodeResponse?.name} />
         {profileCodeResponse?.content ? (
-          <div>hi</div>
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(profileCodeResponse.content) }} />
         ) : (
           <div className={styles.noData}>
             <p className={styles.text}>

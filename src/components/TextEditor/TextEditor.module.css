@@ -14,12 +14,16 @@
 .info {
   max-width: 1120px;
   width: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   position: absolute;
   padding: 18px 30px;
-  top: 32px;
-  z-index: 10;
+  top: 40px;
+  z-index: 1;
+  background-color: #f7f7fa;
+  border-radius: 10px;
+  align-items: center;
 }
 
 .name {
