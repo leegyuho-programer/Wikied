@@ -26,6 +26,7 @@ function LoginForm() {
       console.log('Response Data:', response);
 
       setLogin(response.user, response.accessToken, response.refreshToken, data.password, response.user.profile?.code);
+      alert('로그인이 완료되었습니다.');
       router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);

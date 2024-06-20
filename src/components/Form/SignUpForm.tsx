@@ -23,6 +23,7 @@ function SignUpForm() {
   const handleSignUp = async (data: PostSignUp) => {
     try {
       await signUp(data);
+      alert('회원가입이 완료되었습니다.');
       router.replace('/login'); // 회원가입 성공 후 로그인 페이지로 이동
     } catch (error) {
       console.error('Error:', error);

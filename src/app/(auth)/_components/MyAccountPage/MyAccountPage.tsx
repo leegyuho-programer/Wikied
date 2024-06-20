@@ -45,6 +45,7 @@ function MyAccountPage() {
 
     try {
       await patchPassword(data, accessToken);
+      alert('비밀번호가 변경되었습니다.');
       setLogout();
     } catch (error) {
       console.error('Error:', error);

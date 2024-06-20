@@ -32,6 +32,7 @@ function ResetPasswordForm() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       } else {
+        alert('비밀번호가 변경되었습니다.');
         router.replace('/login');
       }
 
