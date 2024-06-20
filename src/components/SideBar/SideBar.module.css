@@ -172,8 +172,13 @@
   padding: 0 14px;
   outline: none;
   background: #f7f7fa;
-  color: #474d66;
+  color: #000;
   border-radius: 10px;
+  font-weight: 500;
+}
+
+.answer::placeholder {
+  color: #a5a6b1;
 }
 
 .answer:focus {

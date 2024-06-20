@@ -6,6 +6,7 @@ import styles from './Comment.module.css';
 import { useStore } from '@/store';
 import { GetCommentResponseType } from '@/types/comment';
 import { deleteComment, patchComment } from '@/api/comment/comment';
+import defaultIMG from '../../../../../public/images/default.jpg';
 
 interface CommentProps {
   comment: GetCommentResponseType['list'][number];
@@ -40,7 +41,18 @@ export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.image}>{/* <Image src={} alt='프로필 사진' layout="fill" objectFit="cover" /> */}</div>
+      <div className={styles.image}>
+        {comment.writer.image ? (
+          <Image
+            src={comment.writer.image}
+            alt={`${comment.writer.name}의 프로필 이미지`}
+            layout="fill"
+            className={styles.image}
+          />
+        ) : (
+          <Image src={defaultIMG} alt="기본 이미지" className={styles.image} />
+        )}
+      </div>
       <div className={styles.body}>
         <div className={styles.header}>
           <p className={styles.name}>{comment.writer.name}</p>

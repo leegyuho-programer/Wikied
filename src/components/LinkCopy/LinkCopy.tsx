@@ -9,8 +9,8 @@ interface Props {
   onCopy: (isCopied: boolean) => void;
 }
 
-// const BASE_URL = `https://wikied.netlify.app`;
-const BASE_URL = `http://localhost:3000`;
+const BASE_URL = `https://wikied.netlify.app`;
+// const BASE_URL = `http://localhost:3000`;
 
 function LinkCopy({ profileId, onCopy }: Props) {
   const { user } = useStore();

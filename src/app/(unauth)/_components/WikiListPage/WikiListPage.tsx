@@ -41,8 +41,8 @@ function WikiListPage() {
             const codeId = response.list[0].code;
             const profile = await getProfileCode(codeId);
             setProfiles([profile]);
-            setProfileId(profile.id ?? null); // Nullish Coalescing 연산자 사용
-            setProfileImage(profile.image ?? null); // Nullish Coalescing 연산자 사용
+            setProfileId(profile.id ?? null);
+            setProfileImage(profile.image ?? null);
           } else {
             setProfiles([]);
             setProfileId(null);
@@ -55,8 +55,8 @@ function WikiListPage() {
           setProfiles(allProfiles);
           const firstProfile = allProfiles.length > 0 ? allProfiles[0] : null;
           if (firstProfile) {
-            setProfileId(firstProfile.id ?? null); // Nullish Coalescing 연산자 사용
-            setProfileImage(firstProfile.image ?? null); // Nullish Coalescing 연산자 사용
+            setProfileId(firstProfile.id ?? null);
+            setProfileImage(firstProfile.image ?? null);
           } else {
             setProfileId(null);
             setProfileImage(null);
@@ -85,16 +85,18 @@ function WikiListPage() {
             <Link key={profile.id} className={styles.wikiBox} href={`/user/${profile.id}`} passHref>
               <div className={styles.profile}>
                 <div className={styles.info}>
-                  {profile?.image ? (
-                    <Image
-                      src={profile.image}
-                      alt={`${profile.name}의 프로필 이미지`}
-                      layout="fill"
-                      className={styles.image}
-                    />
-                  ) : (
-                    <Image src={defaultIMG} alt="기본 이미지" className={styles.image} />
-                  )}
+                  <div className={styles.imageWrapper}>
+                    {profile?.image ? (
+                      <Image
+                        src={profile.image}
+                        alt={`${profile.name}의 프로필 이미지`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    ) : (
+                      <Image src={defaultIMG} alt="기본 이미지" layout="fill" objectFit="cover" />
+                    )}
+                  </div>
                   <div className={styles.intro}>
                     <p className={styles.name}>{profile.name}</p>
                     <p className={styles.data}>

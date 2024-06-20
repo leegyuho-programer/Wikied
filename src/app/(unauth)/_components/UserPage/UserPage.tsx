@@ -20,29 +20,19 @@ function UserPage() {
   const [myCode, setMyCode] = useState<string | null>(null);
   const { id } = useParams<{ id: string | string[] }>();
 
-  const {
-    isLogin,
-    user,
-    profileId,
-    profileImage,
-    setProfileImage,
-    setProfileId,
-    setSecurityQuestion,
-    modals,
-    showModal,
-    setPageId,
-  } = useStore((state) => ({
-    isLogin: state.isLogin,
-    user: state.user,
-    profileImage: state.profileImage,
-    setProfileImage: state.setProfileImage,
-    profileId: state.profileId,
-    setProfileId: state.setProfileId,
-    setSecurityQuestion: state.setSecurityQuestion,
-    modals: state.modals,
-    showModal: state.showModal,
-    setPageId: state.setPageId,
-  }));
+  const { isLogin, user, setProfileImage, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore(
+    (state) => ({
+      isLogin: state.isLogin,
+      user: state.user,
+      setProfileImage: state.setProfileImage,
+      profileId: state.profileId,
+      setProfileId: state.setProfileId,
+      setSecurityQuestion: state.setSecurityQuestion,
+      modals: state.modals,
+      showModal: state.showModal,
+      setPageId: state.setPageId,
+    })
+  );
 
   const handleClick = () => {
     showModal('quizModal');

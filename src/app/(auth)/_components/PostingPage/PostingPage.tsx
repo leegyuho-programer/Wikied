@@ -6,9 +6,11 @@ import { postImage } from '@/api/image/postImage';
 import { useStore } from '@/store';
 import styles from './PostingPage.module.css';
 import { postArticles } from '@/api/article/articles';
+import { useRouter } from 'next/navigation';
 
 export default function PostingPage() {
   const accessToken = useStore((state) => state.userAccessToken);
+  const router = useRouter();
 
   const {
     register,
@@ -45,6 +47,7 @@ export default function PostingPage() {
       const response = await postArticles(requestBody, accessToken);
       console.log('Article upload response:', response);
       alert('게시물이 성공적으로 업로드되었습니다.');
+      router.push('/freeBoard');
       return response;
     } catch (error) {
       console.error('업로드 실패:', error);

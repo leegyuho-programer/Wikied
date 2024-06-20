@@ -30,6 +30,7 @@ function LoginForm() {
       router.replace('/mypage');
     } catch (error: any) {
       console.error('Error:', error);
+      alert('비밀번호가 틀렸습니다.');
     }
   };
 
