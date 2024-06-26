@@ -12,6 +12,7 @@ import Link from 'next/link';
 import CommentContainer from '../Comment/CommentContainer';
 import { getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
+import Image from 'next/image';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -93,6 +94,9 @@ export default function ArticlePage() {
           </div>
         </div>
         <ArticleStrokeIcon />
+        <div className={styles.imageWrapper}>
+          <Image src={article.image} alt="대표 이미지" layout="fill" className={styles.image} />
+        </div>
         <div>{article.content}</div>
       </div>
       <Link href="/freeBoard" className={styles.link}>
