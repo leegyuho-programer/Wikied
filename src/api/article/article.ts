@@ -1,4 +1,9 @@
-import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '../../types/article';
+import {
+  DeleteArticleIdRequestType,
+  GetArticleIdResponseType,
+  PatchArticleRequestType,
+  PatchArticleResponseType,
+} from '../../types/article';
 import { authBasedRequest } from '../fetchRequestHandler';
 
 export const getArticle = async (articleId: number, accessToken: string): Promise<GetArticleIdResponseType> => {
@@ -34,6 +39,20 @@ export const patchArticle = async (
     });
     return response;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteArticle = async (articleId: number, token: string): Promise<DeleteArticleIdRequestType> => {
+  try {
+    const response = await authBasedRequest<DeleteArticleIdRequestType>({
+      url: `articles/${articleId}`,
+      method: 'DELETE',
+      token,
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };
