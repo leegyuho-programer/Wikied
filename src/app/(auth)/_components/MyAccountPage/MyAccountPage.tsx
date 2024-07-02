@@ -54,7 +54,6 @@ function MyAccountPage() {
   };
 
   const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
-    console.log('profileData', profileData);
     try {
       const response: PostProfileResponseType = await postProfile(profileData, accessToken);
       alert('질문이 등록되었습니다.');

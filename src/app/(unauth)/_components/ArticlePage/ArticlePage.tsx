@@ -24,25 +24,6 @@ export default function ArticlePage() {
   const [isLiked, setIsLiked] = useState<boolean>(false); // 좋아요 상태 관리
   const router = useRouter();
 
-  useEffect(() => {
-    console.log(id);
-    if (id) {
-      setArticleId(Number(id));
-      async function fetchArticle() {
-        try {
-          const response = await getArticle(Number(id), accessToken);
-          setArticle(response);
-          setIsLiked(response.isLiked); // 초기 좋아요 상태 설정
-        } catch (error) {
-          console.error('게시글을 불러오는 데 실패했습니다:', error);
-        }
-      }
-      fetchArticle();
-    } else {
-      console.log('게시글 ID가 정의되지 않았습니다.');
-    }
-  }, [id, accessToken, setArticleId]);
-
   const handleLikeClick = async () => {
     if (!article) return;
 
@@ -82,6 +63,24 @@ export default function ArticlePage() {
       alert('게시물 삭제에 실패했습니다.');
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      setArticleId(Number(id));
+      async function fetchArticle() {
+        try {
+          const response = await getArticle(Number(id), accessToken);
+          setArticle(response);
+          setIsLiked(response.isLiked); // 초기 좋아요 상태 설정
+        } catch (error) {
+          console.error('게시글을 불러오는 데 실패했습니다:', error);
+        }
+      }
+      fetchArticle();
+    } else {
+      console.log('게시글 ID가 정의되지 않았습니다.');
+    }
+  }, [id, accessToken, setArticleId]);
 
   if (!article) {
     return <div>로딩 중...</div>;
