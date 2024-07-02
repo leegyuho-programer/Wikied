@@ -10,7 +10,7 @@ import { GetArticleIdResponseType } from '@/types/article';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CommentContainer from '../Comment/CommentContainer';
 import styles from './ArticlePage.module.css';
 
@@ -19,7 +19,7 @@ export default function ArticlePage() {
   const user = useStore((state) => state.user);
   const setArticleId = useStore((state) => state.setArticleId);
   const pathname = usePathname();
-  const id = pathname.split('/').pop();
+  const id = Number(pathname.split('/').pop());
   const [article, setArticle] = useState<GetArticleIdResponseType | null>(null);
   const [isLiked, setIsLiked] = useState<boolean>(false); // 좋아요 상태 관리
   const router = useRouter();
@@ -30,20 +30,16 @@ export default function ArticlePage() {
     try {
       if (!isLiked) {
         // 좋아요 추가
-        await postLike(accessToken, Number(id));
-        setArticle((prevArticle) => ({
-          ...prevArticle!,
-          likeCount: prevArticle!.likeCount + 1,
-          isLiked: true,
-        }));
+        await postLike(accessToken, id);
+        setArticle((prevArticle) =>
+          prevArticle ? { ...prevArticle, likeCount: prevArticle.likeCount + 1, isLiked: true } : null
+        );
       } else {
         // 좋아요 제거
         await deleteLike(article.id, accessToken);
-        setArticle((prevArticle) => ({
-          ...prevArticle!,
-          likeCount: prevArticle!.likeCount - 1,
-          isLiked: false,
-        }));
+        setArticle((prevArticle) =>
+          prevArticle ? { ...prevArticle, likeCount: prevArticle.likeCount - 1, isLiked: false } : null
+        );
       }
       setIsLiked(!isLiked); // 좋아요 상태 토글
     } catch (error) {
@@ -64,26 +60,36 @@ export default function ArticlePage() {
     }
   };
 
+  const fetchArticle = useCallback(async () => {
+    try {
+      const response = await getArticle(id, accessToken);
+      setArticle(response);
+      setIsLiked(response.isLiked);
+    } catch (error) {
+      console.error('게시글을 불러오는 데 실패했습니다:', error);
+    }
+  }, [id, accessToken]);
+
   useEffect(() => {
     if (id) {
-      setArticleId(Number(id));
-      async function fetchArticle() {
-        try {
-          const response = await getArticle(Number(id), accessToken);
-          setArticle(response);
-          setIsLiked(response.isLiked); // 초기 좋아요 상태 설정
-        } catch (error) {
-          console.error('게시글을 불러오는 데 실패했습니다:', error);
-        }
-      }
+      setArticleId(id);
       fetchArticle();
     } else {
       console.log('게시글 ID가 정의되지 않았습니다.');
     }
-  }, [id, accessToken, setArticleId]);
+  }, [id, setArticleId, fetchArticle]);
 
   if (!article) {
-    return <div>로딩 중...</div>;
+    return (
+      <div className={styles.wrapperContainer}>
+        <div className={styles.errorContainer}>
+          <p className={styles.errorText}>게시글을 불러오는 데 실패했습니다. 다시 시도해 주세요.</p>
+          <Button variant="primary" onClick={fetchArticle} isLink={false} size="S">
+            다시 시도
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -123,7 +129,7 @@ export default function ArticlePage() {
       <Link href="/freeBoard" className={styles.link}>
         목록으로
       </Link>
-      <CommentContainer articleId={Number(id)} />
+      <CommentContainer articleId={id} />
     </div>
   );
 }
