@@ -5,7 +5,6 @@ import { useStore } from '@/store';
 import { PostCommentResponseType, GetCommentResponseType } from '@/types/comment';
 import { getComment, postComment } from '@/api/comment/comment';
 
-// props 타입 정의
 interface CommentContainerProps {
   articleId: number;
 }

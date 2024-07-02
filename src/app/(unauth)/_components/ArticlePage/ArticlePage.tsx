@@ -21,7 +21,7 @@ export default function ArticlePage() {
   const pathname = usePathname();
   const id = Number(pathname.split('/').pop());
   const [article, setArticle] = useState<GetArticleIdResponseType | null>(null);
-  const [isLiked, setIsLiked] = useState<boolean>(false); // 좋아요 상태 관리
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const router = useRouter();
 
   const handleLikeClick = async () => {
@@ -81,13 +81,9 @@ export default function ArticlePage() {
 
   if (!article) {
     return (
-      <div className={styles.wrapperContainer}>
-        <div className={styles.errorContainer}>
-          <p className={styles.errorText}>게시글을 불러오는 데 실패했습니다. 다시 시도해 주세요.</p>
-          <Button variant="primary" onClick={fetchArticle} isLink={false} size="S">
-            다시 시도
-          </Button>
-        </div>
+      <div className={styles.skeletonContainer}>
+        <div className={`${styles.skeleton} ${styles.skeletonContentContainer}`}></div>
+        <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
       </div>
     );
   }
