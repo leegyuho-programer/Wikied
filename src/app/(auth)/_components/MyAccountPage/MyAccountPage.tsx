@@ -57,7 +57,8 @@ function MyAccountPage() {
     console.log('profileData', profileData);
     try {
       const response: PostProfileResponseType = await postProfile(profileData, accessToken);
-      console.log('Profile updated successfully', response);
+      alert('질문이 등록되었습니다.');
+      router.push('mypage');
     } catch (error) {
       console.error('Failed to update profile', error);
     }

@@ -10,10 +10,6 @@ import Filter from '../Filter/Filter';
 import Pagination from '../Pagination/Pagination';
 import styles from './PaginationPage.module.css';
 
-interface PaginationPageProps {
-  articles: GetArticleResponseType['list'];
-}
-
 export default function PaginationPage() {
   const [articles, setArticles] = useState<GetArticleResponseType['list']>([]);
   const [filteredArticles, setFilteredArticles] = useState<GetArticleResponseType['list']>([]);
@@ -24,52 +20,51 @@ export default function PaginationPage() {
   const articlesPerPage = 10;
   const pageCount = Math.ceil(totalArticles / articlesPerPage);
 
-  const fetchArticles = async (page: number) => {
-    try {
-      const response = await getArticlePagination(page, articlesPerPage);
-      setArticles(response.list);
-      setTotalArticles(response.totalCount);
-    } catch (error) {
-      console.error('Failed to fetch articles:', error);
-    }
+  const fetchArticles = useCallback(
+    async (page: number) => {
+      try {
+        const response = await getArticlePagination(page, articlesPerPage);
+        setArticles(response.list);
+        setTotalArticles(response.totalCount);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [articlesPerPage]
+  );
+
+  const sortArticles = (articlesToSort: GetArticleResponseType['list'], option: string) => {
+    return articlesToSort.slice().sort((a, b) => {
+      if (option === '최신순') {
+        return b.id - a.id;
+      } else if (option === '인기순') {
+        return b.likeCount - a.likeCount;
+      }
+      return 0;
+    });
   };
 
-  const sortArticles = useCallback((articlesToSort: GetArticleResponseType['list'], option: string) => {
-    if (option === '최신순') {
-      return [...articlesToSort].sort((a, b) => b.id - a.id);
-    } else if (option === '인기순') {
-      return [...articlesToSort].sort((a, b) => b.likeCount - a.likeCount);
-    }
-    return articlesToSort;
-  }, []);
-
-  const filterArticles = useCallback((articlesToFilter: GetArticleResponseType['list'], searchTerm: string) => {
-    if (!searchTerm) {
-      return articlesToFilter;
-    }
+  const filterArticles = (articlesToFilter: GetArticleResponseType['list'], searchTerm: string) => {
+    if (!searchTerm) return articlesToFilter;
     return articlesToFilter.filter((article) => article.title.includes(searchTerm));
-  }, []);
+  };
 
-  const handlePageChange = useCallback((pageNumber: number) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-  }, []);
+  };
 
-  const handleSearch = useCallback((term: string) => {
+  const handleSearch = (term: string) => {
     setSearchTerm(term);
-  }, []);
+  };
 
   useEffect(() => {
     fetchArticles(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchArticles]);
 
   useEffect(() => {
-    let updatedArticles = articles;
-
-    updatedArticles = filterArticles(updatedArticles, searchTerm);
-    updatedArticles = sortArticles(updatedArticles, sortOption);
-
+    const updatedArticles = sortArticles(filterArticles(articles, searchTerm), sortOption);
     setFilteredArticles(updatedArticles);
-  }, [articles, searchTerm, sortOption, filterArticles, sortArticles]);
+  }, [articles, searchTerm, sortOption]);
 
   return (
     <div className={styles.container}>
