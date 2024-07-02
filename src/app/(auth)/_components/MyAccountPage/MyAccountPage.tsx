@@ -1,8 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 import patchPassword from '@/api/auth/patchPassword';
+import { postProfile } from '@/api/profile/profile';
 import Button from '@/components/Button/Button';
 import DropDown from '@/components/DropDown/DropDown';
 import Input from '@/components/Input/Input';
@@ -11,8 +10,9 @@ import { currentPasswordRules, signUpPasswordCheckRules, signUpPasswordRules } f
 import { useStore } from '@/store';
 import { PatchPassword } from '@/types/auth';
 import { PostProfileRequestType, PostProfileResponseType } from '@/types/profile';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 import styles from './MyAccountPage.module.css';
-import { postProfile } from '@/api/profile/profile';
 
 function MyAccountPage() {
   const router = useRouter();

@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { getArticles } from '@/api/article/articles';
 import Button from '@/components/Button/Button';
 import { GetArticleResponseType } from '@/types/article';
+import { useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';
-import { getArticles } from '@/api/article/articles';
 
 export default function FreeBoardPage() {
   const [articles, setArticles] = useState<GetArticleResponseType['list']>([]);

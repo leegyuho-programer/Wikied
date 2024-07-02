@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
 import getArticlePagination from '@/api/article/getArticlesPagination';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import LineStrokeIcon from '@/components/SvgComponents/StrokeIcon/LineStroke';
 import { GetArticleResponseType } from '@/types/article';
+import { useCallback, useEffect, useState } from 'react';
 import ArticleList from '../ArticleList/ArticleList';
 import Filter from '../Filter/Filter';
 import Pagination from '../Pagination/Pagination';
