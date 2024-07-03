@@ -48,9 +48,10 @@ export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
             alt={`${comment.writer.name}의 프로필 이미지`}
             layout="fill"
             className={styles.image}
+            loading="lazy"
           />
         ) : (
-          <Image src={defaultIMG} alt="기본 이미지" className={styles.image} />
+          <Image src={defaultIMG} alt="기본 이미지" className={styles.image} loading="lazy" />
         )}
       </div>
       <div className={styles.body}>

@@ -45,6 +45,8 @@ function NavigatorBox() {
                 height={32}
                 className={styles.profileImage}
                 onClick={toggleMenu}
+                loading="eager"
+                priority={true}
               />
             ) : (
               <Image
@@ -54,6 +56,8 @@ function NavigatorBox() {
                 height={32}
                 className={styles.profileImage}
                 onClick={toggleMenu}
+                loading="eager"
+                priority={true}
               />
             )}
             {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
