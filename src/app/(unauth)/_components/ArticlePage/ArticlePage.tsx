@@ -118,7 +118,14 @@ export default function ArticlePage() {
         </div>
         <ArticleStrokeIcon />
         <div className={styles.imageWrapper}>
-          <Image src={article.image} alt="대표 이미지" layout="fill" className={styles.image} />
+          <Image
+            src={article.image}
+            alt="대표 이미지"
+            layout="fill"
+            className={styles.image}
+            loading="eager"
+            priority={true}
+          />
         </div>
         <div>{article.content}</div>
       </div>
