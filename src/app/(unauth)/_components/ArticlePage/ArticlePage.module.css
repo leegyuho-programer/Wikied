@@ -47,6 +47,10 @@
   position: relative;
 }
 
+.image {
+  margin-bottom: 20px;
+}
+
 .content {
   display: flex;
   justify-content: space-between;
