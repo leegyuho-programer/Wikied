@@ -1,29 +1,35 @@
 .container {
-  max-width: 1060px;
   width: 100%;
+  max-width: 1060px;
   height: 144px;
-  display: flex;
-  gap: 20px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
-  align-items: center;
   padding: 30px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.imageWrapper {
+  width: 50px;
+  height: 50px;
+  top: -8px;
+  display: block;
+  border-radius: 100%;
+  position: relative;
 }
 
 .image {
-  /* width: 54px;
-  height: 50px; */
+  height: 100% !important;
   border-radius: 100%;
-  position: relative;
-  top: -8px;
 }
 
 .body {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
 }
 
 .header {
@@ -37,14 +43,14 @@
 }
 
 .name {
-  color: #474d66;
   font-size: 1.8rem;
   font-weight: 600;
+  color: #474d66;
 }
 
 .comment {
-  color: #474d66;
   font-size: 1.6rem;
+  color: #474d66;
 }
 
 .day {

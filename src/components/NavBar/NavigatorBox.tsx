@@ -43,6 +43,7 @@ function NavigatorBox() {
                 alt="프로필 이미지"
                 width={32}
                 height={32}
+                layout="responsive"
                 className={styles.profileImage}
                 onClick={toggleMenu}
                 loading="eager"
@@ -54,6 +55,7 @@ function NavigatorBox() {
                 alt="기본 이미지"
                 width={32}
                 height={32}
+                layout="responsive"
                 className={styles.profileImage}
                 onClick={toggleMenu}
                 loading="eager"

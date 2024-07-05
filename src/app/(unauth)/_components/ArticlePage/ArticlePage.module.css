@@ -40,34 +40,23 @@
   gap: 10px;
 }
 
-/* .imageWrapper {
-  width: 500px;
-  height: 400px;
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.image {
-  margin-bottom: 20px;
-} */
-
 .imageWrapper {
   width: 500px;
   height: 400px;
-  display: block;
   margin-bottom: 10px;
+  display: block;
 }
 
 .image {
-  object-fit: contain;
   height: 100% !important;
+  object-fit: contain;
 }
 
 .text {
-  color: #474d66;
+  margin-bottom: 10px;
   font-size: 1.6rem;
   line-height: 160%;
-  margin-bottom: 10px;
+  color: #474d66;
 }
 
 .content {
@@ -115,8 +104,8 @@
 
 .skeleton {
   background-color: #e0e0e0;
-  border-radius: 4px;
   animation: pulse 1.5s infinite;
+  border-radius: 4px;
 }
 
 @keyframes pulse {
