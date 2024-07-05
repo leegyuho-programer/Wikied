@@ -4,6 +4,7 @@
   align-items: center;
   cursor: pointer;
   display: block;
+  position: relative;
   width: 32px;
   height: 32px;
 }

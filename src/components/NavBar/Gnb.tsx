@@ -6,7 +6,7 @@ function Gnb() {
   return (
     <div className={styles.gnbs}>
       <Link href="/">
-        <Image src="/images/logo.png" alt="로고 이미지" width={107} height={30} />
+        <Image src="/images/logo.png" alt="로고 이미지" width={107} height={30} loading="eager" priority={true} />
       </Link>
       <Link href="/wikilist" className={styles.gnb}>
         위키목록
