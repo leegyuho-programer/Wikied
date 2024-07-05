@@ -41,18 +41,20 @@ export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.image}>
-        {comment.writer.image ? (
-          <Image
-            src={comment.writer.image}
-            alt={`${comment.writer.name}의 프로필 이미지`}
-            layout="fill"
-            className={styles.image}
-          />
-        ) : (
-          <Image src={defaultIMG} alt="기본 이미지" className={styles.image} />
-        )}
-      </div>
+      {/* <div className={styles.image}> */}
+      {comment.writer.image ? (
+        <Image
+          src={comment.writer.image}
+          alt={`${comment.writer.name}의 프로필 이미지`}
+          // layout="fill"
+          width={50}
+          height={50}
+          className={styles.image}
+        />
+      ) : (
+        <Image src={defaultIMG} alt="기본 이미지" className={styles.image} width={50} height={50} />
+      )}
+      {/* </div> */}
       <div className={styles.body}>
         <div className={styles.header}>
           <p className={styles.name}>{comment.writer.name}</p>

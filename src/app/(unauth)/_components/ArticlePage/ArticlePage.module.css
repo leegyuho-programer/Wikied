@@ -40,7 +40,7 @@
   gap: 10px;
 }
 
-.imageWrapper {
+/* .imageWrapper {
   width: 500px;
   height: 400px;
   margin-bottom: 20px;
@@ -49,6 +49,25 @@
 
 .image {
   margin-bottom: 20px;
+} */
+
+.imageWrapper {
+  width: 500px;
+  height: 400px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.image {
+  object-fit: contain;
+  height: 100% !important;
+}
+
+.text {
+  color: #474d66;
+  font-size: 1.6rem;
+  line-height: 160%;
+  margin-bottom: 10px;
 }
 
 .content {
