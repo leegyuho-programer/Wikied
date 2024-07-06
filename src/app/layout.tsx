@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import NavBar from '../components/NavBar/NavBar';
 import '../styles/globals.css';
+import ReactQueryProviders from '@/utils/ReactQueryProvider';
 
 export const metadata: Metadata = {
   title: 'Wikied',
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NavBar />
-        {children}
+        <ReactQueryProviders>
+          <NavBar />
+          {children}
+        </ReactQueryProviders>
       </body>
     </html>
   );
