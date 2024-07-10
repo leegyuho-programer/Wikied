@@ -10,7 +10,7 @@ import { DeleteArticleIdRequestType, DeleteLikeRequestType, GetArticleIdResponse
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CommentContainer from '../Comment/CommentContainer';
 import styles from './ArticlePage.module.css';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -19,7 +19,6 @@ import { PostLikeRequestType } from './../../../../types/article';
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
   const user = useStore((state) => state.user);
-  const setArticleId = useStore((state) => state.setArticleId);
   const pathname = usePathname();
   const id = Number(pathname.split('/').pop());
   const [isLikeClicked, setIsLikeClicked] = useState<boolean>(false);
