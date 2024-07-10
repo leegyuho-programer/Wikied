@@ -6,13 +6,15 @@ import Button from '@/components/Button/Button';
 import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
 import ArticleStrokeIcon from '@/components/SvgComponents/StrokeIcon/ArticleStrokeIcon';
 import { useStore } from '@/store';
-import { GetArticleIdResponseType } from '@/types/article';
+import { DeleteArticleIdRequestType, DeleteLikeRequestType, GetArticleIdResponseType } from '@/types/article';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import CommentContainer from '../Comment/CommentContainer';
 import styles from './ArticlePage.module.css';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { PostLikeRequestType } from './../../../../types/article';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -20,66 +22,83 @@ export default function ArticlePage() {
   const setArticleId = useStore((state) => state.setArticleId);
   const pathname = usePathname();
   const id = Number(pathname.split('/').pop());
-  const [article, setArticle] = useState<GetArticleIdResponseType | null>(null);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLikeClicked, setIsLikeClicked] = useState<boolean>(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const handleLikeClick = async () => {
-    if (!article) return;
-
-    try {
-      if (!isLiked) {
-        // 좋아요 추가
-        await postLike(accessToken, id);
-        setArticle((prevArticle) =>
-          prevArticle ? { ...prevArticle, likeCount: prevArticle.likeCount + 1, isLiked: true } : null
-        );
-      } else {
-        // 좋아요 제거
-        await deleteLike(article.id, accessToken);
-        setArticle((prevArticle) =>
-          prevArticle ? { ...prevArticle, likeCount: prevArticle.likeCount - 1, isLiked: false } : null
-        );
-      }
-      setIsLiked(!isLiked); // 좋아요 상태 토글
-    } catch (error) {
-      console.error('좋아요 처리에 실패했습니다:', error);
-    }
-  };
-
-  const handleDeleteClick = async () => {
-    if (!article) return;
-
-    try {
-      await deleteArticle(article.id, accessToken);
-      alert('게시물이 성공적으로 삭제되었습니다.');
-      router.push('/freeBoard');
-    } catch (error) {
-      console.error('게시물 삭제에 실패했습니다:', error);
-      alert('게시물 삭제에 실패했습니다.');
-    }
-  };
-
-  const fetchArticle = useCallback(async () => {
-    try {
-      const response = await getArticle(id, accessToken);
-      setArticle(response);
-      setIsLiked(response.isLiked);
-    } catch (error) {
-      console.error('게시글을 불러오는 데 실패했습니다:', error);
-    }
-  }, [id, accessToken]);
+  const {
+    data: article,
+    isPending,
+    error,
+  } = useQuery<GetArticleIdResponseType, Error>({
+    queryKey: ['getArticle', id],
+    queryFn: () => getArticle(id, accessToken),
+  });
 
   useEffect(() => {
-    if (id) {
-      setArticleId(id);
-      fetchArticle();
-    } else {
-      console.log('게시글 ID가 정의되지 않았습니다.');
+    if (article) {
+      setIsLikeClicked(article.isLiked);
     }
-  }, [id, setArticleId, fetchArticle]);
+  }, [article]);
 
-  if (!article) {
+  const deleteArticleMutation = useMutation({
+    mutationFn: ({ articleId: id, accessToken }: DeleteArticleIdRequestType) =>
+      deleteArticle(id, accessToken as string),
+    onSuccess: () => {
+      alert('게시물이 성공적으로 삭제되었습니다.');
+      router.push('/freeBoard');
+    },
+    onError: () => {
+      alert('게시물 삭제에 실패했습니다.');
+    },
+  });
+
+  const handleDeleteClick = () => {
+    if (!article) return;
+
+    deleteArticleMutation.mutate(
+      { articleId: id, accessToken },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
+        },
+        onError: (error) => {
+          console.error(error);
+        },
+      }
+    );
+  };
+
+  const postLikeMutation = useMutation({
+    mutationFn: ({ articleId: id, accessToken }: PostLikeRequestType) => postLike(accessToken as string, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
+    },
+  });
+
+  const deleteLikeMutation = useMutation({
+    mutationFn: ({ articleId: id, accessToken }: DeleteLikeRequestType) => deleteLike(id, accessToken as string),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
+    },
+  });
+
+  const handleLikeClick = () => {
+    if (!article) return;
+
+    if (!article.isLiked) {
+      postLikeMutation.mutate({ articleId: id, accessToken });
+    } else {
+      deleteLikeMutation.mutate({ articleId: id, accessToken });
+    }
+    setIsLikeClicked(!isLikeClicked);
+  };
+
+  if (error) {
+    return <div>에러가 발생했습니다: {error.message}</div>;
+  }
+
+  if (isPending) {
     return (
       <div className={styles.skeletonContainer}>
         <div className={`${styles.skeleton} ${styles.skeletonContentContainer}`}></div>
@@ -93,8 +112,8 @@ export default function ArticlePage() {
       <div className={styles.contentContainer}>
         <div className={styles.headerWrapper}>
           <div className={styles.header}>
-            <h1 className={styles.title}>{article.title}</h1>
-            {article.writer.name === user?.name && (
+            <h1 className={styles.title}>{article?.title}</h1>
+            {article?.writer.name === user?.name && (
               <div className={styles.buttons}>
                 <Button variant="primary" isLink={true} destination={`/article/${id}/articleEdit`} size="S">
                   수정하기
@@ -107,29 +126,31 @@ export default function ArticlePage() {
           </div>
           <div className={styles.content}>
             <div className={styles.user}>
-              <p>{article.writer.name}</p>
-              <p>{new Date(article.createdAt).toLocaleDateString()}</p>
+              <p>{article?.writer.name}</p>
+              {article?.createdAt && <p>{new Date(article.createdAt).toLocaleDateString()}</p>}
             </div>
             <div className={styles.like} onClick={handleLikeClick}>
-              <HeartIcon filled={isLiked} /> {/* filled prop으로 좋아요 여부 전달 */}
-              <p>{article.likeCount}</p>
+              <HeartIcon filled={isLikeClicked} />
+              <p>{article?.likeCount}</p>
             </div>
           </div>
         </div>
         <ArticleStrokeIcon />
         <div className={styles.imageWrapper}>
-          <Image
-            src={article.image}
-            alt="대표 이미지"
-            layout="responsive"
-            width={500}
-            height={400}
-            className={styles.image}
-            loading="eager"
-            priority={true}
-          />
+          {article?.image && (
+            <Image
+              src={article.image}
+              alt="대표 이미지"
+              layout="responsive"
+              width={500}
+              height={400}
+              className={styles.image}
+              loading="eager"
+              priority={true}
+            />
+          )}
         </div>
-        <div className={styles.text}>{article.content}</div>
+        <div className={styles.text}>{article?.content}</div>
       </div>
       <Link href="/freeBoard" className={styles.link}>
         목록으로

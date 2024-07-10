@@ -51,12 +51,14 @@ export interface PatchArticleResponseType extends PostArticleResponseType {
 
 export interface DeleteArticleIdRequestType {
   articleId: number;
+  accessToken?: string;
 }
 
 export interface PostArticleLinkRequestType extends PatchArticleResponseType {}
 
 export interface PostLikeRequestType {
-  articledId: string;
+  articleId: number;
+  accessToken?: string;
 }
 
 export interface PostLikeResponseType {
