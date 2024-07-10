@@ -4,6 +4,8 @@ import styles from './CommentContainer.module.css';
 import { useStore } from '@/store';
 import { PostCommentResponseType, GetCommentResponseType } from '@/types/comment';
 import { getComment, postComment } from '@/api/comment/comment';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { PostCommentRequestType } from './../../../../types/comment';
 
 interface CommentContainerProps {
   articleId: number;
@@ -11,38 +13,32 @@ interface CommentContainerProps {
 
 export default function CommentContainer({ articleId }: CommentContainerProps) {
   const [comment, setComment] = useState(''); // 댓글 입력 상태 관리
-  const [comments, setComments] = useState<GetCommentResponseType['list']>([]); // 댓글 리스트 상태 관리
   const accessToken = useStore((state) => state.userAccessToken);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    async function fetchComments() {
-      try {
-        const { list } = await getComment(articleId);
-        setComments(list);
-      } catch (error) {
-        console.error('댓글을 가져오는 중 오류가 발생했습니다:', error);
-      }
-    }
-    fetchComments();
-  }, [articleId]);
+  const {
+    data: comments = [],
+    isLoading,
+    error,
+  } = useQuery<GetCommentResponseType['list'], Error>({
+    queryKey: ['comments', articleId],
+    queryFn: () => getComment(articleId).then((response) => response.list),
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const newComment: PostCommentResponseType = await postComment({ content: comment }, accessToken, articleId);
-      setComments((prevComments) => [...prevComments, newComment]); // 새로운 댓글 리스트 업데이트
-      setComment(''); // 입력 필드 초기화
-    } catch (error) {
+  const postCommentMutation = useMutation({
+    mutationFn: (newComment: string) => postComment({ content: newComment }, accessToken, articleId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
+    },
+    onError: (error) => {
       console.error('댓글을 등록하는 중 오류가 발생했습니다:', error);
-    }
-  };
+    },
+  });
 
-  const handleUpdateComment = (updatedComment: GetCommentResponseType['list'][0]) => {
-    setComments((prevComments) => prevComments.map((cmt) => (cmt.id === updatedComment.id ? updatedComment : cmt)));
-  };
-
-  const handleDeleteComment = (commentId: number) => {
-    setComments((prevComments) => prevComments.filter((cmt) => cmt.id !== commentId));
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    postCommentMutation.mutate(comment);
+    setComment('');
   };
 
   return (
@@ -62,7 +58,7 @@ export default function CommentContainer({ articleId }: CommentContainerProps) {
         </button>
       </form>
       {comments.map((cmt) => (
-        <Comment key={cmt.id} comment={cmt} onUpdate={handleUpdateComment} onDelete={handleDeleteComment} />
+        <Comment key={cmt.id} comment={cmt} articleId={articleId} />
       ))}
     </div>
   );

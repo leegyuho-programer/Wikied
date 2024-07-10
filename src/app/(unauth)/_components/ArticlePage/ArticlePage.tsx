@@ -3,27 +3,25 @@
 import { deleteArticle, getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
 import Button from '@/components/Button/Button';
+import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
+import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
 import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
 import ArticleStrokeIcon from '@/components/SvgComponents/StrokeIcon/ArticleStrokeIcon';
 import { useStore } from '@/store';
 import { DeleteArticleIdRequestType, DeleteLikeRequestType, GetArticleIdResponseType } from '@/types/article';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import CommentContainer from '../Comment/CommentContainer';
-import styles from './ArticlePage.module.css';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostLikeRequestType } from './../../../../types/article';
-import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
-import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
+import styles from './ArticlePage.module.css';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
   const user = useStore((state) => state.user);
   const pathname = usePathname();
   const id = Number(pathname.split('/').pop());
-  const [isLikeClicked, setIsLikeClicked] = useState<boolean>(false);
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -36,21 +34,11 @@ export default function ArticlePage() {
     queryFn: () => getArticle(id, accessToken),
   });
 
-  useEffect(() => {
-    if (article) {
-      setIsLikeClicked(article.isLiked);
-    }
-  }, [article]);
-
   const deleteArticleMutation = useMutation({
     mutationFn: ({ articleId: id, accessToken }: DeleteArticleIdRequestType) =>
       deleteArticle(id, accessToken as string),
     onSuccess: () => {
-      alert('게시물이 성공적으로 삭제되었습니다.');
-      router.push('/freeBoard');
-    },
-    onError: () => {
-      alert('게시물 삭제에 실패했습니다.');
+      queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
   });
 
@@ -61,10 +49,11 @@ export default function ArticlePage() {
       { articleId: id, accessToken },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
+          alert('게시물이 성공적으로 삭제되었습니다.');
+          router.push('/freeBoard');
         },
         onError: (error) => {
-          console.error(error);
+          alert('게시물 삭제에 실패했습니다.');
         },
       }
     );
@@ -92,7 +81,6 @@ export default function ArticlePage() {
     } else {
       deleteLikeMutation.mutate({ articleId: id, accessToken });
     }
-    setIsLikeClicked(!isLikeClicked);
   };
 
   if (error) {
@@ -137,7 +125,7 @@ export default function ArticlePage() {
               {article?.createdAt && <p>{new Date(article.createdAt).toLocaleDateString()}</p>}
             </div>
             <div className={styles.like} onClick={handleLikeClick}>
-              <HeartIcon filled={isLikeClicked} />
+              <HeartIcon />
               <p>{article?.likeCount}</p>
             </div>
           </div>

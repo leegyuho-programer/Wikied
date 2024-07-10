@@ -1,5 +1,7 @@
 export interface PostCommentRequestType {
   content: string;
+  accessToken?: string;
+  articleId?: number;
 }
 
 export interface PostCommentResponseType {

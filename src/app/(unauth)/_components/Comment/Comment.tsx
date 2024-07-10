@@ -1,42 +1,52 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
+import { deleteComment, patchComment } from '@/api/comment/comment';
 import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
 import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
-import styles from './Comment.module.css';
 import { useStore } from '@/store';
 import { GetCommentResponseType } from '@/types/comment';
-import { deleteComment, patchComment } from '@/api/comment/comment';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
+import { useState } from 'react';
 import defaultIMG from '../../../../../public/images/default.jpg';
+import styles from './Comment.module.css';
 
 interface CommentProps {
   comment: GetCommentResponseType['list'][number];
-  onUpdate: (updatedComment: GetCommentResponseType['list'][number]) => void;
-  onDelete: (commentId: number) => void;
+  articleId: number;
 }
 
-export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
+export default function Comment({ comment, articleId }: CommentProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const accessToken = useStore((state) => state.userAccessToken);
   const currentUserId = useStore((state) => state.userId); // 현재 로그인한 사용자의 ID 가져오기
+  const queryClient = useQueryClient();
 
-  const handleEdit = async () => {
-    try {
-      const updatedComment = await patchComment({ content: editContent }, accessToken, comment.id);
-      onUpdate(updatedComment);
-      setIsEditing(false);
-    } catch (error) {
+  const patchCommentMutation = useMutation({
+    mutationFn: () => patchComment({ content: editContent }, accessToken, comment.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
+    },
+    onError: (error) => {
       console.error('댓글을 수정하는 중 오류가 발생했습니다:', error);
-    }
+    },
+  });
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: () => deleteComment(comment.id, accessToken),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
+    },
+    onError: (error) => {
+      console.error('댓글을 삭제하는 중 오류가 발생했습니다:', error);
+    },
+  });
+
+  const handleEdit = () => {
+    patchCommentMutation.mutate();
   };
 
   const handleDelete = async () => {
-    try {
-      await deleteComment(comment.id, accessToken);
-      onDelete(comment.id);
-    } catch (error) {
-      console.error('댓글을 삭제하는 중 오류가 발생했습니다:', error);
-    }
+    deleteCommentMutation.mutate();
   };
 
   return (
