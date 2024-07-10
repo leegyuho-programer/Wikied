@@ -15,6 +15,8 @@ import CommentContainer from '../Comment/CommentContainer';
 import styles from './ArticlePage.module.css';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PostLikeRequestType } from './../../../../types/article';
+import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
+import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -113,14 +115,20 @@ export default function ArticlePage() {
           <div className={styles.header}>
             <h1 className={styles.title}>{article?.title}</h1>
             {article?.writer.name === user?.name && (
-              <div className={styles.buttons}>
-                <Button variant="primary" isLink={true} destination={`/article/${id}/articleEdit`} size="S">
-                  수정하기
-                </Button>
-                <Button variant="secondary" isLink={false} onClick={handleDeleteClick} size="S">
-                  삭제하기
-                </Button>
-              </div>
+              <>
+                <div className={styles.buttons}>
+                  <Button variant="primary" isLink={true} destination={`/article/${id}/articleEdit`} size="S">
+                    수정하기
+                  </Button>
+                  <Button variant="secondary" isLink={false} onClick={handleDeleteClick} size="S">
+                    삭제하기
+                  </Button>
+                </div>
+                <div className={styles.icons}>
+                  <EditIcon onClick={() => router.push(`/article/${id}/articleEdit`)} />
+                  <DeleteIcon onClick={handleDeleteClick} />
+                </div>
+              </>
             )}
           </div>
           <div className={styles.content}>

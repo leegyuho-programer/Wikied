@@ -65,7 +65,7 @@ export default function Comment({ comment, onUpdate, onDelete }: CommentProps) {
       <div className={styles.body}>
         <div className={styles.header}>
           <p className={styles.name}>{comment.writer.name}</p>
-          {currentUserId === comment.writer.id && ( // 현재 사용자가 댓글 작성자인 경우에만 아이콘 표시
+          {currentUserId === comment.writer.id && (
             <div className={styles.icon}>
               <EditIcon onClick={() => setIsEditing(!isEditing)} />
               <DeleteIcon onClick={handleDelete} />

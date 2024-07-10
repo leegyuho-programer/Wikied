@@ -57,4 +57,9 @@
   .dropdown {
     display: block;
   }
+
+  .profile {
+    width: 24px;
+    height: 24px;
+  }
 }

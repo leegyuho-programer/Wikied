@@ -56,3 +56,20 @@
   right: 10px;
   bottom: 10px;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 624px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 15px;
+    max-width: 335px;
+  }
+
+  .span {
+    font-size: 1.6rem;
+  }
+}
