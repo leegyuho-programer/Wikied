@@ -43,6 +43,7 @@ export default function Comment({ comment, articleId }: CommentProps) {
 
   const handleEdit = () => {
     patchCommentMutation.mutate();
+    setIsEditing(false);
   };
 
   const handleDelete = async () => {
@@ -83,10 +84,18 @@ export default function Comment({ comment, articleId }: CommentProps) {
           )}
         </div>
         {isEditing ? (
-          <div>
-            <textarea value={editContent} onChange={(e) => setEditContent(e.target.value)} />
-            <button onClick={handleEdit}>저장</button>
-            <button onClick={() => setIsEditing(false)}>취소</button>
+          <div className={styles.editMode}>
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              className={styles.textarea}
+            />
+            <button onClick={handleEdit} className={styles.saveButton}>
+              저장
+            </button>
+            <button onClick={() => setIsEditing(false)} className={styles.cancelButton}>
+              취소
+            </button>
           </div>
         ) : (
           <p className={styles.comment}>{comment.content}</p>

@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { getComment, postComment } from '@/api/comment/comment';
+import { useStore } from '@/store';
+import { GetCommentResponseType } from '@/types/comment';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import Comment from './Comment';
 import styles from './CommentContainer.module.css';
-import { useStore } from '@/store';
-import { PostCommentResponseType, GetCommentResponseType } from '@/types/comment';
-import { getComment, postComment } from '@/api/comment/comment';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { PostCommentRequestType } from './../../../../types/comment';
 
 interface CommentContainerProps {
   articleId: number;

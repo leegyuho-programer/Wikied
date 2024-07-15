@@ -1,21 +1,21 @@
 .container {
+  width: 100%;
+  max-width: 1060px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 20px;
-  justify-content: center;
-  align-items: center;
-  max-width: 1060px;
-  width: 100%;
 }
 
 .comment {
-  display: flex;
   width: 100%;
-  color: #474d66;
+  display: flex;
+  gap: 5px;
   font-size: 1.8rem;
   font-weight: 600;
+  color: #474d66;
   text-align: center;
-  gap: 5px;
 }
 
 .span {
@@ -27,34 +27,34 @@
 .form {
   width: 100%;
   height: 140px;
-  position: relative;
   margin-bottom: 60px;
+  position: relative;
 }
 
 .textarea {
   width: 100%;
   height: 140px;
-  border-radius: 10px;
-  background: #f7f7fa;
   padding: 20px;
   border: none;
   outline: none;
+  background: #f7f7fa;
+  border-radius: 10px;
 }
 
 .button {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 120px;
   height: 45px;
-  background-color: #4cbfa4;
-  color: #fff;
-  font-weight: 600;
   border: none;
-  border-radius: 10px;
+  position: absolute;
   right: 10px;
   bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4cbfa4;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
 }
 
 @media (max-width: 1200px) {
@@ -65,8 +65,8 @@
 
 @media (max-width: 768px) {
   .container {
-    gap: 15px;
     max-width: 335px;
+    gap: 15px;
   }
 
   .span {

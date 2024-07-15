@@ -11,6 +11,10 @@
   border-radius: 10px;
 }
 
+.container:last-child {
+  margin-bottom: 40px;
+}
+
 .imageWrapper {
   width: 50px;
   height: 50px;
@@ -55,6 +59,37 @@
 
 .day {
   color: #8f95b2;
+}
+
+.editMode {
+  display: flex;
+  gap: 10px;
+}
+
+.textarea {
+  width: 90%;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  outline: none;
+  background: #f7f7fa;
+  border-radius: 10px;
+}
+
+.saveButton {
+  width: 50px;
+  background-color: #4cbfa4;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+}
+
+.cancelButton {
+  width: 50px;
+  background-color: #4cbfa4;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
 }
 
 @media (max-width: 1200px) {
