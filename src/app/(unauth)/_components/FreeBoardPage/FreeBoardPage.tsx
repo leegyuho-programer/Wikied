@@ -3,29 +3,27 @@
 import { getArticles } from '@/api/article/articles';
 import Button from '@/components/Button/Button';
 import { GetArticleResponseType } from '@/types/article';
-import { useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useRef, useState } from 'react';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';
 
 export default function FreeBoardPage() {
-  const [articles, setArticles] = useState<GetArticleResponseType['list']>([]);
   const [scrollX, setScrollX] = useState(0);
   const cardWrapperRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        const response = await getArticles();
-        console.log(response);
-        setArticles(response.list);
-      } catch (error) {
-        console.error('Failed to fetch articles:', error);
-      }
-    }
-
-    fetchArticles();
-  }, []);
+  const {
+    data: articles = [],
+    isPending,
+    error,
+  } = useQuery<GetArticleResponseType['list'], Error>({
+    queryKey: ['getArticles'],
+    queryFn: async () => {
+      const response = await getArticles();
+      return response.list;
+    },
+  });
 
   const scrollLeft = () => {
     if (cardWrapperRef.current) {
@@ -43,6 +41,9 @@ export default function FreeBoardPage() {
       setScrollX(newX);
     }
   };
+
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>An error has occurred: {error.message}</div>;
 
   return (
     <div className={styles.container}>

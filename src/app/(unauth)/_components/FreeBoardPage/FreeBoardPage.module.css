@@ -38,8 +38,8 @@
 }
 
 .card {
-  max-width: 1060px;
   width: 100%;
+  max-width: 1060px;
   overflow-x: hidden;
   display: flex;
   gap: 20px;
