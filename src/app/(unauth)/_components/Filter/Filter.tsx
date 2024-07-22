@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Filter.module.css';
 import DropDownIcon from '@/components/SvgComponents/DropDownIcon';
 
@@ -13,6 +13,7 @@ const options = ['최신순', '인기순'];
 function Filter({ onSortChange }: FilterProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('최신순');
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -24,8 +25,22 @@ function Filter({ onSortChange }: FilterProps) {
     onSortChange(option); // 정렬 기준 변경 이벤트를 부모 컴포넌트로 전달
   };
 
+  useEffect(() => {
+    // 외부 클릭을 감지하는 이벤트 핸들러
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={styles.containerWrapper}>
+    <div className={styles.containerWrapper} ref={dropdownRef}>
       <div className={styles.container}>
         <button
           aria-haspopup="listbox"

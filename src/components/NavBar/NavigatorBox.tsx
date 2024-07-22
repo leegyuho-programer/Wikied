@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useStore } from '@/store';
 import Button from '../Button/Button';
@@ -21,6 +21,7 @@ function NavigatorBox() {
     profileId: state.profileId,
   }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,10 +33,23 @@ function NavigatorBox() {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       {isLogin ? (
-        <div>
+        <div ref={dropdownRef}>
           <div className={styles.profile}>
             {profileImage ? (
               <Image
