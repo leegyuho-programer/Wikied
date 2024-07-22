@@ -42,8 +42,26 @@ export default function FreeBoardPage() {
     }
   };
 
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>An error has occurred: {error.message}</div>;
+  if (isPending) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
+        </div>
+        <div className={styles.skeletonCardWrapper}>
+          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
+        </div>
+        <div className={`${styles.skeleton} ${styles.skeletonSearch}`}></div>
+        <div className={`${styles.skeleton} ${styles.skeletonPagination}`}></div>
+      </div>
+    );
+  }
+
+  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
 
   return (
     <div className={styles.container}>

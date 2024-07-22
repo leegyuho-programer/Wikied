@@ -134,6 +134,55 @@
   gap: 20px;
 }
 
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.skeleton {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 45px;
+}
+
+.skeletonButton {
+  width: 160px;
+  height: 45px;
+}
+
+.skeletonCardWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.skeletonCard {
+  width: 250px;
+  height: 220px;
+  border-radius: 10px;
+}
+
+.skeletonSearch {
+  width: 1060px;
+  height: 45px;
+}
+
+.skeletonPagination {
+  width: 1060px;
+  height: 600px;
+}
+
 @media (max-width: 1200px) {
   .header {
     max-width: 624px;
@@ -172,6 +221,15 @@
   }
 
   .button {
+    width: 130px;
+  }
+
+  .skeletonTitle {
+    width: 140px;
+    height: 45px;
+  }
+
+  .skeletonButton {
     width: 130px;
   }
 }
