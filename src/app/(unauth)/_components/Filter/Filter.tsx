@@ -27,14 +27,20 @@ function Filter({ onSortChange }: FilterProps) {
   return (
     <div className={styles.containerWrapper}>
       <div className={styles.container}>
-        <input
-          type="text"
-          value={selectedOption}
-          placeholder="질문 없음"
-          readOnly
-          className={`${styles.input} ${isOpen ? styles.focus : ''}`}
-        />
-        <button className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleDropdown}>
+        <button
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          className={styles.input}
+          onClick={toggleDropdown}
+          // onKeyDown={handleKeyDown}
+        >
+          {selectedOption}
+        </button>
+        <button
+          className={`${styles.button} ${isOpen ? styles.rotate : ''}`}
+          onClick={toggleDropdown}
+          aria-label="정렬 옵션 선택"
+        >
           <DropDownIcon />
         </button>
       </div>

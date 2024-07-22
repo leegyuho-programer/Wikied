@@ -37,7 +37,7 @@
 }
 
 .rotate {
-  background-color: #fff;
+  /* background-color: #fff; */
   transform: rotate(180deg);
 }
 
@@ -69,10 +69,10 @@
   background-color: #eef9f6;
 }
 
-.focus {
+/* .focus {
   border: 1px solid #4cbfa4;
   background-color: #fff;
-}
+} */
 
 .backgroundWhite {
   background-color: #fff;
