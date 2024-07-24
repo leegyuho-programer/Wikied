@@ -90,11 +90,18 @@ function WikiListPage() {
                       <Image
                         src={profile.image}
                         alt={`${profile.name}의 프로필 이미지`}
-                        layout="fill"
-                        objectFit="cover"
+                        style={{ objectFit: 'fill', width: '100%', height: '100%' }}
+                        width={85}
+                        height={85}
                       />
                     ) : (
-                      <Image src={defaultIMG} alt="기본 이미지" layout="fill" objectFit="cover" />
+                      <Image
+                        src={defaultIMG}
+                        alt="기본 이미지"
+                        style={{ objectFit: 'fill', width: '100%', height: '100%' }}
+                        width={85}
+                        height={85}
+                      />
                     )}
                   </div>
                   <div className={styles.intro}>
