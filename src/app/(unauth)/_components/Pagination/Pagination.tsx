@@ -14,8 +14,7 @@ interface PaginationProps {
 const Pagination = ({ currentPage, totalArticles, articlesPerPage, pageCount, onPageChange }: PaginationProps) => {
   const totalPages = Math.ceil(totalArticles / articlesPerPage); // 총 페이지 개수
   const [start, setStart] = useState(1); // 시작 페이지
-  const noPrev = start === 1; // 이전 페이지가 없는 경우
-  const noNext = start + pageCount - 1 >= totalPages; // 다음 페이지가 없는 경우
+  const end = Math.min(start + pageCount - 1, totalPages);
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -24,7 +23,8 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, pageCount, on
   };
 
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+
+  for (let i = start; i <= end; i++) {
     pageNumbers.push(i);
   }
 

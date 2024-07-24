@@ -1,22 +1,17 @@
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useStore } from '@/store';
 import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
 import LinkContent from './LinkContent';
 import styles from './LinkCopy.module.css';
-import { useStore } from '@/store';
 
 interface Props {
   profileId: number;
   onCopy: (isCopied: boolean) => void;
 }
 
-const BASE_URL = `https://wikied.netlify.app`;
-// const BASE_URL = `http://localhost:3000`;
+const BASE_URL = `https://wikied.vercel.app`;
 
 function LinkCopy({ profileId, onCopy }: Props) {
   const { user } = useStore();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  // const currentURL = `${BASE_URL}${pathname}?${searchParams.toString()}${ID}`;
   const currentURL = `${BASE_URL}/user/${profileId}`;
 
   const handleCopy = async () => {
