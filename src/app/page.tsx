@@ -31,6 +31,7 @@ function Home() {
           <Image src={Image1} alt="예시 이미지" layout="fill" objectFit="cover" />
         </div>
         <div className={styles.circleBackground}></div>
+
         <div className={styles.sectionContainer}>
           <div className={styles.sectionWrapper}>
             <div className={styles.section}>

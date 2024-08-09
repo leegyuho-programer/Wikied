@@ -9,9 +9,9 @@ function LoginPage() {
         <p className={styles.title}>로그인</p>
         <LoginForm />
         <div className={styles.text}>
-          <Link href="/resetPassword">비밀번호 재설정</Link>
+          <p>회원이 아니신가요?</p>
           <Link href="/signup" className={styles.link}>
-            회원가입
+            회원가입하기
           </Link>
         </div>
       </div>

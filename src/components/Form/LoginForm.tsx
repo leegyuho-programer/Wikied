@@ -9,29 +9,41 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
 import login from '@/api/auth/login';
+import { useMutation } from '@tanstack/react-query';
 
 function LoginForm() {
   const router = useRouter();
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<PostLogin>({ mode: 'onBlur' });
 
   const setLogin = useStore((state) => state.setLogin);
 
-  const handleLogin = async (data: PostLogin) => {
-    try {
-      const response = await login(data);
-      console.log('Response Data:', response);
-
-      setLogin(response.user, response.accessToken, response.refreshToken, data.password, response.user.profile?.code);
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (response, variables) => {
+      // response는 mutation함수가 성공적으로 실행된 후 반환하는 값
+      // variables는 mutation을 실행할 때 전달한 인자
+      setLogin(
+        response.user,
+        response.accessToken,
+        response.refreshToken,
+        variables.password,
+        response.user.profile?.code
+      );
       alert('로그인이 완료되었습니다.');
       router.replace('/mypage');
-    } catch (error: any) {
+    },
+    onError: (error) => {
       console.error('Error:', error);
       alert('비밀번호가 틀렸습니다.');
-    }
+    },
+  });
+
+  const handleLogin = (data: PostLogin) => {
+    loginMutation.mutate(data);
   };
 
   return (
@@ -52,7 +64,7 @@ function LoginForm() {
           register={register('password', signUpPasswordRules)}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
+        <Button isLink={false} type="submit" size="L" variant="primary" disabled={loginMutation.isPending}>
           로그인
         </Button>
       </form>

@@ -24,8 +24,8 @@ function WikiListPage() {
   const [profiles, setProfiles] = useState<GetProfileCodeResponseType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(3); // 페이지 크기 고정 (필요에 따라 조정 가능)
   const [totalProfiles, setTotalProfiles] = useState(0); // 총 프로필 수
+  const pageSize = 3; // 페이지 크기 고정 (필요에 따라 조정 가능)
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
