@@ -16,7 +16,7 @@ function SignUpForm() {
     handleSubmit,
     register,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
 
   const passwordValue = watch('password');
@@ -69,7 +69,7 @@ function SignUpForm() {
           register={register('passwordConfirmation', signUpPasswordCheckRules(passwordValue))}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
+        <Button isLink={false} type="submit" size="L" variant="primary" disabled={signUpMutation.isPending}>
           다음
         </Button>
       </form>
