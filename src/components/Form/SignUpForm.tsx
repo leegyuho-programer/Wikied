@@ -8,6 +8,7 @@ import Input from '../Input/Input';
 import styles from './Form.module.css';
 import { nicknameRules, emailRules, signUpPasswordRules, signUpPasswordCheckRules } from '@/constants/inputErrorRules';
 import signUp from '@/api/auth/signUp';
+import { useMutation } from '@tanstack/react-query';
 
 function SignUpForm() {
   const router = useRouter();
@@ -20,14 +21,19 @@ function SignUpForm() {
 
   const passwordValue = watch('password');
 
-  const handleSignUp = async (data: PostSignUp) => {
-    try {
-      await signUp(data);
+  const signUpMutation = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
       alert('회원가입이 완료되었습니다.');
-      router.replace('/login'); // 회원가입 성공 후 로그인 페이지로 이동
-    } catch (error) {
+      router.replace('/login');
+    },
+    onError: (error) => {
       console.error('Error:', error);
-    }
+    },
+  });
+
+  const handleSignUp = (data: PostSignUp) => {
+    signUpMutation.mutate(data);
   };
 
   return (
