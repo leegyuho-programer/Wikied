@@ -16,7 +16,7 @@ function SignUpForm() {
     handleSubmit,
     register,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<PostSignUp>({ mode: 'onBlur' });
 
   const passwordValue = watch('password');
@@ -27,8 +27,8 @@ function SignUpForm() {
       alert('회원가입이 완료되었습니다.');
       router.replace('/login');
     },
-    onError: (error) => {
-      console.error('Error:', error);
+    onError: () => {
+      alert('회원가입 중 오류가 발생했습니다.');
     },
   });
 
@@ -69,7 +69,7 @@ function SignUpForm() {
           register={register('passwordConfirmation', signUpPasswordCheckRules(passwordValue))}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={signUpMutation.isPending}>
+        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
           다음
         </Button>
       </form>

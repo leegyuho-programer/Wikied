@@ -16,7 +16,7 @@ function LoginForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<PostLogin>({ mode: 'onBlur' });
 
   const setLogin = useStore((state) => state.setLogin);
@@ -64,7 +64,7 @@ function LoginForm() {
           register={register('password', signUpPasswordRules)}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={loginMutation.isPending}>
+        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
           로그인
         </Button>
       </form>
