@@ -94,7 +94,10 @@ function UserPage() {
       <div className={styles.section}>
         <SideBar profileData={profileCodeResponse} showEditButton={false} />
         {profileCodeResponse?.content ? (
-          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(profileCodeResponse.content) }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(profileCodeResponse.content) }}
+            className={styles.content}
+          />
         ) : (
           <div className={styles.noData}>
             <p className={styles.text}>
