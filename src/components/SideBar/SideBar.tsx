@@ -282,7 +282,11 @@ function SideBar({ profileData, showEditButton }: Props) {
           </div>
           {showEditButton && (
             <div className={styles.buttonWrapper}>
-              <button type="submit" className={styles.button} disabled={updateProfileMutation.isPending}>
+              <button
+                type="submit"
+                className={`${styles.button} ${updateProfileMutation.isPending ? styles.buttonDisabled : ''}`}
+                disabled={updateProfileMutation.isPending}
+              >
                 수정하기
               </button>
             </div>

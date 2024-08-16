@@ -166,6 +166,12 @@
   border: none;
 }
 
+.buttonDisabled {
+  background-color: #c6cada;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
 .answer {
   max-width: 100%;
   height: 40px;
