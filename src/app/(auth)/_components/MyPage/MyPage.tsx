@@ -13,6 +13,7 @@ import { getProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
 import DOMPurify from 'dompurify';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import MyPageSkeleton from './MyPageSkeleton';
 
 function MyPage() {
   const { user, profileId, profileImage, setProfileId, setProfileImage, securityAnswer, accessToken } = useStore(
@@ -85,15 +86,7 @@ function MyPage() {
   };
 
   if (isPending) {
-    return (
-      <div className={styles.skeletonContainer}>
-        <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
-        <div className={styles.skeletonSection}>
-          <div className={`${styles.skeleton} ${styles.skeletonSideBarContainer}`}></div>
-          <div className={`${styles.skeleton} ${styles.skeletonContent}`}></div>
-        </div>
-      </div>
-    );
+    return <MyPageSkeleton />;
   }
 
   return (
