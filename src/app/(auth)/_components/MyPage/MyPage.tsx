@@ -89,7 +89,7 @@ function MyPage() {
       <div className={styles.skeletonContainer}>
         <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
         <div className={styles.skeletonSection}>
-          <div className={`${styles.skeleton} ${styles.skeletonSidebar}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonSideBarContainer}`}></div>
           <div className={`${styles.skeleton} ${styles.skeletonContent}`}></div>
         </div>
       </div>

@@ -3,9 +3,9 @@
 import { postImage } from '@/api/image/postImage';
 import { patchProfileCode } from '@/api/profile/profileCode';
 import { useStore } from '@/store';
+import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
 import defaultIMG from '../../../public/images/default.jpg';
 import ArrowDownIcon from '../SvgComponents/ArrowDownIcon/ArrowDownIcon';
 import CameraIcon from '../SvgComponents/CameraIcon/CameraIcon';
@@ -74,7 +74,6 @@ function SideBar({ profileData, showEditButton }: Props) {
     }));
   };
 
-  // Mutation for profile update
   const updateProfileMutation = useMutation({
     mutationFn: () =>
       patchProfileCode(
