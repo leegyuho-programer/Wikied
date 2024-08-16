@@ -16,6 +16,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import CommentContainer from '../Comment/CommentContainer';
 import { PostLikeRequestType } from './../../../../types/article';
 import styles from './ArticlePage.module.css';
+import ArticlePageSkeleton from './ArticlePageSkeleton';
 
 export default function ArticlePage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -88,12 +89,7 @@ export default function ArticlePage() {
   }
 
   if (isPending) {
-    return (
-      <div className={styles.skeletonContainer}>
-        <div className={`${styles.skeleton} ${styles.skeletonContentContainer}`}></div>
-        <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
-      </div>
-    );
+    return <ArticlePageSkeleton />;
   }
 
   return (

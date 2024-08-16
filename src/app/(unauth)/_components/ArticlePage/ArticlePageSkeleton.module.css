@@ -1,0 +1,57 @@
+.skeleton {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.skeletonContainer {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.skeletonContentContainer {
+  width: 1060px;
+  height: 641px;
+  margin-top: 60px;
+}
+
+.skeletonButton {
+  width: 140px;
+  height: 45px;
+}
+
+@media (max-width: 1200px) {
+  .skeletonContainer {
+    gap: 40px;
+  }
+
+  .skeletonContentContainer {
+    width: 624px;
+    height: 693px;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .skeletonContentContainer {
+    width: 335px;
+    height: 530px;
+    margin-top: 40px;
+  }
+}

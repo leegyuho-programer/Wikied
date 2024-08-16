@@ -29,7 +29,7 @@ function MyPage() {
   const [isCopied, setIsCopied] = useState(false);
 
   // Profile 데이터 가져오기
-  const { data: profileData } = useQuery({
+  const { data: profileData, isPending } = useQuery({
     queryKey: ['profile', user?.name],
     queryFn: () => getProfile(1, 10, user.name),
     enabled: !!user?.name,
@@ -83,6 +83,18 @@ function MyPage() {
       }
     }
   };
+
+  if (isPending) {
+    return (
+      <div className={styles.skeletonContainer}>
+        <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
+        <div className={styles.skeletonSection}>
+          <div className={`${styles.skeleton} ${styles.skeletonSidebar}`}></div>
+          <div className={`${styles.skeleton} ${styles.skeletonContent}`}></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

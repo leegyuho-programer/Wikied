@@ -5,6 +5,7 @@ import { patchProfileCode } from '@/api/profile/profileCode';
 import { useStore } from '@/store';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
 import defaultIMG from '../../../public/images/default.jpg';
 import ArrowDownIcon from '../SvgComponents/ArrowDownIcon/ArrowDownIcon';
 import CameraIcon from '../SvgComponents/CameraIcon/CameraIcon';
@@ -17,6 +18,7 @@ interface Props {
 
 function SideBar({ profileData, showEditButton }: Props) {
   const accessToken = useStore((state) => state.userAccessToken);
+  const queryClient = useQueryClient();
   const [showAll, setShowAll] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -41,19 +43,26 @@ function SideBar({ profileData, showEditButton }: Props) {
     setShowAll(!showAll);
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const imageUrl = await handleImageUpload(file);
-      setProfileImage(imageUrl);
+  // Mutation for image upload
+  const uploadImageMutation = useMutation({
+    mutationFn: (file: File) => postImage(file, accessToken),
+    onSuccess: (data) => {
+      setProfileImage(data.url);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        image: imageUrl,
+        image: data.url,
       }));
-    } catch (error) {
+      console.log('Image uploaded successfully:', data.url);
+    },
+    onError: (error) => {
       console.error('이미지 업로드 중 오류:', error);
+    },
+  });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      uploadImageMutation.mutate(file);
     }
   };
 
@@ -65,41 +74,36 @@ function SideBar({ profileData, showEditButton }: Props) {
     }));
   };
 
-  const handleImageUpload = async (image: File) => {
-    try {
-      const response = await postImage(image, accessToken);
-      console.log('Image upload response:', response);
-      return response.url;
-    } catch (error) {
-      console.error('이미지 업로드 중 오류:', error);
-      throw error;
-    }
-  };
-
-  const handleUpdateProfile = async () => {
-    const updatedFormData = {
-      image: profileImage || undefined,
-      city: formData.city,
-      mbti: formData.mbti,
-      job: formData.job,
-      sns: formData.sns,
-      birthday: formData.birthday,
-      nickname: formData.nickname,
-      bloodType: formData.bloodType,
-      nationality: formData.nationality,
-    };
-    console.log('formData:', updatedFormData, 'codeId:', profileData?.code, 'accessToken', accessToken);
-    try {
-      const response = await patchProfileCode(updatedFormData, profileData?.code, accessToken);
+  // Mutation for profile update
+  const updateProfileMutation = useMutation({
+    mutationFn: () =>
+      patchProfileCode(
+        {
+          image: profileImage || undefined,
+          city: formData.city,
+          mbti: formData.mbti,
+          job: formData.job,
+          sns: formData.sns,
+          birthday: formData.birthday,
+          nickname: formData.nickname,
+          bloodType: formData.bloodType,
+          nationality: formData.nationality,
+        },
+        profileData?.code,
+        accessToken
+      ),
+    onSuccess: () => {
       alert('수정이 완료되었습니다.');
-    } catch (error) {
+      queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
+    },
+    onError: (error) => {
       console.error('프로필을 업데이트하는 데 실패했습니다:', error);
-    }
-  };
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleUpdateProfile();
+    updateProfileMutation.mutate();
   };
 
   useEffect(() => {
@@ -279,7 +283,7 @@ function SideBar({ profileData, showEditButton }: Props) {
           </div>
           {showEditButton && (
             <div className={styles.buttonWrapper}>
-              <button type="submit" className={styles.button}>
+              <button type="submit" className={styles.button} disabled={updateProfileMutation.isPending}>
                 수정하기
               </button>
             </div>
