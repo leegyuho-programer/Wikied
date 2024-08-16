@@ -12,6 +12,7 @@ import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
 import DOMPurify from 'dompurify';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 function MyPage() {
   const { user, profileId, profileImage, setProfileId, setProfileImage, securityAnswer, accessToken } = useStore(
@@ -26,39 +27,49 @@ function MyPage() {
     })
   );
   const [isCopied, setIsCopied] = useState(false);
-  const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        if (user?.name && typeof window !== 'undefined') {
-          const response: GetProfileResponseType = await getProfile(1, 10, user.name);
-          const codeId = response.list[0].code;
+  // Profile 데이터 가져오기
+  const { data: profileData } = useQuery({
+    queryKey: ['profile', user?.name],
+    queryFn: () => getProfile(1, 10, user.name),
+    enabled: !!user?.name,
+  });
 
-          const profileCodeResponse: GetProfileCodeResponseType = await getProfileCode(codeId);
+  const profileCode = profileData?.list[0]?.code;
 
-          setProfileId(profileCodeResponse.id || null);
-          setProfileImage(profileCodeResponse.image || null);
-          setProfileCodeResponse(profileCodeResponse);
+  const { data: profileCodeResponse } = useQuery({
+    queryKey: ['profileCode', profileCode],
+    queryFn: () => getProfileCode(profileCode!),
+    enabled: !!profileCode,
+  });
 
-          const pingRequest: PostProfilePingRequestType = {
-            securityAnswer,
-          };
-          console.log(pingRequest, codeId, accessToken);
+  // 프로필 핑 mutation
+  const postPingMutation = useMutation({
+    mutationFn: ({ pingRequest, profileCode }: { pingRequest: PostProfilePingRequestType; profileCode: string }) =>
+      postProfilePing(pingRequest, profileCode, accessToken),
+    onSuccess: () => {
+      setProfileId(profileCodeResponse?.id || null);
+      setProfileImage(profileCodeResponse?.image || null);
+    },
+    onError: (error: any) => {
+      console.error('Ping error:', error.response?.data || error.message);
+    },
+  });
 
-          const pingResponse = await postProfilePing(pingRequest, codeId, accessToken);
-          console.log('Profile Ping Response:', pingResponse);
-          return pingResponse;
-        }
-      } catch (error) {
-        console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
+  // profileCode가 있으면 postPing 실행
+  useQuery({
+    queryKey: ['profilePing', profileCode],
+    queryFn: () => {
+      if (!profileCode || !accessToken || !securityAnswer) {
+        throw new Error('Required data for ping is missing');
       }
-    }
+      const pingRequest: PostProfilePingRequestType = { securityAnswer };
 
-    if (user) {
-      fetchProfile();
-    }
-  }, [user, setProfileId, setProfileImage, securityAnswer, accessToken]);
+      return postPingMutation.mutateAsync({ pingRequest, profileCode });
+    },
+    enabled: !!profileCode && !!accessToken && !!securityAnswer,
+    retry: false,
+  });
 
   const handleInvite = async () => {
     if (typeof window !== 'undefined') {
