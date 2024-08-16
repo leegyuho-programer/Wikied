@@ -64,7 +64,13 @@ function LoginForm() {
           register={register('password', signUpPasswordRules)}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
+        <Button
+          isLink={false}
+          type="submit"
+          size="L"
+          variant="primary"
+          disabled={isSubmitting || loginMutation.isPending}
+        >
           로그인
         </Button>
       </form>

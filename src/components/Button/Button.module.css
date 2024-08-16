@@ -9,8 +9,22 @@
   border: none;
 }
 
+.button.disabled {
+  background-color: #c6cada;
+}
+
+.button.primary {
+  background-color: #4cbfa4;
+  border-radius: 10px;
+}
+
+.button.primary.disabled {
+  background-color: #c6cada;
+}
+
 .disabled {
   background-color: #c6cada;
+  border-radius: 10px;
 }
 
 .primary {
