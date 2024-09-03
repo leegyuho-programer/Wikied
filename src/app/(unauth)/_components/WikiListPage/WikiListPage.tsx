@@ -1,18 +1,19 @@
 'use client';
 
+import { getProfile } from '@/api/profile/profile';
+import { getProfileCode } from '@/api/profile/profileCode';
+import LinkCopy from '@/components/LinkCopy/LinkCopy';
+import SearchBar from '@/components/SearchBar/SearchBar';
+import { useStore } from '@/store';
+import { GetProfileCodeResponseType } from '@/types/profile';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import LinkCopy from '@/components/LinkCopy/LinkCopy';
-import SearchBar from '@/components/SearchBar/SearchBar';
 import defaultIMG from '../../../../../public/images/default.jpg';
 import noResult from '../../../../../public/images/noResult.png';
 import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
-import { useStore } from '@/store';
-import { GetProfileCodeResponseType } from '@/types/profile';
-import { getProfile } from '@/api/profile/profile';
-import { getProfileCode } from '@/api/profile/profileCode';
 
 function WikiListPage() {
   const { setProfileId, setProfileImage } = useStore((state: any) => ({
@@ -21,55 +22,42 @@ function WikiListPage() {
   }));
 
   const [isCopied, setIsCopied] = useState(false);
-  const [profiles, setProfiles] = useState<GetProfileCodeResponseType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
-  const [totalProfiles, setTotalProfiles] = useState(0); // 총 프로필 수
   const pageSize = 3; // 페이지 크기 고정 (필요에 따라 조정 가능)
+
+  const fetchProfiles = async () => {
+    const response = await getProfile(page, pageSize, searchTerm);
+    const profiles = await Promise.all(response.list.map(async (profile) => getProfileCode(profile.code)));
+    return { profiles, totalCount: response.totalCount };
+  };
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ['profiles', page, pageSize, searchTerm],
+    queryFn: fetchProfiles,
+    placeholderData: (previousData) => previousData,
+  });
+
+  useEffect(() => {
+    if (data?.profiles && data.profiles.length > 0) {
+      setProfileId(data.profiles[0].id ?? null);
+      setProfileImage(data.profiles[0].image ?? null);
+    } else {
+      setProfileId(null);
+      setProfileImage(null);
+    }
+  }, [data, setProfileId, setProfileImage]);
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
     setPage(1); // 검색 시 페이지를 처음으로 리셋
   };
 
-  useEffect(() => {
-    const fetchProfiles = async (page: number, pageSize: number, searchTerm: string) => {
-      try {
-        const response = await getProfile(page, pageSize, searchTerm);
-        if (searchTerm) {
-          if (response.list.length > 0) {
-            const codeId = response.list[0].code;
-            const profile = await getProfileCode(codeId);
-            setProfiles([profile]);
-            setProfileId(profile.id ?? null);
-            setProfileImage(profile.image ?? null);
-          } else {
-            setProfiles([]);
-            setProfileId(null);
-            setProfileImage(null);
-          }
-        } else {
-          const allProfiles = await Promise.all(
-            response.list.map(async (profile: any) => getProfileCode(profile.code))
-          );
-          setProfiles(allProfiles);
-          const firstProfile = allProfiles.length > 0 ? allProfiles[0] : null;
-          if (firstProfile) {
-            setProfileId(firstProfile.id ?? null);
-            setProfileImage(firstProfile.image ?? null);
-          } else {
-            setProfileId(null);
-            setProfileImage(null);
-          }
-        }
-        setTotalProfiles(response.totalCount); // 총 프로필 수 설정
-      } catch (error) {
-        console.error('Failed to fetch profiles:', error);
-      }
-    };
+  if (isPending) return <div>...loading</div>;
+  if (error) return <div>An error occurred: {(error as Error).message}</div>;
 
-    fetchProfiles(page, pageSize, searchTerm);
-  }, [page, pageSize, searchTerm, setProfileId, setProfileImage]);
+  const profiles = data?.profiles || [];
+  const totalProfiles = data?.totalCount || 0;
 
   return (
     <div className={styles.container}>
@@ -81,28 +69,18 @@ function WikiListPage() {
       </div>
       <div className={styles.wikiBoxContainer}>
         {profiles.length > 0 ? (
-          profiles.map((profile) => (
+          profiles.map((profile: GetProfileCodeResponseType) => (
             <Link key={profile.id} className={styles.wikiBox} href={`/user/${profile.id}`} passHref>
               <div className={styles.profile}>
                 <div className={styles.info}>
                   <div className={styles.imageWrapper}>
-                    {profile?.image ? (
-                      <Image
-                        src={profile.image}
-                        alt={`${profile.name}의 프로필 이미지`}
-                        style={{ objectFit: 'fill', width: '100%', height: '100%' }}
-                        width={85}
-                        height={85}
-                      />
-                    ) : (
-                      <Image
-                        src={defaultIMG}
-                        alt="기본 이미지"
-                        style={{ objectFit: 'fill', width: '100%', height: '100%' }}
-                        width={85}
-                        height={85}
-                      />
-                    )}
+                    <Image
+                      src={profile.image || defaultIMG}
+                      alt={`${profile.name}의 프로필 이미지`}
+                      style={{ objectFit: 'fill', width: '100%', height: '100%' }}
+                      width={85}
+                      height={85}
+                    />
                   </div>
                   <div className={styles.intro}>
                     <p className={styles.name}>{profile.name}</p>
