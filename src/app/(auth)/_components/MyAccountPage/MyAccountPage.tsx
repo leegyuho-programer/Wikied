@@ -13,6 +13,7 @@ import { PostProfileRequestType, PostProfileResponseType } from '@/types/profile
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import styles from './MyAccountPage.module.css';
+import { useMutation } from '@tanstack/react-query';
 
 function MyAccountPage() {
   const router = useRouter();
@@ -34,6 +35,29 @@ function MyAccountPage() {
 
   const passwordValue = watch('password');
 
+  const patchPasswordMutation = useMutation({
+    mutationFn: (data: PatchPassword) => patchPassword(data, accessToken),
+    onSuccess: () => {
+      alert('비밀번호가 변경되었습니다.');
+      setLogout();
+      router.push('login');
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    },
+  });
+
+  const postProfileMutation = useMutation({
+    mutationFn: (profileData: PostProfileRequestType) => postProfile(profileData, accessToken),
+    onSuccess: () => {
+      alert('질문이 등록되었습니다.');
+      router.push('mypage');
+    },
+    onError: (error) => {
+      console.error('Failed to update profile', error);
+    },
+  });
+
   const handleResetPassword = async (data: PatchPassword) => {
     if (data.currentPassword !== storedPassword) {
       setError('currentPassword', {
@@ -43,24 +67,11 @@ function MyAccountPage() {
       return;
     }
 
-    try {
-      await patchPassword(data, accessToken);
-      alert('비밀번호가 변경되었습니다.');
-      setLogout();
-      router.push('login');
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    patchPasswordMutation.mutate(data);
   };
 
   const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
-    try {
-      const response: PostProfileResponseType = await postProfile(profileData, accessToken);
-      alert('질문이 등록되었습니다.');
-      router.push('mypage');
-    } catch (error) {
-      console.error('Failed to update profile', error);
-    }
+    postProfileMutation.mutate(profileData);
   };
 
   const handleQuestionChange = (question: string, answer: string) => {
@@ -96,7 +107,7 @@ function MyAccountPage() {
             type="password"
           />
           <div className={styles.buttonWrapper}>
-            <Button isLink={false} type="submit" size="XS" variant="primary" disabled={isSubmitting}>
+            <Button isLink={false} type="submit" size="XS" variant="primary" disabled={patchPasswordMutation.isPending}>
               변경하기
             </Button>
           </div>
@@ -106,7 +117,7 @@ function MyAccountPage() {
       <DropDown
         onSelectionChange={handleQuestionChange}
         onSubmit={handleSecurityQuestionSubmit}
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || postProfileMutation.isPending}
       />
     </div>
   );

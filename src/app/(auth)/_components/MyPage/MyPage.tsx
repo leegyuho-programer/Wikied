@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { getProfile } from '@/api/profile/profile';
+import { getProfileCode } from '@/api/profile/profileCode';
+import { postProfilePing } from '@/api/profile/profilePing';
 import Button from '@/components/Button/Button';
 import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SideBar from '@/components/SideBar/SideBar';
 import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
-import { GetProfileCodeResponseType, GetProfileResponseType, PostProfilePingRequestType } from '@/types/profile';
-import styles from './MyPage.module.css';
-import { getProfile } from '@/api/profile/profile';
-import { getProfileCode } from '@/api/profile/profileCode';
-import { postProfilePing } from '@/api/profile/profilePing';
-import DOMPurify from 'dompurify';
+import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import DOMPurify from 'dompurify';
+import { useState } from 'react';
+import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
 
 function MyPage() {

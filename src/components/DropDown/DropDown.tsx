@@ -60,7 +60,12 @@ function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, 
           className={`${styles.input} ${isOpen ? styles.focus : ''}`}
           placeholder={isOpen ? '질문 선택하기' : '직접 입력'}
         />
-        <button type="button" className={`${styles.button} ${isOpen ? styles.rotate : ''}`} onClick={toggleDropdown}>
+        <button
+          type="button"
+          className={`${styles.button} ${isOpen ? styles.rotate : ''}`}
+          onClick={toggleDropdown}
+          aria-label="질문 선택하기"
+        >
           <DropDownIcon />
         </button>
       </div>
