@@ -1,0 +1,61 @@
+.skeleton {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.skeletonContainer {
+  margin-top: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.skeletonSearch {
+  max-width: 860px;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #f7f7fa;
+  padding: 10px 20px;
+  gap: 15px;
+  position: relative;
+}
+
+.skeletonWikiBoxContainer {
+  width: 100%;
+  max-width: 860px;
+  margin-top: 60px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeletonWikiBox {
+  width: 100%;
+  max-width: 860px;
+  height: 145px;
+  padding: 15px 30px;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+}

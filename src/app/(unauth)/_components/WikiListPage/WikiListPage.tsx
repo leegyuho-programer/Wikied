@@ -14,6 +14,7 @@ import defaultIMG from '../../../../../public/images/default.jpg';
 import noResult from '../../../../../public/images/noResult.png';
 import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
+import WikiListPageSkeleton from './WikiListPageSkeleton';
 
 function WikiListPage() {
   const { setProfileId, setProfileImage } = useStore((state: any) => ({
@@ -53,7 +54,7 @@ function WikiListPage() {
     setPage(1); // 검색 시 페이지를 처음으로 리셋
   };
 
-  if (isPending) return <div>...loading</div>;
+  if (isPending) return <WikiListPageSkeleton />;
   if (error) return <div>An error occurred: {(error as Error).message}</div>;
 
   const profiles = data?.profiles || [];
