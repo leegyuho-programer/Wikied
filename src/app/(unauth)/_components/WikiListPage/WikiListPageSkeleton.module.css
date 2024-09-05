@@ -28,14 +28,9 @@
   max-width: 860px;
   width: 100%;
   height: 45px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   border-radius: 10px;
   background-color: #f7f7fa;
-  padding: 10px 20px;
-  gap: 15px;
-  position: relative;
+  margin-bottom: 20px;
 }
 
 .skeletonWikiBoxContainer {
@@ -50,12 +45,30 @@
 
 .skeletonWikiBox {
   width: 100%;
-  max-width: 860px;
   height: 145px;
   padding: 15px 30px;
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
-  display: flex;
-  background: #fff;
-  cursor: pointer;
+  background-color: #fff;
   border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+  .skeletonSearch {
+    max-width: 704px;
+  }
+
+  .skeletonWikiBoxContainer {
+    max-width: 704px;
+  }
+}
+
+@media (max-width: 768px) {
+  .skeletonWikiBoxContainer {
+    margin-bottom: 40px;
+  }
+
+  .skeletonWikiBox {
+    flex-direction: column;
+    width: 100%;
+    height: 150px;
+  }
 }
