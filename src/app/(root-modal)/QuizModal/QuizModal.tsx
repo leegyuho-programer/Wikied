@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { getProfileCode } from '@/api/profile/profileCode';
 
 interface Props {
-  codeId: string | null;
+  codeId: string | null | undefined;
 }
 
 interface FormValues {

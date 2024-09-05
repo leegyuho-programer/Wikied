@@ -1,23 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { getProfile } from '@/api/profile/profile';
+import { getProfileCode } from '@/api/profile/profileCode';
+import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
 import Button from '@/components/Button/Button';
 import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SideBar from '@/components/SideBar/SideBar';
 import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
-import styles from './UserPage.module.css';
-import { useParams } from 'next/navigation';
-import { getProfile } from '@/api/profile/profile';
-import { getProfileCode } from '@/api/profile/profileCode';
-import QuizModal from '@/app/(root-modal)/QuizModal/QuizModal';
+import { useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
+import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import styles from './UserPage.module.css';
+import MyPageSkeleton from '@/app/(auth)/_components/MyPage/MyPageSkeleton';
 
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
-  const [profileCodeResponse, setProfileCodeResponse] = useState<GetProfileCodeResponseType | null>(null);
-  const [myCode, setMyCode] = useState<string | null>(null);
   const { id } = useParams<{ id: string | string[] }>();
 
   const { isLogin, user, setProfileImage, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore(
@@ -25,7 +25,6 @@ function UserPage() {
       isLogin: state.isLogin,
       user: state.user,
       setProfileImage: state.setProfileImage,
-      profileId: state.profileId,
       setProfileId: state.setProfileId,
       setSecurityQuestion: state.setSecurityQuestion,
       modals: state.modals,
@@ -34,44 +33,39 @@ function UserPage() {
     })
   );
 
+  const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
+
+  const { data: profileList, isPending: isProfileListPending } = useQuery({
+    queryKey: ['profiles'],
+    queryFn: () => getProfile(1, 100),
+  });
+
+  const { data: profileCodeResponse, isPending: isProfileCodePending } = useQuery<GetProfileCodeResponseType, Error>({
+    queryKey: ['profileCode', parsedId],
+    queryFn: async () => {
+      const codeId = profileList?.list.find((item: any) => item.id === parsedId)?.code;
+      if (codeId) {
+        return getProfileCode(codeId);
+      }
+      throw new Error('일치하는 데이터의 코드를 찾을 수 없습니다.');
+    },
+    enabled: !!profileList,
+  });
+
+  useEffect(() => {
+    if (profileCodeResponse) {
+      setProfileId(parsedId);
+      setPageId?.(parsedId);
+      setProfileImage(profileCodeResponse.image || null);
+      setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
+    }
+  }, [profileCodeResponse, parsedId, setProfileId, setPageId, setProfileImage, setSecurityQuestion]);
+
   const handleClick = () => {
     showModal('quizModal');
   };
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const response = await getProfile(1, 100);
-        console.log('getProfile', response);
-        const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
-        const codeId = response.list.find((item: any) => item.id === parsedId)?.code;
-        setProfileId(parsedId);
-        if (setPageId) {
-          setPageId(parsedId);
-        }
-        console.log('id', parsedId);
-        console.log('codeId', codeId);
-
-        if (codeId !== undefined) {
-          setMyCode(codeId);
-          const profileCodeResponse = await getProfileCode(codeId);
-          console.log('profileCodeResponse', profileCodeResponse);
-          setProfileCodeResponse(profileCodeResponse);
-          setProfileImage(profileCodeResponse.image || null);
-          if (setSecurityQuestion) {
-            setSecurityQuestion(profileCodeResponse.securityQuestion || null);
-          }
-        } else {
-          console.error('일치하는 데이터의 코드를 찾을 수 없습니다.');
-        }
-      } catch (error) {
-        console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
-      }
-    }
-    if (id) {
-      fetchProfile();
-    }
-  }, [id, setProfileId, setProfileImage, setSecurityQuestion]);
+  if (isProfileListPending || isProfileCodePending) return <MyPageSkeleton />;
 
   return (
     <div className={styles.container}>
@@ -111,7 +105,7 @@ function UserPage() {
           </div>
         )}
       </div>
-      {modals[modals.length - 1] === 'quizModal' && <QuizModal codeId={myCode} />}
+      {modals[modals.length - 1] === 'quizModal' && <QuizModal codeId={profileCodeResponse?.code} />}
     </div>
   );
 }
