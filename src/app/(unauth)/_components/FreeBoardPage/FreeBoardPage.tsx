@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';
+import FreeBoardPageSkeleton from './FreeBoardPageSkeleton';
 
 export default function FreeBoardPage() {
   const [scrollX, setScrollX] = useState(0);
@@ -42,26 +43,7 @@ export default function FreeBoardPage() {
     }
   };
 
-  if (isPending) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={`${styles.skeleton} ${styles.skeletonTitle}`}></div>
-          <div className={`${styles.skeleton} ${styles.skeletonButton}`}></div>
-        </div>
-        <div className={styles.skeletonCardWrapper}>
-          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
-          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
-          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
-          <div className={`${styles.skeleton} ${styles.skeletonCard}`}></div>
-        </div>
-        <div className={`${styles.skeleton} ${styles.skeletonSearch}`}></div>
-        <div className={`${styles.skeleton} ${styles.skeletonPagination}`}></div>
-      </div>
-    );
-  }
-
-  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
+  if (isPending) return <FreeBoardPageSkeleton />;
 
   return (
     <div className={styles.container}>

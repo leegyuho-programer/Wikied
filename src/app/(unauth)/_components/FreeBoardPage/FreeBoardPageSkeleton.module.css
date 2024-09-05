@@ -1,0 +1,87 @@
+.container {
+  max-width: 1060px;
+  margin: 0 auto;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: space-between;
+  justify-content: space-between;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.skeleton {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 45px;
+}
+
+.skeletonButton {
+  width: 160px;
+  height: 45px;
+}
+
+.skeletonCardWrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.skeletonCard {
+  width: 250px;
+  height: 220px;
+  border-radius: 10px;
+}
+
+.skeletonSearch {
+  width: 1060px;
+  height: 45px;
+}
+
+.skeletonPagination {
+  width: 1060px;
+  height: 600px;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    max-width: 624px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .skeletonTitle {
+    width: 140px;
+    height: 45px;
+  }
+
+  .skeletonButton {
+    width: 130px;
+  }
+}

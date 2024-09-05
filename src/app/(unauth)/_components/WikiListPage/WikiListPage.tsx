@@ -55,7 +55,6 @@ function WikiListPage() {
   };
 
   if (isPending) return <WikiListPageSkeleton />;
-  if (error) return <div>An error occurred: {(error as Error).message}</div>;
 
   const profiles = data?.profiles || [];
   const totalProfiles = data?.totalCount || 0;
