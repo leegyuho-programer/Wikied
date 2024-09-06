@@ -10,8 +10,9 @@ import { GetProfileCodeResponseType } from '@/types/profile';
 import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import styles from './UserEditPage.module.css';
+import UserEditPageSkeleton from './UserEditPageSkeleton';
 
-function UserEditPage() {
+export default function UserEditPage() {
   const [text, setText] = useState('');
   const { setSecurityQuestion, pageId } = useStore((state) => ({
     setSecurityQuestion: state.setSecurityQuestion,
@@ -40,11 +41,11 @@ function UserEditPage() {
   }, [profileCodeData, setSecurityQuestion]);
 
   if (isProfilePending || isProfileCodePending) {
-    return <div>Pending...</div>;
+    return <UserEditPageSkeleton />;
   }
 
   if (!profileData || !profileCodeData) {
-    return <div>No data available</div>;
+    return null;
   }
 
   return (

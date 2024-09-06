@@ -111,14 +111,10 @@ function TextEditor({ value, setValue }: Props) {
         const response = await getProfile(1, 100);
         const profile = response.list.find((item: any) => item.id === pageId);
         const ProfileCodeId = profile?.code;
-        console.log('response', response);
-        console.log('profile', profile);
-        console.log('code', ProfileCodeId);
 
         if (ProfileCodeId !== undefined) {
           setCodeId(ProfileCodeId);
           const profileCodeResponse = await getProfileCode(ProfileCodeId);
-          console.log('profileCodeResponse', profileCodeResponse);
           setValue(profileCodeResponse.content || defaultTemplate);
         } else {
           setCodeId(null);
@@ -129,10 +125,9 @@ function TextEditor({ value, setValue }: Props) {
         const pingRequest: PostProfilePingRequestType = {
           securityAnswer,
         };
-        console.log('ping', codeId, ProfileCodeId);
+
         const pingResponse = await postProfilePing(pingRequest, ProfileCodeId as string, accessToken);
         setPingTime(Date.now());
-        console.log('Profile Ping Response:', pingResponse);
       } catch (error) {
         console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
       }
