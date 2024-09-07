@@ -48,12 +48,23 @@ export default function UserEditPage() {
     return null;
   }
 
+  // return (
+  //   <div className={styles.container}>
+  //     <div className={styles.header}>
+  //       <TextEditor value={text} setValue={setText} />
+  //     </div>
+  //     <SideBar profileData={profileCodeData} showEditButton={false} />
+  //   </div>
+  // );
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <TextEditor value={text} setValue={setText} />
+        <label htmlFor="text-editor" aria-label="Profile text editor">
+          <TextEditor value={text} setValue={setText} />
+        </label>
       </div>
-      <SideBar profileData={profileCodeData} showEditButton={false} />
+      <SideBar profileData={profileCodeData} showEditButton={false} aria-label="User profile sidebar" />
     </div>
   );
 }

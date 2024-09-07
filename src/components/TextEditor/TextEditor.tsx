@@ -1,18 +1,19 @@
 'use client';
 
+import { getProfile } from '@/api/profile/profile';
+import { getProfileCode, patchProfileCode } from '@/api/profile/profileCode';
+import { postProfilePing } from '@/api/profile/profilePing';
+import OverTimeModal from '@/app/(root-modal)/OverTimeModal/OverTimeModal';
 import { useStore } from '@/store';
+import { PostProfilePingRequestType } from '@/types/profile';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
-import { useState, Dispatch, SetStateAction, useEffect, useMemo, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
+import Button from '../Button/Button';
 import './TextEditor.css';
 import styles from './TextEditor.module.css';
-import { getProfile } from '@/api/profile/profile';
-import { GetProfileResponseType, PostProfilePingRequestType } from '@/types/profile';
-import { getProfileCode, patchProfileCode } from '@/api/profile/profileCode';
-import Button from '../Button/Button';
-import { postProfilePing } from '@/api/profile/profilePing';
-import { useRouter } from 'next/navigation';
-import OverTimeModal from '@/app/(root-modal)/OverTimeModal/OverTimeModal';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -31,8 +32,8 @@ function TextEditor({ value, setValue }: Props) {
     showModal: state.showModal,
   }));
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const [codeId, setCodeId] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [pingTime, setPingTime] = useState<number | null>(null);
 
@@ -57,21 +58,38 @@ function TextEditor({ value, setValue }: Props) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const lastModifiedRef = useRef<number>(Date.now());
 
-  const handleUpdateProfile = async () => {
-    if (!codeId) {
+  const { data: profileData } = useQuery({
+    queryKey: ['profile', pageId],
+    queryFn: async () => {
+      const response = await getProfile(1, 100);
+      return response.list.find((item: any) => item.id === pageId);
+    },
+    enabled: !!user && !!pageId,
+  });
+
+  const { data: profileCodeData } = useQuery({
+    queryKey: ['profileCode', profileData?.code],
+    queryFn: () => getProfileCode(profileData?.code || ''),
+    enabled: !!profileData?.code,
+  });
+
+  const updateProfileMutation = useMutation({
+    mutationFn: (payload: { content: string }) => patchProfileCode(payload, profileData?.code || '', accessToken),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
+      router.push(`/user/${pageId}`);
+    },
+    onError: (error) => {
+      console.error('프로필을 업데이트하는 데 실패했습니다:', error);
+    },
+  });
+
+  const handleUpdateProfile = () => {
+    if (!profileData?.code) {
       console.error('코드 ID를 찾을 수 없습니다.');
       return;
     }
-
-    const payload = { content: value };
-
-    try {
-      const response = await patchProfileCode(payload, codeId, accessToken);
-      console.log('Profile Updated:', response);
-      router.push(`/user/${pageId}`);
-    } catch (error) {
-      console.error('프로필을 업데이트하는 데 실패했습니다:', error);
-    }
+    updateProfileMutation.mutate({ content: value });
   };
 
   const modules = useMemo(
@@ -106,37 +124,25 @@ function TextEditor({ value, setValue }: Props) {
   };
 
   useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const response = await getProfile(1, 100);
-        const profile = response.list.find((item: any) => item.id === pageId);
-        const ProfileCodeId = profile?.code;
+    setValue(profileCodeData?.content || defaultTemplate);
+  }, [profileCodeData]);
 
-        if (ProfileCodeId !== undefined) {
-          setCodeId(ProfileCodeId);
-          const profileCodeResponse = await getProfileCode(ProfileCodeId);
-          setValue(profileCodeResponse.content || defaultTemplate);
-        } else {
-          setCodeId(null);
-          setValue(defaultTemplate);
-        }
-        setName(profile?.name || null);
-
-        const pingRequest: PostProfilePingRequestType = {
-          securityAnswer,
-        };
-
-        const pingResponse = await postProfilePing(pingRequest, ProfileCodeId as string, accessToken);
-        setPingTime(Date.now());
-      } catch (error) {
-        console.error('프로필 데이터를 불러오는 데 실패했습니다:', error);
-      }
+  useEffect(() => {
+    if (profileData) {
+      setName(profileData.name || null);
     }
+  }, [profileData]);
 
-    if (user) {
-      fetchProfile();
+  useEffect(() => {
+    if (user && profileData?.code) {
+      const pingRequest: PostProfilePingRequestType = {
+        securityAnswer,
+      };
+      postProfilePing(pingRequest, profileData.code, accessToken)
+        .then(() => setPingTime(Date.now()))
+        .catch((error) => console.error('Ping 요청 실패:', error));
     }
-  }, [user, securityAnswer, accessToken, pageId, setValue]);
+  }, [user, profileData, securityAnswer, accessToken]);
 
   useEffect(() => {
     resetTimer();
