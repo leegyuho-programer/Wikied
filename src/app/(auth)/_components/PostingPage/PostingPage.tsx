@@ -13,6 +13,7 @@ import { PostArticleResponseType } from '@/types/article';
 interface FormData {
   title: string;
   content: string;
+  image: string;
 }
 
 export default function PostingPage() {
@@ -23,7 +24,7 @@ export default function PostingPage() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>();
   const [image, setImage] = useState<File | null>(null);
 
@@ -65,6 +66,8 @@ export default function PostingPage() {
     uploadMutation.mutate(data);
   };
 
+  console.log(errors);
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -73,12 +76,24 @@ export default function PostingPage() {
           {...register('title', { required: '제목을 입력해주세요.' })}
           className={styles.input}
         />
+        {errors.title && <p className={styles.error}>{errors.title.message}</p>}
+
         <textarea
           placeholder="내용"
           {...register('content', { required: '내용을 입력해주세요.' })}
           className={styles.textarea}
         ></textarea>
-        <input type="file" onChange={handleImageChange} className={styles.fileInput} />
+        {errors.content && <p className={styles.error}>{errors.content.message}</p>}
+
+        <input
+          type="file"
+          className={styles.fileInput}
+          {...register('image', {
+            required: '이미지를 선택해주세요.',
+            onChange: handleImageChange, // register 안에 onChange를 포함
+          })}
+        />
+        {errors.image && <p className={styles.error}>{errors.image.message}</p>}
         <button type="submit" className={styles.submitButton} disabled={isSubmitting || uploadMutation.isPending}>
           {uploadMutation.isPending ? '업로드 중...' : '게시물 업로드'}
         </button>
