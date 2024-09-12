@@ -53,7 +53,7 @@ export default function PostingPage() {
       return postArticles(requestBody, accessToken);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['articles'] }); // Invalidate and refetch articles query
+      queryClient.invalidateQueries({ queryKey: ['articles'] });
       alert('게시물이 성공적으로 업로드되었습니다.');
       router.push('/freeBoard');
     },

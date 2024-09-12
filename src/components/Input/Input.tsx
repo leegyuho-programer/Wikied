@@ -8,7 +8,6 @@ interface Props {
   placeholder: string;
   register?: any;
   errors?: any;
-  value?: any;
   onChange?: any;
   classname?: any;
 }

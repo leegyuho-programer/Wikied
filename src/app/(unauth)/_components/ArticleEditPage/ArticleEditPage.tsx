@@ -5,62 +5,67 @@ import { useStore } from '@/store';
 import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from '../ArticlePage/ArticlePage.module.css';
 
 export default function ArticleEditPage() {
   const accessToken = useStore((state) => state.userAccessToken);
   const articleId = useStore((state) => state.articleId);
   const router = useRouter();
-  const [article, setArticle] = useState<GetArticleIdResponseType | null>(null);
+  const queryClient = useQueryClient();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  useEffect(() => {
-    if (articleId) {
-      async function fetchArticle() {
-        try {
-          const response = await getArticle(articleId, accessToken);
-          setArticle(response);
-          setTitle(response.title);
-          setContent(response.content);
-        } catch (error) {
-          console.error('게시글을 불러오는 데 실패했습니다:', error);
-        }
-      }
-      fetchArticle();
-    } else {
-      console.log('게시글 ID가 정의되지 않았습니다.');
-    }
-  }, [articleId, accessToken]);
+  const {
+    data: article,
+    isLoading,
+    isError,
+  } = useQuery<GetArticleIdResponseType>({
+    queryKey: ['article', articleId],
+    queryFn: () => getArticle(articleId, accessToken),
+    enabled: !!articleId && !!accessToken,
+  });
 
-  const handleTitleChange = (e: any) => {
+  useEffect(() => {
+    if (article) {
+      setTitle(article.title);
+      setContent(article.content);
+    }
+  }, [article]);
+
+  const updateArticleMutation = useMutation<PatchArticleResponseType, Error, PatchArticleRequestType>({
+    mutationFn: (patchedArticle) => patchArticle(patchedArticle, accessToken, articleId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['article', articleId] });
+      router.push(`/article/${articleId}`);
+    },
+    onError: (error) => {
+      console.error('게시글 수정에 실패했습니다:', error);
+    },
+  });
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleContentChange = (e: any) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!article) return;
+    const patchedArticle: PatchArticleRequestType = {
+      title,
+      content,
+    };
 
-    try {
-      const patchedArticle: PatchArticleRequestType = {
-        title,
-        content,
-      };
-
-      const response: PatchArticleResponseType = await patchArticle(patchedArticle, accessToken, articleId);
-      router.push(`/article/${articleId}`);
-    } catch (error) {
-      console.error('게시글 수정에 실패했습니다:', error);
-    }
+    updateArticleMutation.mutate(patchedArticle);
   };
 
   if (!article) {
-    return <div>로딩 중...</div>;
+    return <div>게시글을 찾을 수 없습니다.</div>;
   }
 
   return (
@@ -79,7 +84,9 @@ export default function ArticleEditPage() {
                 <textarea value={content} onChange={handleContentChange} />
               </div>
             </div>
-            <button type="submit">수정 완료</button>
+            <button type="submit" disabled={updateArticleMutation.isPending}>
+              {updateArticleMutation.isPending ? '수정 중...' : '수정 완료'}
+            </button>
           </div>
         </form>
       </div>
