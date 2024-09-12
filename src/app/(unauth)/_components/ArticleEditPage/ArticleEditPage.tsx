@@ -1,11 +1,11 @@
 'use client';
 
-import styles from '../ArticlePage/ArticlePage.module.css';
+import { getArticle, patchArticle } from '@/api/article/article';
+import { useStore } from '@/store';
+import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
-import { useStore } from '@/store';
-import { getArticle, patchArticle } from '@/api/article/article';
+import styles from '../ArticlePage/ArticlePage.module.css';
 
 export default function ArticleEditPage() {
   const accessToken = useStore((state) => state.userAccessToken);
@@ -16,7 +16,6 @@ export default function ArticleEditPage() {
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    console.log('edit', articleId);
     if (articleId) {
       async function fetchArticle() {
         try {

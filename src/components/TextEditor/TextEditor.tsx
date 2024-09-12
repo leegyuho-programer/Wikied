@@ -56,7 +56,6 @@ function TextEditor({ value, setValue }: Props) {
   `;
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const lastModifiedRef = useRef<number>(Date.now());
 
   const { data: profileData } = useQuery({
     queryKey: ['profile', pageId],
@@ -119,7 +118,6 @@ function TextEditor({ value, setValue }: Props) {
 
   const handleTextChange = (content: string) => {
     setValue(content);
-    lastModifiedRef.current = Date.now();
     resetTimer();
   };
 

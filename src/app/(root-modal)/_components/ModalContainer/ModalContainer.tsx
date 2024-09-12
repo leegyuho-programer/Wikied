@@ -31,5 +31,3 @@ function ModalContainer({ children, type, text }: Props) {
 }
 
 export default ModalContainer;
-
-//타입에 따라 다르게 하기!?
