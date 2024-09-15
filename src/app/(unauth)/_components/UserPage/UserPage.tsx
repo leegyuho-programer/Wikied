@@ -20,18 +20,15 @@ function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const { id } = useParams<{ id: string | string[] }>();
 
-  const { isLogin, user, setProfileImage, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore(
-    (state) => ({
-      isLogin: state.isLogin,
-      user: state.user,
-      setProfileImage: state.setProfileImage,
-      setProfileId: state.setProfileId,
-      setSecurityQuestion: state.setSecurityQuestion,
-      modals: state.modals,
-      showModal: state.showModal,
-      setPageId: state.setPageId,
-    })
-  );
+  const { isLogin, user, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore((state) => ({
+    isLogin: state.isLogin,
+    user: state.user,
+    setProfileId: state.setProfileId,
+    setSecurityQuestion: state.setSecurityQuestion,
+    modals: state.modals,
+    showModal: state.showModal,
+    setPageId: state.setPageId,
+  }));
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
 
@@ -56,10 +53,9 @@ function UserPage() {
     if (profileCodeResponse) {
       setProfileId(parsedId);
       setPageId?.(parsedId);
-      setProfileImage(profileCodeResponse.image || null);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, setProfileId, setPageId, setProfileImage, setSecurityQuestion]);
+  }, [profileCodeResponse, parsedId, setProfileId, setPageId, setSecurityQuestion]);
 
   const handleClick = () => {
     showModal('quizModal');
