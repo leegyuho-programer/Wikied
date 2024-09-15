@@ -39,8 +39,8 @@
   overflow: hidden;
 }
 
-.profileContainer:hover .profileImage {
-  filter: brightness(80%); /* 호버 시 이미지 어둡게 처리 */
+.profileContainer.editable:hover .profileImage {
+  filter: brightness(80%);
 }
 
 .cameraIcon {

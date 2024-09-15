@@ -143,7 +143,7 @@ function SideBar({ profileData, showEditButton }: Props) {
     <div className={styles.containerWrapper}>
       <div className={styles.container}>
         <form className={styles.innerContainer} onSubmit={handleSubmit}>
-          <div className={styles.profileContainer}>
+          <div className={`${styles.profileContainer} ${showEditButton ? styles.editable : ''}`}>
             <label className={styles.label}>
               <Image
                 src={profileImage ? profileImage : defaultIMG}
