@@ -23,7 +23,8 @@ export default function UserEditPage() {
     queryKey: ['profile', pageId],
     queryFn: async () => {
       const response = await getProfile(1, 100);
-      return response.list.find((item: any) => item.id === pageId);
+
+      return response.list.find((item) => item.id === pageId);
     },
     enabled: !!pageId,
   });
@@ -47,15 +48,6 @@ export default function UserEditPage() {
   if (!profileData || !profileCodeData) {
     return null;
   }
-
-  // return (
-  //   <div className={styles.container}>
-  //     <div className={styles.header}>
-  //       <TextEditor value={text} setValue={setText} />
-  //     </div>
-  //     <SideBar profileData={profileCodeData} showEditButton={false} />
-  //   </div>
-  // );
 
   return (
     <div className={styles.container}>

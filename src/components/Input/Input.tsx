@@ -1,15 +1,16 @@
 import classNames from 'classnames/bind';
 import styles from './Input.module.css';
+import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
 interface Props {
   name: string;
   label?: string;
   type?: string;
   placeholder: string;
-  register?: any;
-  errors?: any;
-  onChange?: any;
-  classname?: any;
+  register?: UseFormRegisterReturn;
+  errors?: FieldErrors;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  classname?: string;
 }
 
 const cn = classNames.bind(styles);
@@ -23,7 +24,9 @@ function Input({ name, label, type = 'text', placeholder, register, errors, clas
         </label>
       )}
       <input className={styles.input} id={name} type={type} placeholder={placeholder} {...register} />
-      {errors[name] && <span className={styles.error}>{errors[name]?.message}</span>}
+      {errors && errors[name] && typeof errors[name]?.message === 'string' && (
+        <span className={styles.error}>{errors[name]?.message}</span>
+      )}
     </div>
   );
 }

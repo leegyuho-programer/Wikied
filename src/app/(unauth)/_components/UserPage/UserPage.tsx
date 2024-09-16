@@ -40,7 +40,7 @@ function UserPage() {
   const { data: profileCodeResponse, isPending: isProfileCodePending } = useQuery<GetProfileCodeResponseType, Error>({
     queryKey: ['profileCode', parsedId],
     queryFn: async () => {
-      const codeId = profileList?.list.find((item: any) => item.id === parsedId)?.code;
+      const codeId = profileList?.list.find((item) => item.id === parsedId)?.code;
       if (codeId) {
         return getProfileCode(codeId);
       }
