@@ -32,10 +32,10 @@ function WikiListPage() {
     let totalCount = 0;
 
     while (true) {
-      const response = await getProfile(currentPage, pageSize * 2, searchTerm); // Fetch double the pageSize
+      const response = await getProfile(currentPage, pageSize * 2, searchTerm);
       const profiles = await Promise.all(response.list.map(async (profile) => getProfileCode(profile.code)));
 
-      const filteredProfiles = profiles.filter((profile) => profile.id !== user.profile.id);
+      const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
       allProfiles = [...allProfiles, ...filteredProfiles];
       totalCount = response.totalCount - 1; // 본인을 제외해야 하기 때문에 - 1
 
@@ -50,7 +50,7 @@ function WikiListPage() {
     const paginatedProfiles = allProfiles.slice(startIndex, startIndex + pageSize);
 
     return { profiles: paginatedProfiles, totalCount };
-  }, [page, pageSize, searchTerm, user.profile.id]);
+  }, [page, pageSize, searchTerm, user?.profile.id]);
 
   const { data, isPending } = useQuery({
     queryKey: ['profiles', page, pageSize, searchTerm],
