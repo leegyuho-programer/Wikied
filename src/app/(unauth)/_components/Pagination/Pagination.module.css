@@ -23,8 +23,9 @@
   border-radius: 10px;
 }
 
-.button:visited:link::after {
-  color: #4cbfa4;
+.active {
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 @media (max-width: 768px) {
