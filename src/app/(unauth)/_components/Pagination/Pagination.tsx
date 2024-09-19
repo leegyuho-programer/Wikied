@@ -1,20 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
-  totalArticles: number; // 데이터의 총 개수
-  articlesPerPage: number; // 페이지 당 보여줄 데이터 개수
-  currentPage: number; // 현재 페이지
-  pageCount: number; // 보여줄 페이지 개수 ex) 1-5페이지
+  totalArticles: number;
+  articlesPerPage: number;
+  currentPage: number;
   onPageChange: (pageNumber: number) => void;
 }
 
-const Pagination = ({ currentPage, totalArticles, articlesPerPage, pageCount, onPageChange }: PaginationProps) => {
-  const totalPages = Math.ceil(totalArticles / articlesPerPage); // 총 페이지 개수
-  const [start, setStart] = useState(1); // 시작 페이지
-  const end = Math.min(start + pageCount - 1, totalPages);
+const Pagination = ({ currentPage, totalArticles, articlesPerPage, onPageChange }: PaginationProps) => {
+  const totalPages = Math.ceil(totalArticles / articlesPerPage);
+  const [pageGroup, setPageGroup] = useState(Math.ceil(currentPage / 5));
+
+  useEffect(() => {
+    setPageGroup(Math.ceil(currentPage / 5));
+  }, [currentPage]);
+
+  const getPageNumbers = () => {
+    const start = (pageGroup - 1) * 5 + 1;
+    const end = Math.min(start + 4, totalPages);
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -22,14 +30,27 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, pageCount, on
     }
   };
 
-  const pageNumbers = [];
+  const handlePrevGroup = () => {
+    if (pageGroup > 1) {
+      const newPage = (pageGroup - 2) * 5 + 1;
+      onPageChange(newPage);
+    }
+  };
 
-  for (let i = start; i <= end; i++) {
-    pageNumbers.push(i);
-  }
+  const handleNextGroup = () => {
+    if (pageGroup * 5 < totalPages) {
+      const newPage = pageGroup * 5 + 1;
+      onPageChange(newPage);
+    }
+  };
+
+  const pageNumbers = getPageNumbers();
 
   return (
     <div className={styles.container}>
+      <button className={styles.button} onClick={handlePrevGroup} disabled={pageGroup === 1}>
+        &lt;&lt;
+      </button>
       <button className={styles.button} onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
         &lt;
       </button>
@@ -48,6 +69,9 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, pageCount, on
         disabled={currentPage === totalPages}
       >
         &gt;
+      </button>
+      <button className={styles.button} onClick={handleNextGroup} disabled={pageGroup * 5 >= totalPages}>
+        &gt;&gt;
       </button>
     </div>
   );
