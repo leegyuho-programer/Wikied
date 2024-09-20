@@ -1,4 +1,3 @@
-import { useStore } from '@/store';
 import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
 import LinkContent from './LinkContent';
 import styles from './LinkCopy.module.css';
@@ -11,7 +10,6 @@ interface Props {
 const BASE_URL = `https://wikied.vercel.app`;
 
 function LinkCopy({ profileId, onCopy }: Props) {
-  const { user } = useStore();
   const currentURL = `${BASE_URL}/user/${profileId}`;
 
   const handleCopy = async () => {

@@ -77,7 +77,6 @@ export default function QuizModal({ codeId }: Props) {
           errors={errors}
           classname={styles.input}
         />
-        {/* Remove the duplicate error message rendering here */}
         <Button isLink={false} type="submit" variant="primary" classname={styles.button}>
           확인
         </Button>
