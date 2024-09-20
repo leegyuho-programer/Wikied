@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
 import { AuthState, User } from './zustand.types';
+import removeStore from '@/utils/removeStore';
 
 export const createAuthSlice: StateCreator<AuthState> = (set) => ({
   isLogin: false,
@@ -25,7 +26,7 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
       password,
       codeId,
     })),
-  setLogout: () =>
+  setLogout: () => {
     set(() => ({
       isLogin: false,
       user: null,
@@ -35,5 +36,8 @@ export const createAuthSlice: StateCreator<AuthState> = (set) => ({
       password: '',
       codeId: '',
       securityQuestion: null,
-    })),
+    }));
+
+    removeStore();
+  },
 });
