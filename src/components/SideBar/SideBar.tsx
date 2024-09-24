@@ -52,7 +52,6 @@ function SideBar({ profileData, showEditButton }: Props) {
         ...prevFormData,
         image: data.url,
       }));
-      console.log('Image uploaded successfully:', data.url);
     },
     onError: (error) => {
       console.error('이미지 업로드 중 오류:', error);

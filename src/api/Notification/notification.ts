@@ -36,7 +36,7 @@ export const deleteNotification = async (id: number, token: string): Promise<Del
       method: 'DELETE',
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

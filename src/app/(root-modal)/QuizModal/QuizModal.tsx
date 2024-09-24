@@ -39,9 +39,8 @@ export default function QuizModal({ codeId }: Props) {
 
   const handleQuiz = async (data: FormValues) => {
     try {
-      console.log('Security Answer:', data.securityAnswer, 'Code ID:', codeId);
       const response = await postProfilePing({ securityAnswer: data.securityAnswer }, codeId as string, accessToken);
-      console.log('response', response);
+
       router.push('/userEdit');
       clearModal();
     } catch (error) {

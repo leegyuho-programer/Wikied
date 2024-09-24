@@ -8,7 +8,7 @@ const login = async (data: PostLogin): Promise<PostLoginResponse> => {
       method: 'POST',
       body: data,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error('로그인 실패:', error);

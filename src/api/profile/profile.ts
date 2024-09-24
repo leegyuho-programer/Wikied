@@ -9,7 +9,7 @@ export const postProfile = async (data: PostProfileRequestType, token: string): 
       body: data,
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

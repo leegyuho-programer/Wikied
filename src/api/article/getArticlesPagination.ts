@@ -6,7 +6,7 @@ const getArticlePagination = async (page?: number, pageSize?: number): Promise<G
     const response = await fetch(`https://wikied-api.vercel.app/1-99/articles?page=${page}&pageSize=${pageSize}`, {
       method: 'GET',
     });
-    console.log(response);
+
     return response.json();
   } catch (error) {
     console.error(error);

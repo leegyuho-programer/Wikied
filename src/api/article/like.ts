@@ -8,7 +8,7 @@ export const deleteLike = async (articleId: number, token: string): Promise<Dele
       method: 'DELETE',
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);
@@ -23,7 +23,7 @@ export const postLike = async (token: string, articleId: number): Promise<PostLi
       method: 'POST',
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

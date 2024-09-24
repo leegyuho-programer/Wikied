@@ -16,8 +16,6 @@ export default function CheckLogin() {
     if (!userAuth || !isLogin) {
       router.replace('/login');
     }
-
-    console.log('UserAuth:', userAuth, 'IsLogin:', isLogin);
   };
 
   useEffect(() => {

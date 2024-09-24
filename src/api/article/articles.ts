@@ -4,7 +4,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 export const getArticles = async (): Promise<GetArticleResponseType> => {
   try {
     const response = await fetch('https://wikied-api.vercel.app/1-99/articles', { method: 'GET' });
-    console.log(response);
+
     return response.json();
   } catch (error) {
     console.error(error);
@@ -20,7 +20,7 @@ export const postArticles = async (data: PostArticleRequestType, token: string):
       body: data,
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

@@ -15,7 +15,7 @@ export const deleteComment = async (commentId: number, token: string): Promise<D
       method: 'DELETE',
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);
@@ -70,7 +70,7 @@ export const postComment = async (
       body: data,
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

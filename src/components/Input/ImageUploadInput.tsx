@@ -17,7 +17,6 @@ function ImageUploadInput() {
     try {
       const response = await postImage(imgFile, accessToken);
       console.log('Uploaded Image URL:', response.url);
-      // You can set the image URL to the state or perform other actions here
     } catch (error) {
       console.error('Error uploading image:', error);
     }

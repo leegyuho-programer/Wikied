@@ -7,14 +7,13 @@ export const postProfilePing = async (
   token: string
 ): Promise<PostProfilePingResponseType> => {
   try {
-    console.log('Sending Data:', data, 'Code:', code, 'Token:', token);
     const response = await authBasedRequest<PostProfilePingResponseType>({
       url: `profiles/${code}/ping`,
       method: 'POST',
       body: data,
       token,
     });
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error(error);

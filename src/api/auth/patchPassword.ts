@@ -9,7 +9,7 @@ const patchPassword = async (data: PatchPassword, token: string): Promise<PatchP
       body: data,
       token,
     });
-    console.log('비밀번호 변경 성공:', response);
+
     return response;
   } catch (error) {
     console.error('비밀번호 변경 실패:', error);

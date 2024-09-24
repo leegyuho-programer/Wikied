@@ -66,8 +66,6 @@ export default function PostingPage() {
     uploadMutation.mutate(data);
   };
 
-  console.log(errors);
-
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
