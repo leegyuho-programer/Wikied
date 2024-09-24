@@ -11,7 +11,7 @@ import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
 import { useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import styles from './UserPage.module.css';
 import MyPageSkeleton from '@/app/(auth)/_components/MyPage/MyPageSkeleton';
@@ -19,6 +19,7 @@ import MyPageSkeleton from '@/app/(auth)/_components/MyPage/MyPageSkeleton';
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const { id } = useParams<{ id: string | string[] }>();
+  const router = useRouter();
 
   const { isLogin, user, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore((state) => ({
     isLogin: state.isLogin,
@@ -56,6 +57,12 @@ function UserPage() {
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
   }, [profileCodeResponse, parsedId, setProfileId, setPageId, setSecurityQuestion]);
+
+  useEffect(() => {
+    if (isLogin && user && user?.profile?.id === parsedId) {
+      router.push('/mypage');
+    }
+  }, [isLogin, user, parsedId, router]);
 
   const handleClick = () => {
     showModal('quizModal');
