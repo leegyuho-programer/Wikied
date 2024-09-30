@@ -23,9 +23,9 @@ export interface AuthState {
   password: string;
   setUserId?: (data: number) => void;
   userAccessToken: string;
-  setUserAccessToken?: (data: string) => void;
+  // setUserAccessToken?: (data: string) => void;
   userRefreshToken: string;
-  setUserRefreshToken?: (data: string) => void;
+  // setUserRefreshToken?: (data: string) => void;
   codeId: string | null;
   securityQuestion?: string | null;
   setSecurityQuestion?: (question: string | null) => void;
@@ -33,6 +33,11 @@ export interface AuthState {
   setSecurityAnswer?: (answer: string | null) => void;
   pageId?: number | null;
   setPageId?: (data: number) => void;
+
+  getUserAccessToken: () => string;
+  setUserAccessToken: (token: string) => void;
+  getUserRefreshToken: () => string;
+  setUserRefreshToken: (token: string) => void;
 }
 
 export interface ArtworkState {

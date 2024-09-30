@@ -1,49 +1,198 @@
+// import { useStore } from '@/store';
+
+// type AuthBasedRequestType = {
+//   url: string;
+//   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+//   params?: { [key: string]: any };
+//   body?: any;
+// };
+
+// type RequestType = AuthBasedRequestType;
+
+// const baseURL = 'https://wikied-api.vercel.app/1-99';
+
+// // 리프레시 토큰을 사용하여 액세스 토큰을 재발급
+// const reissueAccessToken = async (): Promise<string | null> => {
+//   try {
+//     const refreshToken = useStore.getState().getUserRefreshToken();
+//     if (!refreshToken) {
+//       throw new Error('Refresh token not found');
+//     }
+
+//     const response = await fetch(`${baseURL}/auth/refresh-token`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ refreshToken }),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error('Failed to refresh token');
+//     }
+
+//     const { accessToken } = await response.json();
+//     useStore.getState().setUserAccessToken(accessToken);
+//     return accessToken;
+//   } catch (error) {
+//     console.error('액세스 토큰 재발급 실패:', error);
+//     return null;
+//   }
+// };
+
+// /** token based request handler
+//  * @param url request url
+//  * @param method http method type
+//  * @param params request parameters
+//  * @param body request body
+//  */
+// export const authBasedRequest = async <T>({ url, method = 'GET', params, body }: AuthBasedRequestType): Promise<T> => {
+//   let token = useStore.getState().getUserAccessToken();
+//   if (!token) {
+//     throw new Error('Access token not found');
+//   }
+
+//   const queryString = new URLSearchParams(params).toString();
+//   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
+
+//   const makeRequest = async (accessToken: string): Promise<Response> => {
+//     return fetch(fullUrl, {
+//       method,
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//       body: body ? JSON.stringify(body) : undefined,
+//     });
+//   };
+
+//   let response = await makeRequest(token);
+
+//   if (response.status === 401) {
+//     // Token might be expired, try to refresh
+//     const newToken = await reissueAccessToken();
+//     if (newToken) {
+//       // Retry the request with the new token
+//       response = await makeRequest(newToken);
+//     } else {
+//       throw new Error('Failed to refresh token');
+//     }
+//   }
+
+//   if (!response.ok) {
+//     throw new Error('Something went wrong');
+//   }
+
+//   return response.json() as Promise<T>;
+// };
+
+// /** request handler
+//  * @param url request url
+//  * @param method http method type
+//  * @param params request parameters
+//  * @param body request body
+//  */
+// export const request = async <T>({ url, method = 'GET', params, body }: RequestType): Promise<T> => {
+//   const queryString = new URLSearchParams(params).toString();
+//   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
+
+//   const response = await fetch(fullUrl, {
+//     method,
+//     headers: { 'Content-Type': 'application/json' },
+//     body: body ? JSON.stringify(body) : undefined,
+//   });
+
+//   if (!response.ok) {
+//     throw new Error('Something went wrong');
+//   }
+
+//   return response.json() as Promise<T>;
+// };
+
+import { useStore } from '@/store';
+
 type AuthBasedRequestType = {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   params?: { [key: string]: any };
-  token: string;
   body?: any;
 };
 
-type RequestType = Omit<AuthBasedRequestType, 'token'>;
+type RequestType = AuthBasedRequestType;
+
+const baseURL = 'https://wikied-api.vercel.app/1-99';
+
+// 리프레시 토큰을 사용하여 액세스 토큰을 재발급
+const reissueAccessToken = async (): Promise<string | null> => {
+  try {
+    const refreshToken = useStore.getState().getUserRefreshToken();
+    if (!refreshToken) {
+      throw new Error('Refresh token not found');
+    }
+
+    const response = await fetch(`${baseURL}/auth/refresh-token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh token');
+    }
+
+    const { accessToken } = await response.json();
+    useStore.getState().setUserAccessToken(accessToken);
+    return accessToken;
+  } catch (error) {
+    console.error('액세스 토큰 재발급 실패:', error);
+    return null;
+  }
+};
 
 /** token based request handler
  * @param url request url
  * @param method http method type
  * @param params request parameters
- * @param token auth token
  * @param body request body
  */
+export const authBasedRequest = async ({ url, method = 'GET', params, body }: AuthBasedRequestType): Promise<any> => {
+  const makeRequest = async (accessToken: string): Promise<Response> => {
+    const queryString = new URLSearchParams(params).toString();
+    const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
-export const authBasedRequest = async <T>({ url, method = 'GET', params, token, body }: AuthBasedRequestType) => {
-  if (!token) {
-    const storedToken = localStorage.getItem('store');
-    if (!storedToken) {
-      throw new Error('Token not found in localStorage');
+    return fetch(fullUrl, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  };
+
+  const handleResponse = async (response: Response): Promise<any> => {
+    if (response.ok) {
+      return response.json();
     }
-    token = JSON.parse(storedToken).state.userAccessToken;
+    if (response.status === 401) {
+      // Token might be expired, try to refresh
+      const newToken = await reissueAccessToken();
+      if (newToken) {
+        // Retry the request with the new token
+        const retryResponse = await makeRequest(newToken);
+        return handleResponse(retryResponse);
+      } else {
+        throw new Error('Failed to refresh token');
+      }
+    }
+    throw new Error('Something went wrong');
+  };
+
+  let token = useStore.getState().getUserAccessToken();
+  if (!token) {
+    throw new Error('Access token not found');
   }
 
-  const baseURL = 'https://wikied-api.vercel.app/1-99';
-  const queryString = new URLSearchParams(params).toString();
-
-  const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
-
-  const response = await fetch(fullUrl, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body) ?? '',
-  });
-
-  if (!response.ok) {
-    throw new Error('something went to wrong');
-  }
-
-  return (await response.json()) as T;
+  const initialResponse = await makeRequest(token);
+  return handleResponse(initialResponse);
 };
 
 /** request handler
@@ -52,24 +201,19 @@ export const authBasedRequest = async <T>({ url, method = 'GET', params, token, 
  * @param params request parameters
  * @param body request body
  */
-
-export const request = async <T>({ url, method = 'GET', params, body }: RequestType) => {
-  const baseURL = 'https://wikied-api.vercel.app/1-99';
+export const request = async ({ url, method = 'GET', params, body }: RequestType): Promise<any> => {
   const queryString = new URLSearchParams(params).toString();
-
   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
   const response = await fetch(fullUrl, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body) ?? '',
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
   });
 
   if (!response.ok) {
-    throw new Error('something went to wrong');
+    throw new Error('Something went wrong');
   }
 
-  return (await response.json()) as T;
+  return response.json();
 };
