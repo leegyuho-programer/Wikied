@@ -1,5 +1,4 @@
 import { getComment, postComment } from '@/api/comment/comment';
-import { useStore } from '@/store';
 import { GetCommentResponseType } from '@/types/comment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -12,7 +11,6 @@ interface CommentContainerProps {
 
 export default function CommentContainer({ articleId }: CommentContainerProps) {
   const [comment, setComment] = useState(''); // 댓글 입력 상태 관리
-  const accessToken = useStore((state) => state.userAccessToken);
   const queryClient = useQueryClient();
 
   const {
@@ -25,7 +23,7 @@ export default function CommentContainer({ articleId }: CommentContainerProps) {
   });
 
   const postCommentMutation = useMutation({
-    mutationFn: (newComment: string) => postComment({ content: newComment }, accessToken, articleId),
+    mutationFn: (newComment: string) => postComment({ content: newComment }, articleId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
     },

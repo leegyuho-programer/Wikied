@@ -44,7 +44,12 @@ const reissueAccessToken = async (): Promise<string | null> => {
  * @param params request parameters
  * @param body request body
  */
-export const authBasedRequest = async ({ url, method = 'GET', params, body }: AuthBasedRequestType): Promise<any> => {
+export const authBasedRequest = async <T>({
+  url,
+  method = 'GET',
+  params,
+  body,
+}: AuthBasedRequestType): Promise<any> => {
   const makeRequest = async (accessToken: string): Promise<Response> => {
     const queryString = new URLSearchParams(params).toString();
     const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;

@@ -17,7 +17,6 @@ import { useMutation } from '@tanstack/react-query';
 
 function MyAccountPage() {
   const router = useRouter();
-  const accessToken = useStore((state) => state.userAccessToken);
   const storedPassword = useStore((state) => state.password);
   const { setLogout, setSecurityQuestion, setSecurityAnswer } = useStore((state) => ({
     setLogout: state.setLogout,
@@ -36,7 +35,7 @@ function MyAccountPage() {
   const passwordValue = watch('password');
 
   const patchPasswordMutation = useMutation({
-    mutationFn: (data: PatchPassword) => patchPassword(data, accessToken),
+    mutationFn: (data: PatchPassword) => patchPassword(data),
     onSuccess: () => {
       alert('비밀번호가 변경되었습니다.');
       setLogout();
@@ -48,7 +47,7 @@ function MyAccountPage() {
   });
 
   const postProfileMutation = useMutation({
-    mutationFn: (profileData: PostProfileRequestType) => postProfile(profileData, accessToken),
+    mutationFn: (profileData: PostProfileRequestType) => postProfile(profileData),
     onSuccess: () => {
       alert('질문이 등록되었습니다.');
       router.push('mypage');

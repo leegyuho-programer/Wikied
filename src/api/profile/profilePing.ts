@@ -3,15 +3,13 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 export const postProfilePing = async (
   data: PostProfilePingRequestType,
-  code: string,
-  token: string
+  code: string
 ): Promise<PostProfilePingResponseType> => {
   try {
     const response = await authBasedRequest<PostProfilePingResponseType>({
       url: `profiles/${code}/ping`,
       method: 'POST',
       body: data,
-      token,
     });
 
     return response;

@@ -87,8 +87,7 @@ function SideBar({ profileData, showEditButton }: Props) {
           bloodType: formData.bloodType,
           nationality: formData.nationality,
         },
-        profileData?.code,
-        accessToken
+        profileData?.code
       ),
     onSuccess: () => {
       alert('수정이 완료되었습니다.');

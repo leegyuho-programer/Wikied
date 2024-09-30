@@ -22,10 +22,9 @@ interface FormValues {
 }
 
 export default function QuizModal({ codeId }: Props) {
-  const { setSecurityQuestion, securityQuestion, accessToken } = useStore((state: any) => ({
+  const { setSecurityQuestion, securityQuestion } = useStore((state: any) => ({
     setSecurityQuestion: state.setSecurityQuestion,
     securityQuestion: state.securityQuestion,
-    accessToken: state.accessToken,
   }));
 
   const router = useRouter();
@@ -39,7 +38,7 @@ export default function QuizModal({ codeId }: Props) {
 
   const handleQuiz = async (data: FormValues) => {
     try {
-      const response = await postProfilePing({ securityAnswer: data.securityAnswer }, codeId as string, accessToken);
+      const response = await postProfilePing({ securityAnswer: data.securityAnswer }, codeId as string);
 
       router.push('/userEdit');
       clearModal();

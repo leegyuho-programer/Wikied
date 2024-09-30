@@ -19,7 +19,6 @@ import styles from './ArticlePage.module.css';
 import ArticlePageSkeleton from './ArticlePageSkeleton';
 
 export default function ArticlePage() {
-  const accessToken = useStore((state) => state.userAccessToken);
   const user = useStore((state) => state.user);
   const pathname = usePathname();
   const id = Number(pathname.split('/').pop());
@@ -32,12 +31,11 @@ export default function ArticlePage() {
     error,
   } = useQuery<GetArticleIdResponseType, Error>({
     queryKey: ['getArticle', id],
-    queryFn: () => getArticle(id, accessToken),
+    queryFn: () => getArticle(id),
   });
 
   const deleteArticleMutation = useMutation({
-    mutationFn: ({ articleId: id, accessToken }: DeleteArticleIdRequestType) =>
-      deleteArticle(id, accessToken as string),
+    mutationFn: ({ articleId: id }: DeleteArticleIdRequestType) => deleteArticle(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
@@ -47,7 +45,7 @@ export default function ArticlePage() {
     if (!article) return;
 
     deleteArticleMutation.mutate(
-      { articleId: id, accessToken },
+      { articleId: id },
       {
         onSuccess: () => {
           alert('게시물이 성공적으로 삭제되었습니다.');
@@ -61,14 +59,14 @@ export default function ArticlePage() {
   };
 
   const postLikeMutation = useMutation({
-    mutationFn: ({ articleId: id, accessToken }: PostLikeRequestType) => postLike(accessToken as string, id),
+    mutationFn: ({ articleId: id }: PostLikeRequestType) => postLike(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
   });
 
   const deleteLikeMutation = useMutation({
-    mutationFn: ({ articleId: id, accessToken }: DeleteLikeRequestType) => deleteLike(id, accessToken as string),
+    mutationFn: ({ articleId: id }: DeleteLikeRequestType) => deleteLike(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
@@ -78,9 +76,9 @@ export default function ArticlePage() {
     if (!article) return;
 
     if (!article.isLiked) {
-      postLikeMutation.mutate({ articleId: id, accessToken });
+      postLikeMutation.mutate({ articleId: id });
     } else {
-      deleteLikeMutation.mutate({ articleId: id, accessToken });
+      deleteLikeMutation.mutate({ articleId: id });
     }
   };
 

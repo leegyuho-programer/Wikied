@@ -16,12 +16,11 @@ import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
 
 function MyPage() {
-  const { user, profileId, setProfileId, securityAnswer, accessToken } = useStore((state: any) => ({
+  const { user, profileId, setProfileId, securityAnswer } = useStore((state: any) => ({
     user: state.user,
     profileId: state.profileId,
     setProfileId: state.setProfileId,
     securityAnswer: state.securityAnswer,
-    accessToken: state.userAccessToken,
   }));
   const [isCopied, setIsCopied] = useState(false);
 
@@ -43,7 +42,7 @@ function MyPage() {
   // 프로필 핑 mutation
   const postPingMutation = useMutation({
     mutationFn: ({ pingRequest, profileCode }: { pingRequest: PostProfilePingRequestType; profileCode: string }) =>
-      postProfilePing(pingRequest, profileCode, accessToken),
+      postProfilePing(pingRequest, profileCode),
     onSuccess: () => {
       setProfileId(profileCodeResponse?.id || null);
     },
@@ -56,14 +55,14 @@ function MyPage() {
   useQuery({
     queryKey: ['profilePing', profileCode],
     queryFn: () => {
-      if (!profileCode || !accessToken || !securityAnswer) {
+      if (!profileCode || !securityAnswer) {
         throw new Error('Required data for ping is missing');
       }
       const pingRequest: PostProfilePingRequestType = { securityAnswer };
 
       return postPingMutation.mutateAsync({ pingRequest, profileCode });
     },
-    enabled: !!profileCode && !!accessToken && !!securityAnswer,
+    enabled: !!profileCode && !!securityAnswer,
     retry: false,
   });
 

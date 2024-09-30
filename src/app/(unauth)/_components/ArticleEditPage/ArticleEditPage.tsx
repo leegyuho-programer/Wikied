@@ -9,7 +9,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from '../ArticlePage/ArticlePage.module.css';
 
 export default function ArticleEditPage() {
-  const accessToken = useStore((state) => state.userAccessToken);
   const articleId = useStore((state) => state.articleId);
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -23,8 +22,8 @@ export default function ArticleEditPage() {
     isError,
   } = useQuery<GetArticleIdResponseType>({
     queryKey: ['article', articleId],
-    queryFn: () => getArticle(articleId, accessToken),
-    enabled: !!articleId && !!accessToken,
+    queryFn: () => getArticle(articleId),
+    enabled: !!articleId,
   });
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function ArticleEditPage() {
   }, [article]);
 
   const updateArticleMutation = useMutation<PatchArticleResponseType, Error, PatchArticleRequestType>({
-    mutationFn: (patchedArticle) => patchArticle(patchedArticle, accessToken, articleId),
+    mutationFn: (patchedArticle) => patchArticle(patchedArticle, articleId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['article', articleId] });
       router.push(`/article/${articleId}`);

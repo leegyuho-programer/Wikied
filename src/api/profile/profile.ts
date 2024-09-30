@@ -1,13 +1,12 @@
 import { GetProfileResponseType, PostProfileRequestType, PostProfileResponseType } from '../../types/profile';
 import { authBasedRequest } from '../fetchRequestHandler';
 
-export const postProfile = async (data: PostProfileRequestType, token: string): Promise<PostProfileResponseType> => {
+export const postProfile = async (data: PostProfileRequestType): Promise<PostProfileResponseType> => {
   try {
     const response = await authBasedRequest<PostProfileResponseType>({
       url: `profiles`,
       method: 'POST',
       body: data,
-      token,
     });
 
     return response;

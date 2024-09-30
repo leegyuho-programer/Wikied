@@ -29,12 +29,11 @@ export const getNotification = async (page: number, pageSize: number): Promise<G
   }
 };
 
-export const deleteNotification = async (id: number, token: string): Promise<DeleteNotificationRequestType> => {
+export const deleteNotification = async (id: number): Promise<DeleteNotificationRequestType> => {
   try {
     const response = await authBasedRequest<DeleteNotificationResponseType>({
       url: `notification/${id}`,
       method: 'DELETE',
-      token,
     });
 
     return response;

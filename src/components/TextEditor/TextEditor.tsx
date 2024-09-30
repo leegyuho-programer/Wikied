@@ -23,9 +23,8 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, accessToken, securityAnswer, pageId, modals, showModal } = useStore((state: any) => ({
+  const { user, securityAnswer, pageId, modals, showModal } = useStore((state: any) => ({
     user: state.user,
-    accessToken: state.userAccessToken,
     securityAnswer: state.securityAnswer,
     pageId: state.pageId,
     modals: state.modals,
@@ -73,7 +72,7 @@ function TextEditor({ value, setValue }: Props) {
   });
 
   const updateProfileMutation = useMutation({
-    mutationFn: (payload: { content: string }) => patchProfileCode(payload, profileData?.code || '', accessToken),
+    mutationFn: (payload: { content: string }) => patchProfileCode(payload, profileData?.code || ''),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
       router.push(`/user/${pageId}`);
@@ -136,11 +135,11 @@ function TextEditor({ value, setValue }: Props) {
       const pingRequest: PostProfilePingRequestType = {
         securityAnswer,
       };
-      postProfilePing(pingRequest, profileData.code, accessToken)
+      postProfilePing(pingRequest, profileData.code)
         .then(() => setPingTime(Date.now()))
         .catch((error) => console.error('Ping 요청 실패:', error));
     }
-  }, [user, profileData, securityAnswer, accessToken]);
+  }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
     resetTimer();

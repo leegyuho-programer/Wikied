@@ -50,7 +50,7 @@ export default function PostingPage() {
         image: imageUrl,
       };
 
-      return postArticles(requestBody, accessToken);
+      return postArticles(requestBody);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['articles'] });

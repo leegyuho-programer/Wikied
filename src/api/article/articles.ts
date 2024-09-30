@@ -12,13 +12,12 @@ export const getArticles = async (): Promise<GetArticleResponseType> => {
   }
 };
 
-export const postArticles = async (data: PostArticleRequestType, token: string): Promise<PostArticleResponseType> => {
+export const postArticles = async (data: PostArticleRequestType): Promise<PostArticleResponseType> => {
   try {
     const response = await authBasedRequest<PostArticleResponseType>({
       url: 'articles',
       method: 'POST',
       body: data,
-      token,
     });
 
     return response;

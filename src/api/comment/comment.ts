@@ -8,12 +8,11 @@ import {
 } from '../../types/comment';
 import { authBasedRequest } from '../fetchRequestHandler';
 
-export const deleteComment = async (commentId: number, token: string): Promise<DeleteCommentRequestType> => {
+export const deleteComment = async (commentId: number): Promise<DeleteCommentRequestType> => {
   try {
     const response = await authBasedRequest<DeleteCommentRequestType>({
       url: `comments/${commentId}`,
       method: 'DELETE',
-      token,
     });
 
     return response;
@@ -42,7 +41,6 @@ export const getComment = async (
 
 export const patchComment = async (
   data: PatchCommentRequestType,
-  token: string,
   commentId: number
 ): Promise<PatchCommentResponseType> => {
   try {
@@ -50,7 +48,6 @@ export const patchComment = async (
       url: `comments/${commentId}`,
       method: 'PATCH',
       body: data,
-      token,
     });
     return response;
   } catch (error) {
@@ -60,7 +57,6 @@ export const patchComment = async (
 
 export const postComment = async (
   data: PostCommentRequestType,
-  token: string,
   articleId: number
 ): Promise<PostCommentResponseType> => {
   try {
@@ -68,7 +64,6 @@ export const postComment = async (
       url: `articles/${articleId}/comments`,
       method: 'POST',
       body: data,
-      token,
     });
 
     return response;

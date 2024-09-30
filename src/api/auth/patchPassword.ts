@@ -1,13 +1,12 @@
 import { PatchPassword, PatchPasswordResponse } from '../../types/auth';
 import { authBasedRequest } from '../fetchRequestHandler';
 
-const patchPassword = async (data: PatchPassword, token: string): Promise<PatchPasswordResponse> => {
+const patchPassword = async (data: PatchPassword): Promise<PatchPasswordResponse> => {
   try {
     const response = await authBasedRequest<PatchPasswordResponse>({
       url: 'users/me/password',
       method: 'PATCH',
       body: data,
-      token,
     });
 
     return response;

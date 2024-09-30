@@ -17,12 +17,11 @@ interface CommentProps {
 export default function Comment({ comment, articleId }: CommentProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
-  const accessToken = useStore((state) => state.userAccessToken);
   const currentUserId = useStore((state) => state.userId); // 현재 로그인한 사용자의 ID 가져오기
   const queryClient = useQueryClient();
 
   const patchCommentMutation = useMutation({
-    mutationFn: () => patchComment({ content: editContent }, accessToken, comment.id),
+    mutationFn: () => patchComment({ content: editContent }, comment.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
     },
@@ -32,7 +31,7 @@ export default function Comment({ comment, articleId }: CommentProps) {
   });
 
   const deleteCommentMutation = useMutation({
-    mutationFn: () => deleteComment(comment.id, accessToken),
+    mutationFn: () => deleteComment(comment.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', articleId] });
     },
