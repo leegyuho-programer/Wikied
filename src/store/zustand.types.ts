@@ -1,5 +1,3 @@
-import { GetProfileResponseType, PostProfileResponseType } from '../types/profile';
-
 export interface User {
   id: number;
   email: string;
@@ -23,9 +21,7 @@ export interface AuthState {
   password: string;
   setUserId?: (data: number) => void;
   userAccessToken: string;
-  // setUserAccessToken?: (data: string) => void;
   userRefreshToken: string;
-  // setUserRefreshToken?: (data: string) => void;
   codeId: string | null;
   securityQuestion?: string | null;
   setSecurityQuestion?: (question: string | null) => void;

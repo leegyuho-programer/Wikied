@@ -11,7 +11,7 @@ import { useStore } from '@/store';
 import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
 
@@ -85,6 +85,21 @@ function MyPage() {
     }
   };
 
+  // 새로고침 시 profileId를 로컬 저장소에서 불러오기
+  useEffect(() => {
+    const storedProfileId = localStorage.getItem('profileId');
+    if (storedProfileId) {
+      setProfileId(storedProfileId);
+    }
+  }, [setProfileId]);
+
+  // profileId가 변경되면 로컬 저장소에 저장
+  useEffect(() => {
+    if (profileId) {
+      localStorage.setItem('profileId', profileId);
+    }
+  }, [profileId]);
+
   if (isPending) {
     return <MyPageSkeleton />;
   }
@@ -98,7 +113,11 @@ function MyPage() {
       )}
       <div className={styles.title}>
         <p className={styles.name}>{user?.name}</p>
-        {profileId && <LinkCopy onCopy={setIsCopied} profileId={profileId} />}
+        {isPending || !profileId ? (
+          <p>Loading profile link...</p>
+        ) : (
+          <LinkCopy onCopy={setIsCopied} profileId={profileId} />
+        )}
       </div>
       <div className={styles.section}>
         <SideBar profileData={profileCodeResponse} showEditButton={user?.name === profileCodeResponse?.name} />
