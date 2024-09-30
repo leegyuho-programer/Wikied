@@ -97,7 +97,7 @@ export const authBasedRequest = async <T>({
  * @param params request parameters
  * @param body request body
  */
-export const request = async ({ url, method = 'GET', params, body }: RequestType): Promise<any> => {
+export const request = async <T>({ url, method = 'GET', params, body }: RequestType): Promise<any> => {
   const queryString = new URLSearchParams(params).toString();
   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
@@ -111,5 +111,5 @@ export const request = async ({ url, method = 'GET', params, body }: RequestType
     throw new Error('Something went wrong');
   }
 
-  return response.json();
+  return (await response.json()) as T;
 };
