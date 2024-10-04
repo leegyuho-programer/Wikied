@@ -2,7 +2,7 @@
 
 import { postImage } from '@/api/image/postImage';
 import { patchProfileCode } from '@/api/profile/profileCode';
-import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
