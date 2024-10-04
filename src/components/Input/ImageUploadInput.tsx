@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
 import { postImage } from '@/api/image/postImage';
-import { useStore } from '@/store';
+import { parseCookies } from 'nookies';
+import { useCallback, useRef } from 'react';
 
 function ImageUploadInput() {
-  const accessToken = useStore((state) => state.userAccessToken);
+  const cookies = parseCookies();
+  const accessToken = cookies.userAccessToken;
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {

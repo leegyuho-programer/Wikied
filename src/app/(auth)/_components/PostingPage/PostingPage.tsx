@@ -2,13 +2,13 @@
 
 import { postArticles } from '@/api/article/articles';
 import { postImage } from '@/api/image/postImage';
-import { useStore } from '@/store';
+import { PostArticleResponseType } from '@/types/article';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { parseCookies } from 'nookies';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './PostingPage.module.css';
-import { PostArticleResponseType } from '@/types/article';
 
 interface FormData {
   title: string;
@@ -17,7 +17,8 @@ interface FormData {
 }
 
 export default function PostingPage() {
-  const accessToken = useStore((state) => state.userAccessToken);
+  const cookies = parseCookies();
+  const accessToken = cookies.userAccessToken;
   const router = useRouter();
   const queryClient = useQueryClient();
 

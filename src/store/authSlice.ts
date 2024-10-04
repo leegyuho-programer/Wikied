@@ -1,5 +1,56 @@
+// import { StateCreator } from 'zustand';
+// import { AuthState, User } from './zustand.types';
+// import removeStore from '@/utils/removeStore';
+
+// export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
+//   isLogin: false,
+//   user: null,
+//   userId: 0,
+//   pageId: 0,
+//   setPageId: (pageId: number) => set({ pageId }),
+//   userAccessToken: '',
+//   userRefreshToken: '',
+//   password: '',
+//   codeId: '',
+//   setSecurityQuestion: (question) => set({ securityQuestion: question }),
+//   setSecurityAnswer: (answer) => set({ securityAnswer: answer }),
+//   securityQuestion: null,
+//   securityAnswer: null,
+
+//   getUserAccessToken: () => get().userAccessToken,
+//   setUserAccessToken: (token: string) => set({ userAccessToken: token }),
+//   getUserRefreshToken: () => get().userRefreshToken,
+//   setUserRefreshToken: (token: string) => set({ userRefreshToken: token }),
+
+//   setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) =>
+//     set(() => ({
+//       isLogin: true,
+//       user,
+//       userId: user.id,
+//       userAccessToken: accessToken,
+//       userRefreshToken: refreshToken,
+//       password,
+//       codeId,
+//     })),
+//   setLogout: () => {
+//     set(() => ({
+//       isLogin: false,
+//       user: null,
+//       userId: 0,
+//       userAccessToken: '',
+//       userRefreshToken: '',
+//       password: '',
+//       codeId: '',
+//       securityQuestion: null,
+//     }));
+
+//     removeStore();
+//   },
+// });
+
 import { StateCreator } from 'zustand';
 import { AuthState, User } from './zustand.types';
+import { saveTokenToCookies, getTokenFromCookies, removeTokenFromCookies } from './cookieUtils';
 import removeStore from '@/utils/removeStore';
 
 export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
@@ -8,8 +59,8 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   userId: 0,
   pageId: 0,
   setPageId: (pageId: number) => set({ pageId }),
-  userAccessToken: '',
-  userRefreshToken: '',
+  userAccessToken: getTokenFromCookies('userAccessToken') || '',
+  userRefreshToken: getTokenFromCookies('userRefreshToken') || '',
   password: '',
   codeId: '',
   setSecurityQuestion: (question) => set({ securityQuestion: question }),
@@ -18,32 +69,40 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   securityAnswer: null,
 
   getUserAccessToken: () => get().userAccessToken,
-  setUserAccessToken: (token: string) => set({ userAccessToken: token }),
+  setUserAccessToken: (token: string) => {
+    saveTokenToCookies('userAccessToken', token);
+    set({ userAccessToken: token });
+  },
   getUserRefreshToken: () => get().userRefreshToken,
-  setUserRefreshToken: (token: string) => set({ userRefreshToken: token }),
+  setUserRefreshToken: (token: string) => {
+    saveTokenToCookies('userRefreshToken', token);
+    set({ userRefreshToken: token });
+  },
 
-  setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) =>
-    set(() => ({
+  setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) => {
+    saveTokenToCookies('userAccessToken', accessToken);
+    saveTokenToCookies('userRefreshToken', refreshToken);
+    set({
       isLogin: true,
       user,
       userId: user.id,
-      userAccessToken: accessToken,
-      userRefreshToken: refreshToken,
       password,
       codeId,
-    })),
+    });
+  },
+
   setLogout: () => {
-    set(() => ({
+    removeTokenFromCookies('userAccessToken');
+    removeTokenFromCookies('userRefreshToken');
+    set({
       isLogin: false,
       user: null,
       userId: 0,
-      userAccessToken: '',
-      userRefreshToken: '',
       password: '',
       codeId: '',
       securityQuestion: null,
-    }));
-
+      securityAnswer: null,
+    });
     removeStore();
   },
 });

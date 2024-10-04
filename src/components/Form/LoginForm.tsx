@@ -10,6 +10,7 @@ import Input from '../Input/Input';
 import styles from './Form.module.css';
 import login from '@/api/auth/login';
 import { useMutation } from '@tanstack/react-query';
+import { setCookie } from 'nookies';
 
 function LoginForm() {
   const router = useRouter();
@@ -33,6 +34,16 @@ function LoginForm() {
         variables.password,
         response.user.profile?.code
       );
+
+      setCookie(null, 'userAccessToken', response.accessToken, {
+        maxAge: 60 * 60 * 24 * 7, // 쿠키 만료 시간 7일
+        path: '/',
+      });
+      setCookie(null, 'userRefreshToken', response.refreshToken, {
+        maxAge: 60 * 60 * 24 * 7, // 쿠키 만료 시간 7일
+        path: '/',
+      });
+
       alert('로그인이 완료되었습니다.');
       router.replace('/mypage');
     },

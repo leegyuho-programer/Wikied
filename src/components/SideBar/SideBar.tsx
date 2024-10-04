@@ -2,9 +2,9 @@
 
 import { postImage } from '@/api/image/postImage';
 import { patchProfileCode } from '@/api/profile/profileCode';
-import { useStore } from '@/store';
 import { useMutation, useQueryClient } from '@tanstack/react-query'; // Import React Query hooks
 import Image from 'next/image';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
 import ArrowDownIcon from '../SvgComponents/ArrowDownIcon/ArrowDownIcon';
@@ -17,7 +17,8 @@ interface Props {
 }
 
 function SideBar({ profileData, showEditButton }: Props) {
-  const accessToken = useStore((state) => state.userAccessToken);
+  const cookies = parseCookies();
+  const accessToken = cookies.userAccessToken;
   const queryClient = useQueryClient();
   const [showAll, setShowAll] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(() => {
