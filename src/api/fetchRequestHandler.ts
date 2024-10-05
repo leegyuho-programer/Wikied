@@ -70,10 +70,10 @@ export const authBasedRequest = async <T>({
       return response.json();
     }
     if (response.status === 401) {
-      // Token might be expired, try to refresh
+      // Token이 만료되었을 가능성이 있으므로 재발급 시도
       const newToken = await reissueAccessToken();
       if (newToken) {
-        // Retry the request with the new token
+        // 새로운 토큰으로 요청 재시도
         const retryResponse = await makeRequest(newToken);
         return handleResponse(retryResponse);
       } else {
