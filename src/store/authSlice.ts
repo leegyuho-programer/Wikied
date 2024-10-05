@@ -20,18 +20,18 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
 
   getUserAccessToken: () => get().userAccessToken,
   setUserAccessToken: (token: string) => {
-    saveTokenToCookies('userAccessToken', token);
+    saveTokenToCookies('userAccessToken', token, 'AT');
     set({ userAccessToken: token });
   },
   getUserRefreshToken: () => get().userRefreshToken,
   setUserRefreshToken: (token: string) => {
-    saveTokenToCookies('userRefreshToken', token);
+    saveTokenToCookies('userRefreshToken', token, 'RT');
     set({ userRefreshToken: token });
   },
 
   setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) => {
-    saveTokenToCookies('userAccessToken', accessToken);
-    saveTokenToCookies('userRefreshToken', refreshToken);
+    saveTokenToCookies('userAccessToken', accessToken, 'AT');
+    saveTokenToCookies('userRefreshToken', refreshToken, 'RT');
     set({
       isLogin: true,
       user,
