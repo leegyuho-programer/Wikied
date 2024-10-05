@@ -36,12 +36,16 @@ function LoginForm() {
       );
 
       setCookie(null, 'userAccessToken', response.accessToken, {
-        maxAge: 60 * 60 * 24 * 7, // 쿠키 만료 시간 7일
+        maxAge: 30 * 60,
         path: '/',
+        secure: true,
+        sameSite: 'strict',
       });
       setCookie(null, 'userRefreshToken', response.refreshToken, {
-        maxAge: 60 * 60 * 24 * 7, // 쿠키 만료 시간 7일
+        maxAge: 30 * 24 * 60 * 60,
         path: '/',
+        secure: true,
+        sameSite: 'strict',
       });
 
       alert('로그인이 완료되었습니다.');
