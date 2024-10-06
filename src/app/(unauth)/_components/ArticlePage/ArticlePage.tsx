@@ -17,6 +17,7 @@ import CommentContainer from '../Comment/CommentContainer';
 import { PostLikeRequestType } from './../../../../types/article';
 import styles from './ArticlePage.module.css';
 import ArticlePageSkeleton from './ArticlePageSkeleton';
+import { formatDate } from '@/utils/day';
 
 export default function ArticlePage() {
   const user = useStore((state) => state.user);
@@ -112,7 +113,7 @@ export default function ArticlePage() {
           <div className={styles.content}>
             <div className={styles.user}>
               <p>{article?.writer.name}</p>
-              {article?.createdAt && <p>{new Date(article.createdAt).toLocaleDateString()}</p>}
+              {article?.createdAt && <p>{formatDate(article.createdAt)}</p>}
             </div>
             <div className={styles.like} onClick={handleLikeClick}>
               <HeartIcon />

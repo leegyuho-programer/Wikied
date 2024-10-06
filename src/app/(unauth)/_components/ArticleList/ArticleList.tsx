@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import LineStrokeIcon from '@/components/SvgComponents/StrokeIcon/LineStroke';
 import styles from './ArticleList.module.css';
+import { formatDate } from '@/utils/day';
 
 export interface ArticleListProps {
   id: number;
@@ -24,7 +25,7 @@ export default function ArticleList({ id, title, writerName, likeCount, createdA
         <div className={styles.articleTitle}>{title}</div>
         <p className={styles.articleWriter}>{writerName}</p>
         <div className={styles.like}>{likeCount}</div>
-        <p className={styles.day}>{new Date(createdAt).toLocaleDateString()}</p>
+        <p className={styles.day}>{formatDate(createdAt)}</p>
       </div>
       <LineStrokeIcon />
     </div>

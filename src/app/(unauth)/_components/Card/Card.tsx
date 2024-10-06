@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from './Card.module.css';
 import Image from 'next/image';
 import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
+import { formatDate } from '@/utils/day';
 
 interface CardProps {
   id: number;
@@ -31,7 +32,7 @@ export default function Card({ id, title, image, writerName, createdAt, likeCoun
         <div className={styles.body}>
           <div className={styles.user}>
             <p>{writerName}</p>
-            <p>{new Date(createdAt).toLocaleDateString()}</p>
+            <p>{formatDate(createdAt)}</p>
           </div>
           <div className={styles.like}>
             <HeartIcon />

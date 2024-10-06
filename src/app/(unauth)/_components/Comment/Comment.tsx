@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import defaultIMG from '../../../../../public/images/default.jpg';
 import styles from './Comment.module.css';
+import { formatDate } from '@/utils/day';
 
 interface CommentProps {
   comment: GetCommentResponseType['list'][number];
@@ -99,7 +100,7 @@ export default function Comment({ comment, articleId }: CommentProps) {
         ) : (
           <p className={styles.comment}>{comment.content}</p>
         )}
-        <p className={styles.day}>{new Date(comment.createdAt).toLocaleDateString()}</p>
+        <p className={styles.day}>{formatDate(comment.createdAt)}</p>
       </div>
     </div>
   );
