@@ -29,6 +29,8 @@ export interface AuthState {
   setSecurityAnswer?: (answer: string | null) => void;
   pageId?: number | null;
   setPageId?: (data: number) => void;
+  profileId: number | null;
+  setProfileId: (profileId: number | null) => void;
 
   getUserAccessToken: () => string;
   setUserAccessToken: (token: string) => void;

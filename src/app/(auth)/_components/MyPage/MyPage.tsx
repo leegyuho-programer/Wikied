@@ -84,21 +84,6 @@ function MyPage() {
     }
   };
 
-  // // 새로고침 시 profileId를 로컬 저장소에서 불러오기
-  // useEffect(() => {
-  //   const storedProfileId = localStorage.getItem('profileId');
-  //   if (storedProfileId) {
-  //     setProfileId(storedProfileId);
-  //   }
-  // }, [setProfileId]);
-
-  // // profileId가 변경되면 로컬 저장소에 저장
-  // useEffect(() => {
-  //   if (profileId) {
-  //     localStorage.setItem('profileId', profileId);
-  //   }
-  // }, [profileId]);
-
   if (isPending) {
     return <MyPageSkeleton />;
   }

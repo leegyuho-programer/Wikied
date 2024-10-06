@@ -32,7 +32,7 @@ function LoginForm() {
         response.accessToken,
         response.refreshToken,
         variables.password,
-        response.user.profile?.code
+        response.user.profile?.code || ''
       );
 
       setCookie(null, 'userAccessToken', response.accessToken, {
