@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 import { AuthState, User } from './zustand.types';
-import { saveTokenToCookies, getTokenFromCookies, removeTokenFromCookies } from './cookieUtils';
+import { saveTokenToCookies, getTokenFromCookies, removeTokenFromCookies } from '../utils/cookieUtils';
 import removeStore from '@/utils/removeStore';
 
 export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
