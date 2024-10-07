@@ -95,11 +95,12 @@
 
 @media (max-width: 1200px) {
   .container {
+    margin: 0 60px;
     gap: 40px;
   }
 
   .contentContainer {
-    max-width: 624px;
+    /* max-width: 624px; */
     height: 100%;
     max-height: 693px;
     margin-top: 40px;
@@ -119,7 +120,7 @@
   }
 
   .contentContainer {
-    max-width: 335px;
+    /* max-width: 335px; */
     height: 100%;
     max-height: 530px;
     margin-top: 40px;
