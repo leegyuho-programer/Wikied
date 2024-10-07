@@ -1,38 +1,47 @@
 'use client';
 
-import { useState } from 'react';
-import SearchIcon from '../SvgComponents/SearchIcon';
-import CancelIcon from '../SvgComponents/CancelIcon'; // x 버튼 아이콘 추가
-import styles from './SearchBar.module.css';
-import Button from '../Button/Button';
 import classNames from 'classnames/bind';
+import { debounce } from 'lodash';
+import { useState } from 'react';
+import CancelIcon from '../SvgComponents/CancelIcon';
+import SearchIcon from '../SvgComponents/SearchIcon';
+import styles from './SearchBar.module.css';
 
 const cn = classNames.bind(styles);
 
-interface SearchBarProps {
+interface Props {
   onSearch: (searchTerm: string) => void;
   className?: string;
 }
 
-function SearchBar({ onSearch, className }: SearchBarProps) {
+function SearchBar({ onSearch, className }: Props) {
   const [inputValue, setInputValue] = useState('');
+
+  // debounce 적용: 사용자가 입력을 멈춘 뒤 500ms 후에 검색을 트리거
+  const debouncedSearch = debounce((value: string) => {
+    onSearch(value);
+  }, 500);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    debouncedSearch(event.target.value); // 입력이 바뀔 때마다 debounce를 통해 검색
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
+      debouncedSearch.cancel(); // Enter 시 debounce 대기 중인 작업 취소
       onSearch(inputValue);
     }
   };
 
   const handleSearchClick = () => {
+    debouncedSearch.cancel(); // 버튼 클릭 시 debounce 대기 중인 작업 취소
     onSearch(inputValue);
   };
 
   const clearSearch = () => {
     setInputValue('');
+    debouncedSearch.cancel(); // 검색어 초기화 시 debounce 대기 중인 작업 취소
     onSearch(''); // 검색어 초기화
   };
 
@@ -45,9 +54,9 @@ function SearchBar({ onSearch, className }: SearchBarProps) {
         placeholder="검색어를 입력하세요"
         value={inputValue}
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
       />
-      {inputValue && ( // 검색어가 있을 때만 x 버튼을 표시
+      {inputValue && (
         <button className={styles.clearButton} onClick={clearSearch}>
           <CancelIcon />
         </button>
