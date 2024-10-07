@@ -230,6 +230,16 @@
     width: 100%;
   }
 
+  .profileContainer {
+    width: 71px;
+    height: 71px;
+  }
+
+  .label {
+    width: 71px;
+    height: 71px;
+  }
+
   .title {
     max-width: 70px;
     width: 100%;
@@ -284,5 +294,15 @@
 
   .lineWrapper {
     gap: 20px;
+  }
+
+  .profileContainer {
+    width: 62px;
+    height: 62px;
+  }
+
+  .label {
+    width: 62px;
+    height: 62px;
   }
 }
