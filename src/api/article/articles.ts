@@ -14,7 +14,7 @@ export const getArticles = async (): Promise<GetArticleResponseType> => {
 
 export const postArticles = async (data: PostArticleRequestType): Promise<PostArticleResponseType> => {
   try {
-    const response = await authBasedRequest<PostArticleResponseType>({
+    const response = await authBasedRequest({
       url: 'articles',
       method: 'POST',
       body: data,

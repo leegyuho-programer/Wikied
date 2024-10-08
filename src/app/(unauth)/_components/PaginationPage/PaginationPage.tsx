@@ -17,14 +17,9 @@ export default function PaginationPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const articlesPerPage = 10;
 
-  const fetchArticles = useCallback(async (page: number) => {
-    const response = await getArticlePagination(page, articlesPerPage);
-    return response;
-  }, []);
-
   const { data, isPending, isPlaceholderData } = useQuery<GetArticleResponseType>({
-    queryKey: ['articles', currentPage],
-    queryFn: () => fetchArticles(currentPage),
+    queryKey: ['articles'],
+    queryFn: () => getArticlePagination(1, 1000),
     placeholderData: (previousData) => previousData,
   });
 
@@ -46,24 +41,19 @@ export default function PaginationPage() {
 
   const filteredArticles = useMemo(() => {
     if (!data) return [];
-    return sortArticles(filterArticles(data.list, searchTerm), sortOption);
-  }, [data, searchTerm, sortOption, sortArticles, filterArticles]);
+    const sortedArticles = sortArticles(filterArticles(data.list, searchTerm), sortOption);
+    return sortedArticles.slice((currentPage - 1) * articlesPerPage, currentPage * articlesPerPage); // 현재 페이지에 맞는 데이터만 선택
+  }, [data, searchTerm, sortOption, currentPage, sortArticles, filterArticles]);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
-
-  const pageCount = data ? Math.ceil(data.totalCount / articlesPerPage) : 0;
-
   return (
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={styles.search}>
-          <SearchBar onSearch={handleSearch} className={styles.searchBar} />
+          <SearchBar onSearch={setSearchTerm} className={styles.searchBar} />
           <Filter onSortChange={setSortOption} />
         </div>
         <div className={styles.articleList}>
