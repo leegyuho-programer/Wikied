@@ -4,6 +4,21 @@
   margin: 0 auto;
 }
 
+.headerWrapper {
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -21,20 +36,6 @@
 .textarea {
   min-height: 200px;
   resize: vertical;
-}
-
-.fileInput {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.imagePreview {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  margin-top: 15px;
 }
 
 .submitButton {
@@ -66,4 +67,15 @@
   text-align: center;
   font-size: 18px;
   margin-top: 20px;
+}
+
+/* 이미지 미리보기 스타일 */
+.imagePreviewContainer {
+  margin-top: 15px;
+}
+
+.imagePreview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }

@@ -9,6 +9,7 @@ import { parseCookies } from 'nookies';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './PostingPage.module.css';
+import Image from 'next/image';
 
 interface FormData {
   title: string;
@@ -28,10 +29,19 @@ export default function PostingPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null); // 이미지 미리보기 URL
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImage(e.target.files[0]);
+      const selectedImage = e.target.files[0];
+      setImage(selectedImage);
+
+      // FileReader를 사용하여 이미지 미리보기 URL 설정
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedImage); // 파일을 Data URL로 읽기
     }
   };
 
@@ -93,6 +103,14 @@ export default function PostingPage() {
           })}
         />
         {errors.image && <p className={styles.error}>{errors.image.message}</p>}
+
+        {/* 이미지 미리보기 */}
+        {imagePreview && (
+          <div className={styles.imagePreviewContainer}>
+            <Image src={imagePreview} alt="미리보기" className={styles.imagePreview} width={500} height={400} />
+          </div>
+        )}
+
         <button type="submit" className={styles.submitButton} disabled={isSubmitting || uploadMutation.isPending}>
           {uploadMutation.isPending ? '업로드 중...' : '게시물 업로드'}
         </button>

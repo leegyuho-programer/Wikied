@@ -1,5 +1,7 @@
 .container {
   padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .headerWrapper {
@@ -31,6 +33,18 @@
   font-size: 16px;
 }
 
+.textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.fileInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .submitButton {
   padding: 10px;
   border: none;
@@ -38,13 +52,30 @@
   color: white;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 .submitButton:hover {
   background-color: #0056b3;
 }
 
+.submitButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .error {
   color: #d14343;
   font-size: 1.2rem;
+}
+
+/* 이미지 미리보기 스타일 */
+.imagePreviewContainer {
+  margin-top: 15px;
+}
+
+.imagePreview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }

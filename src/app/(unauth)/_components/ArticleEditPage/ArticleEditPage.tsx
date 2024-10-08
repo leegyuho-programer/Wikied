@@ -3,21 +3,29 @@
 import { getArticle, patchArticle } from '@/api/article/article';
 import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
 import { useRouter, useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { parseCookies } from 'nookies';
+import { postImage } from '@/api/image/postImage';
 import styles from './ArticleEditPage.module.css';
+import Image from 'next/image';
 
 interface FormData {
   title: string;
   content: string;
+  image: FileList; // 이미지 파일 리스트
 }
 
 export default function ArticleEditPage() {
+  const cookies = parseCookies();
+  const accessToken = cookies.userAccessToken;
   const router = useRouter();
   const params = useParams();
   const articleId = Number(params.id);
   const queryClient = useQueryClient();
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); // 선택한 이미지 상태
+  const [imagePreview, setImagePreview] = useState<string | null>(null); // 이미지 미리보기 URL
 
   const {
     register,
@@ -40,11 +48,40 @@ export default function ArticleEditPage() {
     if (article) {
       setValue('title', article.title);
       setValue('content', article.content);
+      setImagePreview(article.image); // 기존 이미지 URL로 미리보기 설정
     }
   }, [article, setValue]);
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]); // 첫 번째 파일만 설정
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string); // 선택된 이미지의 미리보기 설정
+      };
+      reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+    }
+  };
+
   const updateArticleMutation = useMutation<PatchArticleResponseType, Error, PatchArticleRequestType>({
-    mutationFn: (patchedArticle) => patchArticle(patchedArticle, articleId),
+    mutationFn: async (data: PatchArticleRequestType) => {
+      let imageUrl = article?.image || ''; // 기본적으로 기존 이미지 사용
+      if (selectedImage) {
+        // 선택된 이미지가 있을 경우 업로드
+        const imageUploadResponse = await postImage(selectedImage, accessToken);
+        imageUrl = imageUploadResponse.url; // 새 이미지 URL로 변경
+      }
+
+      // 요청 본문 작성
+      const requestBody: PatchArticleRequestType = {
+        title: data.title,
+        content: data.content,
+        image: imageUrl, // 이미지 URL
+      };
+
+      return patchArticle(requestBody, articleId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['article', articleId] });
       alert('게시물이 성공적으로 수정되었습니다.');
@@ -57,7 +94,14 @@ export default function ArticleEditPage() {
   });
 
   const onSubmit = (data: FormData) => {
-    updateArticleMutation.mutate(data);
+    // FormData를 PatchArticleRequestType으로 변환하여 전달
+    const requestData: PatchArticleRequestType = {
+      title: data.title,
+      content: data.content,
+      image: '', // 이미지 URL은 mutationFn에서 처리하므로 기본값 설정
+    };
+
+    updateArticleMutation.mutate(requestData);
   };
 
   if (isLoading) return <div className={styles.loading}>로딩 중...</div>;
@@ -80,6 +124,15 @@ export default function ArticleEditPage() {
           className={styles.textarea}
         ></textarea>
         {errors.content && <p className={styles.error}>{errors.content.message}</p>}
+
+        {imagePreview && (
+          <div className={styles.imagePreviewContainer}>
+            <Image src={imagePreview} alt="미리보기" className={styles.imagePreview} width={500} height={400} />
+          </div>
+        )}
+
+        <input type="file" className={styles.fileInput} onChange={handleImageChange} />
+        {errors.image && <p className={styles.error}>{errors.image.message}</p>}
 
         <button
           type="submit"
