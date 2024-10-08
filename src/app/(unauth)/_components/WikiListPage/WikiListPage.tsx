@@ -52,7 +52,7 @@ function WikiListPage() {
     return { profiles: paginatedProfiles, totalCount };
   }, [page, pageSize, searchTerm, user?.profile.id]);
 
-  const { data, isPending } = useQuery({
+  const { data, isPending, isPlaceholderData } = useQuery({
     queryKey: ['profiles', page, pageSize, searchTerm],
     queryFn: fetchProfiles,
     placeholderData: (previousData) => previousData,
@@ -119,6 +119,8 @@ function WikiListPage() {
           onPageChange={setPage}
           totalArticles={totalProfiles}
           articlesPerPage={pageSize}
+          isPlaceholderData={isPlaceholderData}
+          isPending={isPending}
         />
       )}
     </div>
