@@ -16,7 +16,7 @@ export const patchProfileCode = async (
   code: string
 ): Promise<PatchProfileCodeResponseType> => {
   try {
-    const response = await authBasedRequest<PatchProfileCodeResponseType>({
+    const response = await authBasedRequest({
       url: `profiles/${code}`,
       method: 'PATCH',
       body: data,

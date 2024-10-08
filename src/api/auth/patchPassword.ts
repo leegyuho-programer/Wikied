@@ -3,7 +3,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 const patchPassword = async (data: PatchPassword): Promise<PatchPasswordResponse> => {
   try {
-    const response = await authBasedRequest<PatchPasswordResponse>({
+    const response = await authBasedRequest({
       url: 'users/me/password',
       method: 'PATCH',
       body: data,

@@ -3,7 +3,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 export const deleteLike = async (articleId: number): Promise<DeleteLikeRequestType> => {
   try {
-    const response = await authBasedRequest<DeleteLikeRequestType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}/like`,
       method: 'DELETE',
     });
@@ -17,7 +17,7 @@ export const deleteLike = async (articleId: number): Promise<DeleteLikeRequestTy
 
 export const postLike = async (articleId: number): Promise<PostLikeResponseType> => {
   try {
-    const response = await authBasedRequest<PostLikeResponseType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}/like`,
       method: 'POST',
     });

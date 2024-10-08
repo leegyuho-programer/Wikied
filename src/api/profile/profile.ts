@@ -3,7 +3,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 export const postProfile = async (data: PostProfileRequestType): Promise<PostProfileResponseType> => {
   try {
-    const response = await authBasedRequest<PostProfileResponseType>({
+    const response = await authBasedRequest({
       url: `profiles`,
       method: 'POST',
       body: data,

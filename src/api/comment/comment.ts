@@ -10,7 +10,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 export const deleteComment = async (commentId: number): Promise<DeleteCommentRequestType> => {
   try {
-    const response = await authBasedRequest<DeleteCommentRequestType>({
+    const response = await authBasedRequest({
       url: `comments/${commentId}`,
       method: 'DELETE',
     });
@@ -44,7 +44,7 @@ export const patchComment = async (
   commentId: number
 ): Promise<PatchCommentResponseType> => {
   try {
-    const response = await authBasedRequest<PatchCommentResponseType>({
+    const response = await authBasedRequest({
       url: `comments/${commentId}`,
       method: 'PATCH',
       body: data,
@@ -60,7 +60,7 @@ export const postComment = async (
   articleId: number
 ): Promise<PostCommentResponseType> => {
   try {
-    const response = await authBasedRequest<PostCommentResponseType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}/comments`,
       method: 'POST',
       body: data,

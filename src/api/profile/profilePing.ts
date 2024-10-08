@@ -6,7 +6,7 @@ export const postProfilePing = async (
   code: string
 ): Promise<PostProfilePingResponseType> => {
   try {
-    const response = await authBasedRequest<PostProfilePingResponseType>({
+    const response = await authBasedRequest({
       url: `profiles/${code}/ping`,
       method: 'POST',
       body: data,

@@ -3,7 +3,7 @@ import { request } from '../fetchRequestHandler';
 
 const login = async (data: PostLogin): Promise<PostLoginResponse> => {
   try {
-    const response = await request<PostLoginResponse>({
+    const response = await request({
       url: 'auth/signIn',
       method: 'POST',
       body: data,

@@ -8,7 +8,7 @@ import { authBasedRequest } from '../fetchRequestHandler';
 
 export const getArticle = async (articleId: number): Promise<GetArticleIdResponseType> => {
   try {
-    const response = await authBasedRequest<GetArticleIdResponseType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}`,
       method: 'GET',
     });
@@ -24,7 +24,7 @@ export const patchArticle = async (
   articleId: number
 ): Promise<PatchArticleResponseType> => {
   try {
-    const response = await authBasedRequest<PatchArticleResponseType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}`,
       method: 'PATCH',
       body: data,
@@ -37,7 +37,7 @@ export const patchArticle = async (
 
 export const deleteArticle = async (articleId: number): Promise<DeleteArticleIdRequestType> => {
   try {
-    const response = await authBasedRequest<DeleteArticleIdRequestType>({
+    const response = await authBasedRequest({
       url: `articles/${articleId}`,
       method: 'DELETE',
     });
