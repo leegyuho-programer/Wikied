@@ -1,5 +1,4 @@
-import { useStore } from '@/store';
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 
 type AuthBasedRequestType = {
   url: string;
@@ -15,7 +14,7 @@ const baseURL = 'https://wikied-api.vercel.app/1-99';
 // 리프레시 토큰을 사용하여 액세스 토큰을 재발급
 const reissueAccessToken = async (): Promise<string | null> => {
   try {
-    const { userRefreshToken } = parseCookies(); // 쿠키에서 refreshToken 가져오기
+    const { userRefreshToken } = parseCookies();
     if (!userRefreshToken) {
       throw new Error('Refresh token not found');
     }
@@ -31,7 +30,12 @@ const reissueAccessToken = async (): Promise<string | null> => {
     }
 
     const { accessToken } = await response.json();
-    useStore.getState().setUserAccessToken(accessToken); // store 업데이트
+    setCookie(null, 'userAccessToken', accessToken, {
+      maxAge: 30 * 60,
+      path: '/',
+      secure: true,
+      sameSite: 'strict',
+    });
     return accessToken;
   } catch (error) {
     console.error('액세스 토큰 재발급 실패:', error);
@@ -45,12 +49,7 @@ const reissueAccessToken = async (): Promise<string | null> => {
  * @param params request parameters
  * @param body request body
  */
-export const authBasedRequest = async <T>({
-  url,
-  method = 'GET',
-  params,
-  body,
-}: AuthBasedRequestType): Promise<any> => {
+export const authBasedRequest = async ({ url, method = 'GET', params, body }: AuthBasedRequestType): Promise<any> => {
   const makeRequest = async (accessToken: string): Promise<Response> => {
     const queryString = new URLSearchParams(params).toString();
     const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
@@ -83,13 +82,26 @@ export const authBasedRequest = async <T>({
     throw new Error('Something went wrong');
   };
 
-  const { userAccessToken } = parseCookies(); // 쿠키에서 accessToken 가져오기
-  if (!userAccessToken) {
-    throw new Error('Access token not found');
-  }
+  const getValidAccessToken = async (): Promise<string> => {
+    let { userAccessToken } = parseCookies();
+    if (!userAccessToken) {
+      const newToken = await reissueAccessToken();
+      if (!newToken) {
+        throw new Error('Unable to obtain access token');
+      }
+      userAccessToken = newToken;
+    }
+    return userAccessToken;
+  };
 
-  const initialResponse = await makeRequest(userAccessToken);
-  return handleResponse(initialResponse);
+  try {
+    const accessToken = await getValidAccessToken();
+    const initialResponse = await makeRequest(accessToken);
+    return handleResponse(initialResponse);
+  } catch (error) {
+    console.error('Request failed:', error);
+    throw error;
+  }
 };
 
 /** request handler
@@ -98,7 +110,7 @@ export const authBasedRequest = async <T>({
  * @param params request parameters
  * @param body request body
  */
-export const request = async <T>({ url, method = 'GET', params, body }: RequestType): Promise<any> => {
+export const request = async ({ url, method = 'GET', params, body }: RequestType): Promise<any> => {
   const queryString = new URLSearchParams(params).toString();
   const fullUrl = queryString ? `${baseURL}/${url}?${queryString}` : `${baseURL}/${url}`;
 
@@ -112,5 +124,5 @@ export const request = async <T>({ url, method = 'GET', params, body }: RequestT
     throw new Error('Something went wrong');
   }
 
-  return (await response.json()) as T;
+  return await response.json();
 };
