@@ -8,9 +8,18 @@ interface Props {
   articlesPerPage: number; // 한 페이지에 표시할 게시물 수
   currentPage: number; // 현재 선택된 페이지
   onPageChange: (pageNumber: number) => void; // 페이지 변경 시 호출될 함수
+  isPlaceholderData: boolean;
+  isPending: boolean;
 }
 
-const Pagination = ({ currentPage, totalArticles, articlesPerPage, onPageChange }: Props) => {
+const Pagination = ({
+  currentPage,
+  totalArticles,
+  articlesPerPage,
+  onPageChange,
+  isPlaceholderData,
+  isPending,
+}: Props) => {
   const totalPages = Math.ceil(totalArticles / articlesPerPage);
   const [pageGroup, setPageGroup] = useState(Math.ceil(currentPage / 5));
 
@@ -26,20 +35,20 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, onPageChange 
   };
 
   const handlePageChange = (pageNumber: number) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
+    if (pageNumber >= 1 && pageNumber <= totalPages && !isPending) {
       onPageChange(pageNumber);
     }
   };
 
   const handlePrevGroup = () => {
-    if (pageGroup > 1) {
+    if (pageGroup > 1 && !isPending) {
       const newPage = (pageGroup - 2) * 5 + 1; // 이전 그룹의 첫 번째 페이지로 이동
       onPageChange(newPage);
     }
   };
 
   const handleNextGroup = () => {
-    if (pageGroup * 5 < totalPages) {
+    if (pageGroup * 5 < totalPages && !isPending) {
       const newPage = pageGroup * 5 + 1; // 다음 그룹의 첫 번째 페이지로 이동
       onPageChange(newPage);
     }
@@ -49,10 +58,18 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, onPageChange 
 
   return (
     <div className={styles.container}>
-      <button className={styles.button} onClick={handlePrevGroup} disabled={pageGroup === 1}>
+      <button
+        className={styles.button}
+        onClick={handlePrevGroup}
+        disabled={pageGroup === 1 || isPending || isPlaceholderData}
+      >
         &lt;&lt;
       </button>
-      <button className={styles.button} onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+      <button
+        className={styles.button}
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1 || isPending || isPlaceholderData}
+      >
         &lt;
       </button>
       {pageNumbers.map((number) => (
@@ -67,11 +84,15 @@ const Pagination = ({ currentPage, totalArticles, articlesPerPage, onPageChange 
       <button
         className={styles.button}
         onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || isPending || isPlaceholderData}
       >
         &gt;
       </button>
-      <button className={styles.button} onClick={handleNextGroup} disabled={pageGroup * 5 >= totalPages}>
+      <button
+        className={styles.button}
+        onClick={handleNextGroup}
+        disabled={pageGroup * 5 >= totalPages || isPending || isPlaceholderData}
+      >
         &gt;&gt;
       </button>
     </div>

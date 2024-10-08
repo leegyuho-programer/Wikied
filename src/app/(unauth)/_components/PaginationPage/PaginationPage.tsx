@@ -22,9 +22,10 @@ export default function PaginationPage() {
     return response;
   }, []);
 
-  const { data } = useQuery<GetArticleResponseType>({
+  const { data, isPending, isPlaceholderData } = useQuery<GetArticleResponseType>({
     queryKey: ['articles', currentPage],
     queryFn: () => fetchArticles(currentPage),
+    placeholderData: (previousData) => previousData,
   });
 
   const sortArticles = useCallback((articlesToSort: GetArticleResponseType['list'], option: string) => {
@@ -92,6 +93,8 @@ export default function PaginationPage() {
         totalArticles={data ? data.totalCount : 0}
         articlesPerPage={articlesPerPage}
         onPageChange={handlePageChange}
+        isPlaceholderData={isPlaceholderData}
+        isPending={isPending}
       />
     </div>
   );
