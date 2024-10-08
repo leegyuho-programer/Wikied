@@ -46,7 +46,7 @@
   scroll-behavior: smooth;
 }
 
-.scrollButton {
+/* .scrollButton {
   padding: 10px;
   border: none;
   position: absolute;
@@ -71,6 +71,41 @@
 
 .scrollButton:nth-of-type(2) {
   right: 0;
+} */
+
+.scrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 10px;
+  border: none;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  background-color: #fff;
+  font-size: 2rem;
+  color: #474d66;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* 배경색과 변형 효과 */
+  cursor: pointer;
+  border-radius: 50%; /* 원형 버튼 */
+  transform: translateY(-50%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+}
+
+.scrollButton:hover {
+  background-color: #e0e0e0; /* 호버 시 배경색 변화 */
+  transform: scale(1.1); /* 호버 시 크기 증가 */
+}
+
+.scrollButton:nth-of-type(1) {
+  left: 5px; /* 왼쪽 여백 추가 */
+}
+
+.scrollButton:nth-of-type(2) {
+  right: 5px; /* 오른쪽 여백 추가 */
 }
 
 .search {
@@ -174,5 +209,10 @@
 
   .button {
     width: 130px;
+  }
+
+  .scrollButton {
+    width: 35px;
+    height: 35px;
   }
 }

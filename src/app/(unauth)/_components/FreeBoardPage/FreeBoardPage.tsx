@@ -1,6 +1,6 @@
 'use client';
 
-import { getArticles } from '@/api/article/articles';
+import getArticlePagination from '@/api/article/getArticlesPagination';
 import Button from '@/components/Button/Button';
 import { GetArticleResponseType } from '@/types/article';
 import { useQuery } from '@tanstack/react-query';
@@ -15,16 +15,19 @@ export default function FreeBoardPage() {
   const cardWrapperRef = useRef<HTMLDivElement>(null);
 
   const {
-    data: articles = [],
+    data: articles,
     isPending,
     error,
-  } = useQuery<GetArticleResponseType['list'], Error>({
+  } = useQuery<GetArticleResponseType, Error>({
     queryKey: ['getArticles'],
     queryFn: async () => {
-      const response = await getArticles();
-      return response.list;
+      const response = await getArticlePagination(1, 1000);
+      return response; // 전체 게시물 반환
     },
   });
+
+  // 좋아요 수에 따라 전체 데이터 정렬
+  const sortedArticles = articles?.list.sort((a, b) => b.likeCount - a.likeCount); // articles.list가 필요할 경우
 
   const scrollLeft = () => {
     if (cardWrapperRef.current) {
@@ -58,19 +61,17 @@ export default function FreeBoardPage() {
           {'<'}
         </button>
         <div className={styles.card} ref={cardWrapperRef}>
-          {articles
-            .sort((a, b) => b.likeCount - a.likeCount)
-            .map((article) => (
-              <Card
-                key={article.id}
-                id={article.id}
-                title={article.title}
-                image={article.image}
-                writerName={article.writer.name}
-                createdAt={article.createdAt}
-                likeCount={article.likeCount}
-              />
-            ))}
+          {sortedArticles?.map((article) => (
+            <Card
+              key={article.id}
+              id={article.id}
+              title={article.title}
+              image={article.image}
+              writerName={article.writer.name}
+              createdAt={article.createdAt}
+              likeCount={article.likeCount}
+            />
+          ))}
         </div>
         <button className={styles.scrollButton} onClick={scrollRight}>
           {'>'}
