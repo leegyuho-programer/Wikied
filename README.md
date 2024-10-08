@@ -36,8 +36,10 @@ https://localhost:3000 접속
 
 ## 📄 페이지별 기능 & 스크린샷
 
-<img src="/public/assets/images/README/ArtTalkTalkSlide.png" alt="Page Intro"/>
-
-## ✨ LightHouse
-
-<img src="/public/assets/images/README/lightHouse.png" alt="light house"/>
+<img src="/public/images/README/landingPage.png" alt="landingPage"/>
+<img src="/public/images/README/articlePage.png.png" alt="articlePage"/>
+<img src="/public/images/README/freeBoardPage.png" alt="freeBoardPage"/>
+<img src="/public/images/README/myAccountPage.png" alt="myAccountPage"/>
+<img src="/public/images/README/userEditPage.png" alt="userEditPage"/>
+<img src="/public/images/README/userPage.png" alt="userPage"/>
+<img src="/public/images/README/wikiListPage.png" alt="wikiListPage"/>
