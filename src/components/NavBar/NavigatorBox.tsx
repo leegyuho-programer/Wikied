@@ -82,11 +82,8 @@ function NavigatorBox() {
       ) : (
         <div>
           <div className={styles.status}>
-            <Link href="/login" className={styles.login}>
+            <Button isLink={true} variant="primary" destination="/login" size="S">
               로그인
-            </Link>
-            <Button isLink={true} variant="primary" destination="/mypage" size="S">
-              내 위키 만들기
             </Button>
           </div>
           <div className={styles.dropdown}>
