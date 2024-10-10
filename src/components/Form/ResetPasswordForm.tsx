@@ -1,12 +1,12 @@
 'use client';
 
+import { signUpPasswordCheckRules, signUpPasswordRules } from '@/constants/inputErrorRules';
+import { PatchPassword } from '@/types/auth';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { signUpPasswordCheckRules, signUpPasswordRules } from '@/constants/inputErrorRules';
-import { PatchPassword } from '@/types/auth';
-import { useRouter } from 'next/navigation';
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -63,7 +63,7 @@ function ResetPasswordForm() {
           register={register('passwordConfirmation', signUpPasswordCheckRules(passwordValue))}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={isSubmitting}>
+        <Button type="submit" size="L" variant="primary" disabled={isSubmitting}>
           확인
         </Button>
       </form>

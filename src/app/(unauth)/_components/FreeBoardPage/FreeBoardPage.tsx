@@ -1,7 +1,7 @@
 'use client';
 
 import getArticlePagination from '@/api/article/getArticlesPagination';
-import Button from '@/components/Button/Button';
+import LinkButton from '@/components/Button/LinkButton.';
 import { GetArticleResponseType } from '@/types/article';
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
@@ -52,9 +52,9 @@ export default function FreeBoardPage() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>베스트 게시글</h1>
-        <Button variant="primary" isLink={true} destination="/posting" classname={styles.button}>
+        <LinkButton variant="primary" destination="/posting" classname={styles.button}>
           게시물 등록하기
-        </Button>
+        </LinkButton>
       </div>
       <div className={styles.cardWrapper}>
         <button className={styles.scrollButton} onClick={scrollLeft}>

@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { useStore } from '@/store';
-import Button from '../Button/Button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import defaultIMG from '../../../public/images/default.jpg';
+import LinkButton from '../Button/LinkButton.';
 import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
 import styles from './NavigatorBox.module.css';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import defaultIMG from '../../../public/images/default.jpg';
 
 function NavigatorBox() {
   const router = useRouter();
@@ -82,9 +81,9 @@ function NavigatorBox() {
       ) : (
         <div>
           <div className={styles.status}>
-            <Button isLink={true} variant="primary" destination="/login" size="S">
+            <LinkButton variant="primary" destination="/login" size="S">
               로그인
-            </Button>
+            </LinkButton>
           </div>
           <div className={styles.dropdown}>
             <MenuIcon onClick={toggleMenu} />

@@ -9,11 +9,11 @@ import StrokeIcon from '@/components/SvgComponents/StrokeIcon/StrokeIcon';
 import { currentPasswordRules, signUpPasswordCheckRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PatchPassword } from '@/types/auth';
-import { PostProfileRequestType, PostProfileResponseType } from '@/types/profile';
+import { PostProfileRequestType } from '@/types/profile';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import styles from './MyAccountPage.module.css';
-import { useMutation } from '@tanstack/react-query';
 
 function MyAccountPage() {
   const router = useRouter();
@@ -106,7 +106,7 @@ function MyAccountPage() {
             type="password"
           />
           <div className={styles.buttonWrapper}>
-            <Button isLink={false} type="submit" size="XS" variant="primary" disabled={patchPasswordMutation.isPending}>
+            <Button type="submit" size="XS" variant="primary" disabled={patchPasswordMutation.isPending}>
               변경하기
             </Button>
           </div>

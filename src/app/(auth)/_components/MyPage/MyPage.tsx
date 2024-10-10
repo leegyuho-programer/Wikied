@@ -11,7 +11,7 @@ import { useStore } from '@/store';
 import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
 
@@ -117,7 +117,7 @@ function MyPage() {
               <br />
               친구들을 위키로 초대해 보세요!
             </p>
-            <Button isLink={false} variant="primary" size="XS" onClick={handleInvite}>
+            <Button variant="primary" size="XS" onClick={handleInvite}>
               초대하기
             </Button>
           </div>

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import DropDownIcon from '../SvgComponents/DropDownIcon';
-import Button from '../Button/Button';
-import styles from './DropDown.module.css';
-import { PostProfileRequestType } from '@/types/profile';
 import { useStore } from '@/store';
+import { PostProfileRequestType } from '@/types/profile';
+import { useState } from 'react';
+import Button from '../Button/Button';
+import DropDownIcon from '../SvgComponents/DropDownIcon';
+import styles from './DropDown.module.css';
 
 interface DropDownProps {
   onSelectionChange: (question: string, answer: string) => void;
@@ -87,7 +87,7 @@ function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, 
         />
       )}
       <div className={styles.buttonWrapper}>
-        <Button isLink={false} type="submit" size="XS" variant="primary" disabled={isSubmitting}>
+        <Button type="submit" size="XS" variant="primary" disabled={isSubmitting}>
           저장하기
         </Button>
       </div>

@@ -1,16 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import login from '@/api/auth/login';
 import { emailRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PostLogin } from '@/types/auth';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { setCookie } from 'nookies';
+import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import login from '@/api/auth/login';
-import { useMutation } from '@tanstack/react-query';
-import { setCookie } from 'nookies';
 
 function LoginForm() {
   const router = useRouter();
@@ -79,7 +79,7 @@ function LoginForm() {
           register={register('password', signUpPasswordRules)}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={loginMutation.isPending}>
+        <Button type="submit" size="L" variant="primary" disabled={loginMutation.isPending}>
           로그인
         </Button>
       </form>

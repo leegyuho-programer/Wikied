@@ -1,13 +1,10 @@
-import Link from 'next/link';
-import { ReactNode } from 'react';
-import styles from './Button.module.css';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames/bind';
+import styles from './Button.module.css';
 
 interface Props {
   variant: 'primary' | 'secondary' | 'gray' | 'white';
-  isLink: boolean;
-  destination?: string;
-  children?: ReactNode;
+  children: ReactNode;
   type?: 'button' | 'submit';
   onClick?: () => void;
   size?: 'XS' | 'S' | 'M' | 'ML' | 'L';
@@ -17,22 +14,20 @@ interface Props {
 
 const cn = classNames.bind(styles);
 
-function Button({ variant, isLink, destination, children, type, onClick, size, disabled, classname }: Props) {
+export default function Button({
+  variant,
+  children,
+  type = 'button',
+  onClick,
+  size,
+  disabled = false,
+  classname,
+}: Props) {
   const buttonClass = cn('button', variant, size, { disabled }, classname);
 
   return (
-    <>
-      {isLink ? (
-        <Link href={`${destination}`} className={buttonClass}>
-          {children}
-        </Link>
-      ) : (
-        <button className={buttonClass} type={type} onClick={onClick} disabled={disabled}>
-          {children}
-        </button>
-      )}
-    </>
+    <button className={buttonClass} type={type} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
   );
 }
-
-export default Button;

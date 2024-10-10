@@ -90,6 +90,11 @@ function TextEditor({ value, setValue }: Props) {
     updateProfileMutation.mutate({ content: value });
   };
 
+  const handleCancel = (event: any) => {
+    event.preventDefault();
+    router.back();
+  };
+
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -155,10 +160,10 @@ function TextEditor({ value, setValue }: Props) {
       <div className={styles.info}>
         <p className={styles.name}>{name}</p>
         <div className={styles.button}>
-          <Button variant="white" isLink={true} size="XS">
+          <Button variant="white" size="XS" onClick={handleCancel}>
             취소
           </Button>
-          <Button variant="primary" isLink={false} size="XS" onClick={handleUpdateProfile}>
+          <Button variant="primary" size="XS" onClick={handleUpdateProfile}>
             저장
           </Button>
         </div>

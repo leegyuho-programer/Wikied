@@ -1,6 +1,6 @@
+import LinkButton from '@/components/Button/LinkButton.';
 import Image from 'next/image';
 import Link from 'next/link';
-import Button from '@/components/Button/Button';
 import Image1 from '../../public/images/landing1.png';
 import Image10 from '../../public/images/landing10.png';
 import Image2 from '../../public/images/landing2.png';
@@ -23,9 +23,9 @@ function Home() {
           <span className={styles.titleHighlight}>나만의 위키</span>
         </p>
         <div className={styles.buttonContainer}>
-          <Button isLink={true} destination="/mypage" variant="gray" size="M">
+          <LinkButton destination="/mypage" variant="gray" size="M">
             위키 만들기
-          </Button>
+          </LinkButton>
         </div>
         <div className={styles.imageContainer1}>
           <Image src={Image1} alt="예시 이미지" layout="fill" objectFit="cover" />
@@ -104,9 +104,9 @@ function Home() {
       </div>
       <div className={styles.lastSection}>
         <p className={styles.lastTitle}>나만의 위키 만들어 보기</p>
-        <Button isLink={true} destination="/mypage" variant="white" size="M">
+        <LinkButton destination="/mypage" variant="white" size="M">
           지금 시작하기
-        </Button>
+        </LinkButton>
       </div>
       <div className={styles.footerContainer}>
         <p className={styles.copyright}>Copyright ⓒ Wikied. All Rights Reserved</p>

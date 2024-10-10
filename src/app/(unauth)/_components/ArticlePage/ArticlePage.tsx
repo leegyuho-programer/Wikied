@@ -3,12 +3,14 @@
 import { deleteArticle, getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
 import Button from '@/components/Button/Button';
+import LinkButton from '@/components/Button/LinkButton.';
 import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
 import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
 import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
 import ArticleStrokeIcon from '@/components/SvgComponents/StrokeIcon/ArticleStrokeIcon';
 import { useStore } from '@/store';
 import { DeleteArticleIdRequestType, DeleteLikeRequestType, GetArticleIdResponseType } from '@/types/article';
+import { formatDate } from '@/utils/day';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,7 +19,6 @@ import CommentContainer from '../Comment/CommentContainer';
 import { PostLikeRequestType } from './../../../../types/article';
 import styles from './ArticlePage.module.css';
 import ArticlePageSkeleton from './ArticlePageSkeleton';
-import { formatDate } from '@/utils/day';
 
 export default function ArticlePage() {
   const user = useStore((state) => state.user);
@@ -96,10 +97,10 @@ export default function ArticlePage() {
             {article?.writer.name === user?.name && (
               <>
                 <div className={styles.buttons}>
-                  <Button variant="primary" isLink={true} destination={`/article/${id}/articleEdit`} size="S">
+                  <LinkButton variant="primary" destination={`/article/${id}/articleEdit`} size="S">
                     수정하기
-                  </Button>
-                  <Button variant="secondary" isLink={false} onClick={handleDeleteClick} size="S">
+                  </LinkButton>
+                  <Button variant="secondary" onClick={handleDeleteClick} size="S">
                     삭제하기
                   </Button>
                 </div>

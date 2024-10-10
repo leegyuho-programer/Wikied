@@ -1,14 +1,14 @@
 'use client';
 
+import signUp from '@/api/auth/signUp';
+import { emailRules, nicknameRules, signUpPasswordCheckRules, signUpPasswordRules } from '@/constants/inputErrorRules';
+import { PostSignUp } from '@/types/auth';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { PostSignUp } from '@/types/auth';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { nicknameRules, emailRules, signUpPasswordRules, signUpPasswordCheckRules } from '@/constants/inputErrorRules';
-import signUp from '@/api/auth/signUp';
-import { useMutation } from '@tanstack/react-query';
 
 function SignUpForm() {
   const router = useRouter();
@@ -69,7 +69,7 @@ function SignUpForm() {
           register={register('passwordConfirmation', signUpPasswordCheckRules(passwordValue))}
           errors={errors}
         />
-        <Button isLink={false} type="submit" size="L" variant="primary" disabled={signUpMutation.isPending}>
+        <Button type="submit" size="L" variant="primary" disabled={signUpMutation.isPending}>
           다음
         </Button>
       </form>

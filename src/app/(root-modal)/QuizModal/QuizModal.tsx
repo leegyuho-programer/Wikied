@@ -1,17 +1,17 @@
 'use client';
 
+import { getProfileCode } from '@/api/profile/profileCode';
+import { postProfilePing } from '@/api/profile/profilePing';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { quizModalRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ModalContainer from '../_components/ModalContainer/ModalContainer';
 import ModalHeader from '../_components/ModalHeader/ModalHeader';
 import styles from './QuizModal.module.css';
-import { useRouter } from 'next/navigation';
-import { postProfilePing } from '@/api/profile/profilePing';
-import { useEffect } from 'react';
-import { getProfileCode } from '@/api/profile/profileCode';
 
 interface Props {
   codeId: string | null | undefined;
@@ -75,7 +75,7 @@ export default function QuizModal({ codeId }: Props) {
           errors={errors}
           classname={styles.input}
         />
-        <Button isLink={false} type="submit" variant="primary" classname={styles.button}>
+        <Button type="submit" variant="primary" classname={styles.button}>
           확인
         </Button>
       </form>
