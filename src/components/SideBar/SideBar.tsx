@@ -96,6 +96,7 @@ function SideBar({ profileData, showEditButton }: Props) {
     },
     onError: (error) => {
       console.error('프로필을 업데이트하는 데 실패했습니다:', error);
+      alert('프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
     },
   });
 

@@ -23,10 +23,10 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, securityAnswer, pageId, modals, showModal } = useStore((state: any) => ({
+  const { user, securityAnswer, profileId, modals, showModal } = useStore((state: any) => ({
     user: state.user,
     securityAnswer: state.securityAnswer,
-    pageId: state.pageId,
+    profileId: state.profileId,
     modals: state.modals,
     showModal: state.showModal,
   }));
@@ -57,12 +57,12 @@ function TextEditor({ value, setValue }: Props) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const { data: profileData } = useQuery({
-    queryKey: ['profile', pageId],
+    queryKey: ['profile', profileId],
     queryFn: async () => {
       const response = await getProfile(1, 100);
-      return response.list.find((item: any) => item.id === pageId);
+      return response.list.find((item: any) => item.id === profileId);
     },
-    enabled: !!user && !!pageId,
+    enabled: !!user && !!profileId,
   });
 
   const { data: profileCodeData } = useQuery({
@@ -75,7 +75,7 @@ function TextEditor({ value, setValue }: Props) {
     mutationFn: (payload: { content: string }) => patchProfileCode(payload, profileData?.code || ''),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
-      router.push(`/user/${pageId}`);
+      router.push(`/user/${profileId}`);
     },
     onError: (error) => {
       console.error('프로필을 업데이트하는 데 실패했습니다:', error);
@@ -90,8 +90,7 @@ function TextEditor({ value, setValue }: Props) {
     updateProfileMutation.mutate({ content: value });
   };
 
-  const handleCancel = (event: any) => {
-    event.preventDefault();
+  const handleCancel = () => {
     router.back();
   };
 

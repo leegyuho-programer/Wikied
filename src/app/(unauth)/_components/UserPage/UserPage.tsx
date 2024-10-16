@@ -21,14 +21,13 @@ function UserPage() {
   const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
-  const { isLogin, user, setProfileId, setSecurityQuestion, modals, showModal, setPageId } = useStore((state) => ({
+  const { isLogin, user, setProfileId, setSecurityQuestion, modals, showModal } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
     setProfileId: state.setProfileId,
     setSecurityQuestion: state.setSecurityQuestion,
     modals: state.modals,
     showModal: state.showModal,
-    setPageId: state.setPageId,
   }));
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
@@ -53,10 +52,9 @@ function UserPage() {
   useEffect(() => {
     if (profileCodeResponse) {
       setProfileId(parsedId);
-      setPageId?.(parsedId);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, setProfileId, setPageId, setSecurityQuestion]);
+  }, [profileCodeResponse, parsedId, setProfileId, setSecurityQuestion]);
 
   useEffect(() => {
     if (isLogin && user && user?.profile?.id === parsedId) {
@@ -102,7 +100,7 @@ function UserPage() {
               <br />
               친구의 첫 위키를 작성해 보세요!
             </p>
-            <Button isLink={false} variant="primary" size="XS" onClick={handleClick}>
+            <Button variant="primary" size="XS" onClick={handleClick}>
               시작하기
             </Button>
           </div>
