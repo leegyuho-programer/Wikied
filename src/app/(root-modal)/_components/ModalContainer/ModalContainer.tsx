@@ -13,17 +13,20 @@ interface Props {
   children: ReactNode;
   type?: string;
   text: string;
+  showCloseIcon?: boolean;
 }
 
-function ModalContainer({ children, type, text }: Props) {
+function ModalContainer({ children, type, text, showCloseIcon = true }: Props) {
   const clearModal = useStore((state) => state.clearModal);
 
   return (
     <div className={styles.containerWrapper}>
       <div className={`${styles.container} ${styles.type}`}>
-        <div className={styles.IconWrapper}>
-          <CloseIcon onClick={clearModal} />
-        </div>
+        {showCloseIcon && (
+          <div className={styles.IconWrapper}>
+            <CloseIcon onClick={clearModal} />
+          </div>
+        )}
         {children}
       </div>
     </div>
