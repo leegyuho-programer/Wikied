@@ -22,6 +22,11 @@
   gap: 40px;
 }
 
+.readOnly {
+  cursor: default;
+  background-color: #f0f0f0;
+}
+
 .profileImage {
   border-radius: 9999px;
   display: flex;
@@ -37,6 +42,17 @@
   width: 200px;
   border-radius: 9999px;
   overflow: hidden;
+}
+
+.label {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border-radius: 100%;
+}
+
+.editable {
+  cursor: pointer;
 }
 
 .profileContainer.editable:hover .profileImage {
@@ -84,14 +100,6 @@
   justify-content: center;
   width: 200px;
   height: 200px;
-}
-
-.label {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  cursor: pointer;
-  border-radius: 100%;
 }
 
 .input {
@@ -181,13 +189,18 @@
   color: #000;
   border-radius: 10px;
   font-weight: 500;
+  cursor: default;
 }
 
 .answer::placeholder {
   color: #a5a6b1;
 }
 
-.answer:focus {
+.editableAnswer {
+  cursor: text;
+}
+
+.editableAnswer:focus {
   border: 1px solid #4cbfa4;
   background-color: #fff;
 }

@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Input.module.css';
 import { FieldErrors, UseFormRegisterReturn } from 'react-hook-form';
 
+const cn = classNames.bind(styles);
+
 interface Props {
   name: string;
   label?: string;
@@ -11,9 +13,8 @@ interface Props {
   errors?: FieldErrors;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   classname?: string;
+  readonly?: boolean;
 }
-
-const cn = classNames.bind(styles);
 
 function Input({ name, label, type = 'text', placeholder, register, errors, classname }: Props) {
   return (

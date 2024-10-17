@@ -87,7 +87,7 @@ function UserPage() {
         )}
       </div>
       <div className={styles.section}>
-        <SideBar profileData={profileCodeResponse} showEditButton={false} />
+        <SideBar profileData={profileCodeResponse} showEditButton={user?.name === profileCodeResponse?.name} />
         {profileCodeResponse?.content ? (
           <div
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(profileCodeResponse.content) }}

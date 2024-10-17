@@ -144,7 +144,7 @@ function SideBar({ profileData, showEditButton }: Props) {
       <div className={styles.container}>
         <form className={styles.innerContainer} onSubmit={handleSubmit}>
           <div className={`${styles.profileContainer} ${showEditButton ? styles.editable : ''}`}>
-            <label className={styles.label}>
+            <label className={`${styles.label} ${showEditButton ? styles.editable : ''}`}>
               <Image
                 src={profileImage ? profileImage : defaultIMG}
                 alt="프로필 이미지"
@@ -168,7 +168,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     거주 도시
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="city"
                     value={formData.city}
@@ -182,7 +182,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     MBTI
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="mbti"
                     value={formData.mbti}
@@ -196,7 +196,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     직업
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="job"
                     value={formData.job}
@@ -210,7 +210,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     SNS 계정
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="sns"
                     value={formData.sns}
@@ -226,7 +226,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     생일
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="birthday"
                     value={formData.birthday}
@@ -240,7 +240,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     별명
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="nickname"
                     value={formData.nickname}
@@ -254,7 +254,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     혈액형
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="bloodType"
                     value={formData.bloodType}
@@ -268,7 +268,7 @@ function SideBar({ profileData, showEditButton }: Props) {
                     국적
                   </label>
                   <input
-                    className={styles.answer}
+                    className={`${styles.answer} ${showEditButton ? styles.editableAnswer : ''}`}
                     type="text"
                     name="nationality"
                     value={formData.nationality}
