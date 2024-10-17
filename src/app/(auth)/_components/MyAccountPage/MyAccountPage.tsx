@@ -54,6 +54,7 @@ function MyAccountPage() {
     },
     onError: (error) => {
       console.error('Failed to update profile', error);
+      alert(error.message);
     },
   });
 
