@@ -88,3 +88,11 @@
   color: #ededed;
   font-weight: 500;
 }
+
+@media (max-width: 1200px) {
+  .ql-toolbar.ql-snow {
+    max-width: 700px;
+    width: 100%;
+    left: 0;
+  }
+}
