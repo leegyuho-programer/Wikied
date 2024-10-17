@@ -14,9 +14,10 @@ import styles from './SideBar.module.css';
 interface Props {
   profileData: any;
   showEditButton: boolean;
+  className?: string;
 }
 
-function SideBar({ profileData, showEditButton }: Props) {
+function SideBar({ profileData, showEditButton, className }: Props) {
   const cookies = parseCookies();
   const accessToken = cookies.userAccessToken;
   const queryClient = useQueryClient();
@@ -140,7 +141,7 @@ function SideBar({ profileData, showEditButton }: Props) {
   }, [isSmallScreen]);
 
   return (
-    <div className={styles.containerWrapper}>
+    <div className={`${styles.containerWrapper} ${className ? className : ''}`}>
       <div className={styles.container}>
         <form className={styles.innerContainer} onSubmit={handleSubmit}>
           <div className={`${styles.profileContainer} ${showEditButton ? styles.editable : ''}`}>
