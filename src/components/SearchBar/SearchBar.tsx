@@ -2,7 +2,7 @@
 
 import classNames from 'classnames/bind';
 import { debounce } from 'lodash';
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CancelIcon from '../SvgComponents/CancelIcon';
 import SearchIcon from '../SvgComponents/SearchIcon';
 import styles from './SearchBar.module.css';
@@ -18,9 +18,20 @@ function SearchBar({ onSearch, className }: Props) {
   const [inputValue, setInputValue] = useState('');
 
   // debounce 적용: 사용자가 입력을 멈춘 뒤 500ms 후에 검색을 트리거
-  const debouncedSearch = debounce((value: string) => {
-    onSearch(value);
-  }, 500);
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        onSearch(value);
+      }, 500),
+    [onSearch]
+  );
+
+  useEffect(() => {
+    // 컴포넌트 unmount 시 debounce를 취소
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
