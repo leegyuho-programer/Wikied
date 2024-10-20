@@ -4,7 +4,7 @@ import getArticlePagination from '@/api/article/getArticlesPagination';
 import LinkButton from '@/components/Button/LinkButton.';
 import { GetArticleResponseType } from '@/types/article';
 import { useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';
@@ -13,21 +13,46 @@ import FreeBoardPageSkeleton from './FreeBoardPageSkeleton';
 export default function FreeBoardPage() {
   const [scrollX, setScrollX] = useState(0);
   const cardWrapperRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const {
     data: articles,
     isPending,
     error,
-  } = useQuery<GetArticleResponseType, Error>({
-    queryKey: ['getArticles'],
+  } = useQuery<GetArticleResponseType>({
+    queryKey: ['bestArticles'],
     queryFn: async () => {
-      const response = await getArticlePagination(1, 1000);
-      return response; // 전체 게시물 반환
+      const response = await getArticlePagination(1, 10, 'like');
+      return response;
     },
   });
 
-  // 좋아요 수에 따라 전체 데이터 정렬
-  const sortedArticles = articles?.list.sort((a, b) => b.likeCount - a.likeCount); // articles.list가 필요할 경우
+  // 스크롤 가능 여부 체크
+  useEffect(() => {
+    const checkScroll = () => {
+      if (cardWrapperRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = cardWrapperRef.current;
+        setCanScrollLeft(scrollLeft > 0);
+        setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+      }
+    };
+
+    const currentRef = cardWrapperRef.current;
+    const observer = new ResizeObserver(checkScroll);
+
+    if (currentRef) {
+      observer.observe(currentRef);
+      checkScroll(); // 초기 체크
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      observer.disconnect();
+    };
+  }, [articles]);
 
   const scrollLeft = () => {
     if (cardWrapperRef.current) {
@@ -46,7 +71,22 @@ export default function FreeBoardPage() {
     }
   };
 
-  if (isPending) return <FreeBoardPageSkeleton />;
+  const handleScroll = () => {
+    if (cardWrapperRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = cardWrapperRef.current;
+      setScrollX(scrollLeft);
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 약간의 여유 추가
+    }
+  };
+
+  if (error) {
+    return <div className={styles.error}>게시글을 불러오는데 실패했습니다.</div>;
+  }
+
+  if (isPending) {
+    return <FreeBoardPageSkeleton />;
+  }
 
   return (
     <div className={styles.container}>
@@ -57,11 +97,17 @@ export default function FreeBoardPage() {
         </LinkButton>
       </div>
       <div className={styles.cardWrapper}>
-        <button className={styles.scrollButton} onClick={scrollLeft}>
-          {'<'}
-        </button>
-        <div className={styles.card} ref={cardWrapperRef}>
-          {sortedArticles?.map((article) => (
+        {canScrollLeft && (
+          <button
+            className={`${styles.scrollButton} ${styles.leftButton}`}
+            onClick={scrollLeft}
+            aria-label="스크롤 왼쪽"
+          >
+            {'<'}
+          </button>
+        )}
+        <div className={styles.card} ref={cardWrapperRef} onScroll={handleScroll}>
+          {articles?.list?.map((article) => (
             <Card
               key={article.id}
               id={article.id}
@@ -73,9 +119,15 @@ export default function FreeBoardPage() {
             />
           ))}
         </div>
-        <button className={styles.scrollButton} onClick={scrollRight}>
-          {'>'}
-        </button>
+        {canScrollRight && (
+          <button
+            className={`${styles.scrollButton} ${styles.rightButton}`}
+            onClick={scrollRight}
+            aria-label="스크롤 오른쪽"
+          >
+            {'>'}
+          </button>
+        )}
       </div>
       <PaginationPage />
     </div>
