@@ -8,9 +8,9 @@
 
 ## 💁🏻‍♀️ 프로젝트 소개
 
-- ArtTalkTalk은 대학생들의 졸업 작품에 대한 평가 및 의견을 자유롭게 나누는 웹 기반 플랫폼입니다.
-- 미래의 신진 작가들이 재학생활 중 만드는 다양한 작품들을 본인 피드에 올림으로써 자신의 작품에 대한 방향성 및 의도를 설명할 수 있는 자신만의 전시장을 만들 수 있습니다.
-- 다양한 작가들의 작품을 보고 직접 구매할 수 있도록 1:1 채팅 서비스를 지원하며 재능 기부의 형태로 무료 나눔 및 기부도 가능합니다.
+- Wikied는 위키 페이지를 사용자 정의로 생성하고 편집할 수 있는 플랫폼입니다.
+- 생성한 위키 페이지의 링크를 복사하여 친구들과 공유할 수 있으며, 그들이 함께 작성하도록 초대할 수 있습니다.
+- 또한, 자유게시판에서 글을 작성할 수 있으며, 많은 좋아요를 받은 글은 베스트 게시글에 오를 수 있습니다.
 
 ## ⚙️ 기술스택
 
@@ -35,11 +35,17 @@ https://localhost:3000 접속
 ```
 
 ## 📄 페이지별 기능 & 스크린샷
-
+랜딩페이지
 <img src="/public/images/README/landingPage.png" alt="landingPage"/>
-<img src="/public/images/README/articlePage.png.png" alt="articlePage"/>
+게시물 페이지
+<img src="/public/images/README/articlePage.png" alt="articlePage"/>
+자유 게시판 페이지
 <img src="/public/images/README/freeBoardPage.png" alt="freeBoardPage"/>
+내 계정 페이지
 <img src="/public/images/README/myAccountPage.png" alt="myAccountPage"/>
-<img src="/public/images/README/userEditPage.png" alt="userEditPage"/>
+유저 페이지
 <img src="/public/images/README/userPage.png" alt="userPage"/>
+유저 위키 수정 페이지
+<img src="/public/images/README/userEditPage.png" alt="userEditPage"/>
+위키목록 페이지
 <img src="/public/images/README/wikiListPage.png" alt="wikiListPage"/>
