@@ -3,7 +3,7 @@
 import { deleteArticle, getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
 import Button from '@/components/Button/Button';
-import LinkButton from '@/components/Button/LinkButton.';
+import LinkButton from '@/components/Button/LinkButton';
 import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
 import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
 import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';

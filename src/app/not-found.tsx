@@ -1,4 +1,4 @@
-import LinkButton from '@/components/Button/LinkButton.';
+import LinkButton from '@/components/Button/LinkButton';
 import Image from 'next/image';
 import notFound from '../../public/images/notFound.png';
 import styles from './not-found.module.css';

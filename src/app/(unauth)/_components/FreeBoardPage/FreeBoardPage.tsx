@@ -1,10 +1,10 @@
 'use client';
 
 import getArticlePagination from '@/api/article/getArticlesPagination';
-import LinkButton from '@/components/Button/LinkButton.';
+import LinkButton from '@/components/Button/LinkButton';
 import { GetArticleResponseType } from '@/types/article';
 import { useQuery } from '@tanstack/react-query';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
 import PaginationPage from '../PaginationPage/PaginationPage';
 import styles from './FreeBoardPage.module.css';

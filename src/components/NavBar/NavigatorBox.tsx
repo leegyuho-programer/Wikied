@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
-import LinkButton from '../Button/LinkButton.';
+import LinkButton from '../Button/LinkButton';
 import Menu from '../Menu/Menu';
 import MenuIcon from '../SvgComponents/MenuIcon';
 import styles from './NavigatorBox.module.css';
