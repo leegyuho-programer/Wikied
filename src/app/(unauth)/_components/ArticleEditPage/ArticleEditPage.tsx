@@ -1,15 +1,16 @@
 'use client';
 
 import { getArticle, patchArticle } from '@/api/article/article';
-import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
-import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import { parseCookies } from 'nookies';
 import { postImage } from '@/api/image/postImage';
-import styles from './ArticleEditPage.module.css';
+import { useAuthCheck } from '@/hooks/useAuthCheck';
+import { GetArticleIdResponseType, PatchArticleRequestType, PatchArticleResponseType } from '@/types/article';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useParams, useRouter } from 'next/navigation';
+import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import styles from './ArticleEditPage.module.css';
 
 interface FormData {
   title: string;
@@ -18,6 +19,7 @@ interface FormData {
 }
 
 export default function ArticleEditPage() {
+  useAuthCheck();
   const cookies = parseCookies();
   const accessToken = cookies.userAccessToken;
   const router = useRouter();

@@ -39,7 +39,7 @@ function MyAccountPage() {
     onSuccess: () => {
       alert('비밀번호가 변경되었습니다.');
       setLogout();
-      router.push('login');
+      router.replace('login');
     },
     onError: (error) => {
       console.error('Error:', error);

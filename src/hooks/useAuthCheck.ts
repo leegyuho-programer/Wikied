@@ -3,27 +3,24 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useStore } from '@/store';
+import { parseCookies } from 'nookies';
 
-export default function CheckLogin() {
+export function useAuthCheck() {
   const router = useRouter();
   const { setLogout } = useStore((state) => ({
     setLogout: state.setLogout,
   }));
 
-  const handleRedirect = () => {
-    if (typeof window === 'undefined') return;
+  useEffect(() => {
+    if (typeof window === 'undefined') return; // 서버 사이드에서 실행되지 않도록 체크
 
     const userAuth = window.localStorage.getItem('store');
+    const cookies = parseCookies();
+    const refreshToken = cookies.userRefreshToken;
 
-    if (!userAuth) {
+    if (!userAuth || !refreshToken) {
       setLogout();
       router.replace('/login');
     }
-  };
-
-  useEffect(() => {
-    handleRedirect();
-  }, []);
-
-  return null;
+  }, [router, setLogout]);
 }
