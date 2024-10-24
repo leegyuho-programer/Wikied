@@ -27,8 +27,8 @@ function SignUpForm() {
       alert('회원가입이 완료되었습니다.');
       router.replace('/login');
     },
-    onError: () => {
-      alert('회원가입 중 오류가 발생했습니다.');
+    onError: (error) => {
+      alert(error.message);
     },
   });
 

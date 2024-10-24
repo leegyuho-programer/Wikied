@@ -69,7 +69,6 @@ function WikiListPage() {
 
   const profiles = data?.profiles || [];
   const totalProfiles = data?.totalCount || 0;
-  console.log(totalProfiles);
 
   return (
     <div className={styles.container}>
