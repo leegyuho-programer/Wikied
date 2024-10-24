@@ -37,7 +37,9 @@ function WikiListPage() {
 
       const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
       allProfiles = [...allProfiles, ...filteredProfiles];
-      totalCount = Math.max(0, response.totalCount - 1); // 본인을 제외하되, 음수가 되지 않도록 처리
+
+      // 검색어가 있을 때는 totalCount를 그대로, 검색어가 없을 때는 본인을 제외한 값으로 설정
+      totalCount = searchTerm ? response.totalCount : Math.max(0, response.totalCount - 1);
 
       if (profiles.length < pageSize * 2 || allProfiles.length >= totalCount) {
         break;
