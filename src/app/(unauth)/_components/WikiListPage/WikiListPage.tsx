@@ -37,7 +37,7 @@ function WikiListPage() {
 
       const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
       allProfiles = [...allProfiles, ...filteredProfiles];
-      totalCount = response.totalCount - 1; // 본인을 제외해야 하기 때문에 - 1
+      totalCount = Math.max(0, response.totalCount - 1); // 본인을 제외하되, 음수가 되지 않도록 처리
 
       if (profiles.length < pageSize * 2 || allProfiles.length >= totalCount) {
         break;
@@ -67,6 +67,7 @@ function WikiListPage() {
 
   const profiles = data?.profiles || [];
   const totalProfiles = data?.totalCount || 0;
+  console.log(totalProfiles);
 
   return (
     <div className={styles.container}>
