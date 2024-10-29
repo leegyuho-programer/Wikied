@@ -5,7 +5,7 @@ import { emailRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PostLogin } from '@/types/auth';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { setCookie } from 'nookies';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
@@ -14,6 +14,8 @@ import styles from './Form.module.css';
 
 function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const {
     handleSubmit,
     register,
@@ -49,7 +51,10 @@ function LoginForm() {
       });
 
       alert('로그인이 완료되었습니다.');
-      router.replace('/mypage');
+
+      // redirect_to 파라미터가 있으면 해당 경로로, 없으면 /mypage로 이동
+      const redirectTo = searchParams.get('redirect_to');
+      router.replace(redirectTo || '/mypage');
     },
     onError: (error) => {
       console.error('Error:', error);
