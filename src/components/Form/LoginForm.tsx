@@ -5,7 +5,7 @@ import { emailRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PostLogin } from '@/types/auth';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { setCookie } from 'nookies';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';

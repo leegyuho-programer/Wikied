@@ -1,4 +1,7 @@
+'use client';
+
 import { getComment, postComment } from '@/api/comment/comment';
+import { useStore } from '@/store';
 import { GetCommentResponseType } from '@/types/comment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -12,6 +15,7 @@ interface CommentContainerProps {
 export default function CommentContainer({ articleId }: CommentContainerProps) {
   const [comment, setComment] = useState(''); // 댓글 입력 상태 관리
   const queryClient = useQueryClient();
+  const user = useStore((state) => state.user);
 
   const {
     data: comments = [],
@@ -50,9 +54,11 @@ export default function CommentContainer({ articleId }: CommentContainerProps) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <button className={styles.button} type="submit">
-          댓글 등록
-        </button>
+        {user && (
+          <button className={styles.button} type="submit">
+            댓글 등록
+          </button>
+        )}
       </form>
       {comments.map((cmt) => (
         <Comment key={cmt.id} comment={cmt} articleId={articleId} />
