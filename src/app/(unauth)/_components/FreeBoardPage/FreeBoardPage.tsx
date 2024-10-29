@@ -97,15 +97,14 @@ export default function FreeBoardPage() {
         </LinkButton>
       </div>
       <div className={styles.cardWrapper}>
-        {canScrollLeft && (
-          <button
-            className={`${styles.scrollButton} ${styles.leftButton}`}
-            onClick={scrollLeft}
-            aria-label="스크롤 왼쪽"
-          >
-            {'<'}
-          </button>
-        )}
+        <button
+          className={`${styles.scrollButton} ${styles.leftButton} ${!canScrollLeft ? styles.hidden : ''}`}
+          onClick={scrollLeft}
+          aria-label="스크롤 왼쪽"
+        >
+          {'<'}
+        </button>
+
         <div className={styles.card} ref={cardWrapperRef} onScroll={handleScroll}>
           {articles?.list?.map((article) => (
             <Card
@@ -119,15 +118,14 @@ export default function FreeBoardPage() {
             />
           ))}
         </div>
-        {canScrollRight && (
-          <button
-            className={`${styles.scrollButton} ${styles.rightButton}`}
-            onClick={scrollRight}
-            aria-label="스크롤 오른쪽"
-          >
-            {'>'}
-          </button>
-        )}
+
+        <button
+          className={`${styles.scrollButton} ${styles.rightButton} ${!canScrollRight ? styles.hidden : ''}`}
+          onClick={scrollRight}
+          aria-label="스크롤 오른쪽"
+        >
+          {'>'}
+        </button>
       </div>
       <PaginationPage />
     </div>
