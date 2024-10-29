@@ -3,7 +3,7 @@
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode, patchProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
-import OverTimeModal from '@/app/(root-modal)/OverTimeModal/OverTimeModal';
+
 import { useStore } from '@/store';
 import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import Button from '../Button/Button';
+import OverTimeModal from './../../app/(root-modal)/OverTimeModal/OverTimeModal';
 import './TextEditor.css';
 import styles from './TextEditor.module.css';
 
@@ -115,7 +116,7 @@ function TextEditor({ value, setValue }: Props) {
       clearTimeout(timerRef.current);
     }
     timerRef.current = setTimeout(() => {
-      showModal('overTimeModal');
+      showModal('overTime');
     }, 300000); // 5분 = 300000 밀리초
   };
 
@@ -168,7 +169,7 @@ function TextEditor({ value, setValue }: Props) {
         </div>
       </div>
       <ReactQuill theme="snow" modules={modules} formats={formats} value={value} onChange={handleTextChange} />
-      {modals[modals.length - 1] === 'overTimeModal' && <OverTimeModal />}
+      {modals[modals.length - 1] === 'overTime' && <OverTimeModal />}
     </div>
   );
 }

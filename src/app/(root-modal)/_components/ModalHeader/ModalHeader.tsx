@@ -7,9 +7,7 @@ interface Props {
 }
 
 function ModalHeader({ text, type }: Props) {
-  return type === 'form' ? (
-    <h1 className={styles.container}>{text}</h1>
-  ) : (
+  return type === 'quiz' ? (
     <div className={styles.header}>
       <div className={styles.icon}>
         <LockIcon />
@@ -20,6 +18,8 @@ function ModalHeader({ text, type }: Props) {
         위키를 작성해 보세요.
       </p>
     </div>
+  ) : (
+    <h1 className={styles.container}>{text}</h1>
   );
 }
 

@@ -9,7 +9,7 @@ import { GetProfileCodeResponseType } from '@/types/profile';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import defaultIMG from '../../../../../public/images/default.jpg';
 import noResult from '../../../../../public/images/noResult.png';
 import Pagination from '../Pagination/Pagination';

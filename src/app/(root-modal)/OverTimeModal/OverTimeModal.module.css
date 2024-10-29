@@ -1,0 +1,16 @@
+.header {
+  color: #474d66;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.content {
+  color: #8f95b2;
+  font-size: 1.6rem;
+}
+
+.buttonWrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+}

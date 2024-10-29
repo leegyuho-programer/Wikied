@@ -75,7 +75,7 @@ export interface Profile {
   id: number;
 }
 
-export type modalType = 'quizModal' | 'overTimeModal';
+export type modalType = 'quiz' | 'overTime' | 'welcome';
 
 export interface ModalState {
   modals: modalType[];

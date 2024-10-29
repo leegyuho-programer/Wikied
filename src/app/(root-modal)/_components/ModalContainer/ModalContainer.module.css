@@ -38,24 +38,15 @@
   margin-top: 40px;
 }
 
-.alert {
-  width: 395px;
-  height: 215px;
-  flex-shrink: 0;
+.overTime {
+  height: 210px;
 }
 
 .quiz {
-  height: 435px;
+  max-height: 405px;
+  height: 100%;
 }
 
-/* .link {
+.welcome {
+  height: 245px;
 }
-
-.video {
-}
-
-.image {
-}
-
-.menu {
-} */

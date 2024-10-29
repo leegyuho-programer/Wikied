@@ -1,27 +1,25 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
-import styles from './ModalContainer.module.css';
-import Button from '@/components/Button/Button';
 import CloseIcon from '@/components/SvgComponents/CloseIcon/CloseIcon';
 import { useStore } from '@/store';
-import ModalPortal from '../../ModalPortal';
+import { modalType } from '@/store/zustand.types';
+import { ReactNode } from 'react';
+import styles from './ModalContainer.module.css';
 
-type TitleType = 'alert' | 'form' | 'quiz';
 interface Props {
   children: ReactNode;
-  type?: string;
+  type?: modalType;
   text: string;
   showCloseIcon?: boolean;
 }
 
 function ModalContainer({ children, type, text, showCloseIcon = true }: Props) {
   const clearModal = useStore((state) => state.clearModal);
+  const containerClass = `${styles.container} ${type ? styles[type] : ''}`;
 
   return (
     <div className={styles.containerWrapper}>
-      <div className={`${styles.container} ${styles.type}`}>
+      <div className={containerClass}>
         {showCloseIcon && (
           <div className={styles.IconWrapper}>
             <CloseIcon onClick={clearModal} />

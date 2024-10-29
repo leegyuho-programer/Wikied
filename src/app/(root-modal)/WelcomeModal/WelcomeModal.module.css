@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+}
+
+.text {
+  height: 140px;
+  display: flex;
+  align-items: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}

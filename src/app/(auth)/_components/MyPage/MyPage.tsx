@@ -11,18 +11,23 @@ import { useStore } from '@/store';
 import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
+import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 
 function MyPage() {
-  const { user, profileId, setProfileId, securityAnswer } = useStore((state: any) => ({
+  const BASE_URL = `https://wikied.vercel.app`;
+  const { user, profileId, setProfileId, securityAnswer, modals, showModal } = useStore((state: any) => ({
     user: state.user,
     profileId: state.profileId,
     setProfileId: state.setProfileId,
     securityAnswer: state.securityAnswer,
+    modals: state.modals,
+    showModal: state.showModal,
   }));
   const [isCopied, setIsCopied] = useState(false);
+  const [hasClickedLater, setHasClickedLater] = useState(false);
 
   // Profile 데이터 가져오기
   const { data: profileData, isPending } = useQuery({
@@ -66,8 +71,6 @@ function MyPage() {
     retry: false,
   });
 
-  const BASE_URL = `https://wikied.vercel.app`;
-
   const handleInvite = async () => {
     if (typeof window !== 'undefined') {
       try {
@@ -83,6 +86,18 @@ function MyPage() {
       }
     }
   };
+
+  const handleLaterClick = () => {
+    setHasClickedLater(true);
+  };
+
+  // Welcome 모달 표시 로직
+  useEffect(() => {
+    const shouldShowModal = !profileId && !hasClickedLater && !modals.includes('welcome');
+    if (shouldShowModal) {
+      showModal('welcome');
+    }
+  }, [profileId, hasClickedLater, modals, showModal]);
 
   if (isPending) {
     return <MyPageSkeleton />;
@@ -123,6 +138,7 @@ function MyPage() {
           </div>
         )}
       </div>
+      {!profileId && modals.includes('welcome') && !hasClickedLater && <WelcomeModal onClose={handleLaterClick} />}
     </div>
   );
 }

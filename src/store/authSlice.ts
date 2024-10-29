@@ -7,8 +7,6 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   isLogin: false,
   user: null,
   userId: 0,
-  // pageId: 0,
-  // setPageId: (pageId: number) => set({ pageId }),
   userAccessToken: getTokenFromCookies('userAccessToken') || '',
   userRefreshToken: getTokenFromCookies('userRefreshToken') || '',
   password: '',

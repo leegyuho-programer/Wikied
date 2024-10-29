@@ -63,7 +63,7 @@ function UserPage() {
   }, [isLogin, user, parsedId, router]);
 
   const handleClick = () => {
-    showModal('quizModal');
+    showModal('quiz');
   };
 
   if (isProfileListPending || isProfileCodePending) return <MyPageSkeleton />;
@@ -106,7 +106,7 @@ function UserPage() {
           </div>
         )}
       </div>
-      {modals[modals.length - 1] === 'quizModal' && <QuizModal codeId={profileCodeResponse?.code} />}
+      {modals[modals.length - 1] === 'quiz' && <QuizModal codeId={profileCodeResponse?.code} />}
     </div>
   );
 }
