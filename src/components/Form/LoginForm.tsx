@@ -14,7 +14,10 @@ import styles from './Form.module.css';
 
 function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
+  // URLSearchParams 사용하여 redirect_to 파라미터 가져오기
+  const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  const redirectTo = searchParams.get('redirect_to');
 
   const {
     handleSubmit,
@@ -53,7 +56,6 @@ function LoginForm() {
       alert('로그인이 완료되었습니다.');
 
       // redirect_to 파라미터가 있으면 해당 경로로, 없으면 /mypage로 이동
-      const redirectTo = searchParams.get('redirect_to');
       router.replace(redirectTo || '/mypage');
     },
     onError: (error) => {
