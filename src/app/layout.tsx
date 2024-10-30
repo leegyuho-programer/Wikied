@@ -19,6 +19,7 @@ export default function RootLayout({
         <ReactQueryProviders>
           <NavBar />
           <main>{children}</main>
+          <div id="modal"></div>
         </ReactQueryProviders>
       </body>
     </html>
