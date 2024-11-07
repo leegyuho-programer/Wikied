@@ -14,7 +14,7 @@
 
 .container {
   max-width: 395px;
-  padding: 20px;
+  padding: 20px 20px 20px 30px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -39,7 +39,7 @@
 }
 
 .overTime {
-  height: 210px;
+  height: 200px;
 }
 
 .quiz {

@@ -14,8 +14,10 @@ export default function OverTimeModal() {
     <div>
       <ModalContainer type="overTime" text="확인" showCloseIcon={false}>
         <ModalBody>
-          <h1 className={styles.header}>{HEADER.timeOver}</h1>
-          <p className={styles.content}>{CONTENT.timeOver}</p>
+          <div className={styles.container}>
+            <h1 className={styles.header}>{HEADER.timeOver}</h1>
+            <p className={styles.content}>{CONTENT.timeOver}</p>
+          </div>
           <div className={styles.buttonWrapper}>
             <Button onClick={() => router.back()} size="XS" variant="primary">
               확인

@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .header {
   color: #474d66;
   font-size: 1.8rem;

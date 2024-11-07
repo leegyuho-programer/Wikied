@@ -56,12 +56,12 @@ export default function UserEditPage() {
           <TextEditor value={text} setValue={setText} />
         </label>
       </div>
-      <SideBar
+      {/* <SideBar
         profileData={profileCodeData}
         showEditButton={false}
         aria-label="User profile sidebar"
         className={styles.sideBar}
-      />
+      /> */}
     </div>
   );
 }
