@@ -1,6 +1,5 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { parseCookies } from 'nookies';
+import { NextResponse } from 'next/server';
 
 // 인증이 필요한 경로들을 정의
 const PROTECTED_PATHS = ['/myAccount', '/mypage', '/posting', '/userEdit', '/articleEdit'];
@@ -16,7 +15,7 @@ export function middleware(request: NextRequest) {
   if (isProtectedPath && !userRefreshToken) {
     // 현재 URL을 redirect_to 파라미터로 포함시켜서 로그인 후 원래 페이지로 돌아올 수 있게 함
     const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect_to', pathname);
+    loginUrl.searchParams.set('redirect_to', encodeURIComponent(pathname));
     return NextResponse.redirect(loginUrl);
   }
 
