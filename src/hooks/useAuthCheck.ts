@@ -1,13 +1,12 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useStore } from '@/store';
 import { parseCookies } from 'nookies';
 
 export function useAuthCheck() {
   const router = useRouter();
-  const pathname = usePathname();
   const { setLogout } = useStore((state) => ({
     setLogout: state.setLogout,
   }));
@@ -19,16 +18,9 @@ export function useAuthCheck() {
     const cookies = parseCookies();
     const refreshToken = cookies.userRefreshToken;
 
-    // if (!userAuth || !refreshToken) {
-    //   setLogout();
-    //   router.replace('/login');
-    // }
-    // 현재 경로가 /login이 아닐 때만 리다이렉션 체크
     if (!userAuth || !refreshToken) {
-      if (pathname !== '/login') {
-        setLogout();
-        router.replace(`/login?redirect_to=${encodeURIComponent(pathname)}`);
-      }
+      setLogout();
+      router.replace('/login');
     }
   }, [router, setLogout]);
 }
