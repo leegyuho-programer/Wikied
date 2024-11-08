@@ -28,7 +28,7 @@ export default function QuizModal({ codeId }: Props) {
   }));
 
   const router = useRouter();
-  const clearModal = useStore((state) => state.clearModal);
+  const hideModal = useStore((state) => state.hideModal);
   const {
     handleSubmit,
     register,
@@ -41,7 +41,7 @@ export default function QuizModal({ codeId }: Props) {
       const response = await postProfilePing({ securityAnswer: data.securityAnswer }, codeId as string);
 
       router.push('/userEdit');
-      clearModal();
+      hideModal('quiz');
     } catch (error) {
       console.error('프로필 핑 전송 중 오류 발생:', error);
       setError('securityAnswer', {
