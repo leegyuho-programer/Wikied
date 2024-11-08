@@ -52,7 +52,7 @@ function WikiListPage() {
     const paginatedProfiles = allProfiles.slice(startIndex, startIndex + pageSize);
 
     return { profiles: paginatedProfiles, totalCount };
-  }, [page, pageSize, searchTerm, user?.profile.id]);
+  }, [page, pageSize, searchTerm, user?.profile?.id]);
 
   const { data, isPending, isPlaceholderData } = useQuery({
     queryKey: ['profiles', page, pageSize, searchTerm],
