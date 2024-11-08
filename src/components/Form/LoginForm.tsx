@@ -5,7 +5,7 @@ import { emailRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PostLogin } from '@/types/auth';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { setCookie } from 'nookies';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
@@ -14,10 +14,10 @@ import styles from './Form.module.css';
 
 function LoginForm() {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
   // URLSearchParams 사용하여 redirect_to 파라미터 가져오기
-  const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
-  // const redirectTo = searchParams.get('redirect_to');
+  // const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+  const redirectTo = searchParams.get('redirect_to');
 
   const {
     handleSubmit,
@@ -56,7 +56,10 @@ function LoginForm() {
       alert('로그인이 완료되었습니다.');
 
       // redirect_to 파라미터가 있으면 해당 경로로, 없으면 /mypage로 이동
-      router.replace('/mypage');
+      // router.replace(redirectTo || '/mypage');
+      // 디코딩된 경로로 리다이렉션
+      const decodedRedirectTo = redirectTo ? decodeURIComponent(redirectTo) : '/mypage';
+      router.push(decodedRedirectTo);
     },
     onError: (error) => {
       console.error('Error:', error);
