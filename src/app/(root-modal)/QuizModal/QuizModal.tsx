@@ -64,7 +64,7 @@ export default function QuizModal({ codeId }: Props) {
   }, [codeId]);
 
   return (
-    <ModalContainer type="quiz" text="확인">
+    <ModalContainer type="quiz">
       <ModalHeader type="quiz" />
       <p className={styles.question}>{securityQuestion}</p>
       <form onSubmit={handleSubmit(handleQuiz)} className={styles.form}>

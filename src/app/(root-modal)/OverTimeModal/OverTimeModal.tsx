@@ -12,7 +12,7 @@ export default function OverTimeModal() {
 
   return (
     <div>
-      <ModalContainer type="overTime" text="확인" showCloseIcon={false}>
+      <ModalContainer type="overTime" showCloseIcon={false} disableBackgroundClose={true}>
         <ModalBody>
           <div className={styles.container}>
             <h1 className={styles.header}>{HEADER.timeOver}</h1>

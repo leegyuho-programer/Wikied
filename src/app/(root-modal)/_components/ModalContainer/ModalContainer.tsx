@@ -10,17 +10,17 @@ import ModalPortal from '../../ModalPortal';
 interface Props {
   children: ReactNode;
   type?: modalType;
-  text: string;
   showCloseIcon?: boolean;
+  disableBackgroundClose?: boolean;
 }
 
-function ModalContainer({ children, type, text, showCloseIcon = true }: Props) {
+function ModalContainer({ children, type, showCloseIcon = true, disableBackgroundClose = false }: Props) {
   const clearModal = useStore((state) => state.clearModal);
   const containerClass = `${styles.container} ${type ? styles[type] : ''}`;
 
   return (
     <ModalPortal>
-      <div className={styles.containerWrapper} onClick={clearModal}>
+      <div className={styles.containerWrapper} onClick={!disableBackgroundClose ? clearModal : undefined}>
         <div className={containerClass} onClick={(e) => e.stopPropagation()}>
           {showCloseIcon && (
             <div className={styles.IconWrapper}>

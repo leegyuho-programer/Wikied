@@ -21,7 +21,7 @@ export default function WelcomeModal({ onClose }: Props) {
   };
 
   return (
-    <ModalContainer type="welcome" text="Welcome to Wikied" showCloseIcon={false}>
+    <ModalContainer type="welcome" showCloseIcon={false}>
       <ModalHeader text="위키드에 오신 것을 환영합니다! 🎉" type="welcome" />
       <ModalBody>
         <div className={styles.container}>
