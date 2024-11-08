@@ -20,7 +20,7 @@ function ModalContainer({ children, type, text, showCloseIcon = true }: Props) {
 
   return (
     <ModalPortal>
-      <div className={styles.containerWrapper}>
+      <div className={styles.containerWrapper} onClick={clearModal}>
         <div className={containerClass}>
           {showCloseIcon && (
             <div className={styles.IconWrapper}>
