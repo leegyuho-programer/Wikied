@@ -51,6 +51,7 @@ function LoginForm() {
 
       alert('로그인이 완료되었습니다.');
 
+      console.log('Redirecting to /mypage');
       // redirect_to 파라미터가 있으면 해당 경로로, 없으면 /mypage로 이동
       router.replace('/mypage');
     },
