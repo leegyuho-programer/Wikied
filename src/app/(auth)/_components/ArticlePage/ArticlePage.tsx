@@ -15,7 +15,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import CommentContainer from '../Comment/CommentContainer';
+import CommentContainer from '@/app/(unauth)/_components/Comment/CommentContainer';
 import { PostLikeRequestType } from './../../../../types/article';
 import styles from './ArticlePage.module.css';
 import ArticlePageSkeleton from './ArticlePageSkeleton';
