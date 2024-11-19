@@ -23,13 +23,13 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, securityAnswer, profileId, modals, showModal, hideModal } = useStore((state: any) => ({
+  const { user, securityAnswer, profileId, modals, showModal, clearModal } = useStore((state: any) => ({
     user: state.user,
     securityAnswer: state.securityAnswer,
     profileId: state.profileId,
     modals: state.modals,
     showModal: state.showModal,
-    hideModal: state.hideModal,
+    clearModal: state.clearModal,
   }));
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -147,7 +147,7 @@ function TextEditor({ value, setValue }: Props) {
   }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
-    hideModal('OverTime');
+    clearModal('OverTime');
     resetTimer();
 
     return () => {
@@ -155,7 +155,7 @@ function TextEditor({ value, setValue }: Props) {
         clearTimeout(timerRef.current);
       }
     };
-  }, [hideModal]);
+  }, [clearModal]);
 
   return (
     <div className={styles.container}>
