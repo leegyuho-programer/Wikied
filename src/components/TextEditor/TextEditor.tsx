@@ -3,7 +3,6 @@
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode, patchProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
-
 import { useStore } from '@/store';
 import { PostProfilePingRequestType } from '@/types/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -24,12 +23,13 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, securityAnswer, profileId, modals, showModal } = useStore((state: any) => ({
+  const { user, securityAnswer, profileId, modals, showModal, hideModal } = useStore((state: any) => ({
     user: state.user,
     securityAnswer: state.securityAnswer,
     profileId: state.profileId,
     modals: state.modals,
     showModal: state.showModal,
+    hideModal: state.hideModal,
   }));
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -147,13 +147,15 @@ function TextEditor({ value, setValue }: Props) {
   }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
+    hideModal('OverTime');
     resetTimer();
+
     return () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
     };
-  }, []);
+  }, [hideModal]);
 
   return (
     <div className={styles.container}>
