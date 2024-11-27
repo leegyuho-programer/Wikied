@@ -1,12 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
-import SideBar from '@/components/SideBar/SideBar';
 import TextEditor from '@/components/TextEditor/TextEditor';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import styles from './UserEditPage.module.css';
@@ -56,12 +55,6 @@ export default function UserEditPage() {
           <TextEditor value={text} setValue={setText} />
         </label>
       </div>
-      {/* <SideBar
-        profileData={profileCodeData}
-        showEditButton={false}
-        aria-label="User profile sidebar"
-        className={styles.sideBar}
-      /> */}
     </div>
   );
 }
