@@ -93,14 +93,14 @@
 }
 
 @media (max-width: 1200px) {
-  .container {
+  /* .container {
     max-width: 624px;
-  }
+  } */
 }
 
 @media (max-width: 768px) {
   .container {
-    max-width: 335px;
+    /* max-width: 335px; */
     padding: 20px;
   }
 
