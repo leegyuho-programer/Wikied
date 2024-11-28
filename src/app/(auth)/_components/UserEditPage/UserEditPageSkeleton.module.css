@@ -16,14 +16,14 @@
   }
 }
 
-.container {
+.skeletonContainer {
   display: flex;
   gap: 80px;
   margin: 0 auto;
   justify-content: center;
 }
 
-.skeletontextEditor {
+.skeletonTextEditor {
   max-width: 1120px;
   width: 1120px;
   height: 60px;
@@ -41,4 +41,11 @@
   width: 350px;
   height: 850px;
   border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+  .skeletonContainer {
+    flex-direction: column;
+    padding: 0 40px;
+  }
 }
