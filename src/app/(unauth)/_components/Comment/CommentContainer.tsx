@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import Comment from './Comment';
 import styles from './CommentContainer.module.css';
+import CommentContainerSkeleton from './CommentContainerSkeleton';
 
 interface CommentContainerProps {
   articleId: number;
@@ -19,7 +20,7 @@ export default function CommentContainer({ articleId }: CommentContainerProps) {
 
   const {
     data: comments = [],
-    isLoading,
+    isPending,
     error,
   } = useQuery<GetCommentResponseType['list'], Error>({
     queryKey: ['comments', articleId],
@@ -41,6 +42,10 @@ export default function CommentContainer({ articleId }: CommentContainerProps) {
     postCommentMutation.mutate(comment);
     setComment('');
   };
+
+  if (isPending) {
+    return <CommentContainerSkeleton />;
+  }
 
   return (
     <div className={styles.container}>
