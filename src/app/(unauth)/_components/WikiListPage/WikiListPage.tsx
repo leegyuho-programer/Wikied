@@ -6,10 +6,10 @@ import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import defaultIMG from '../../../../../public/images/default.jpg';
 import noResult from '../../../../../public/images/noResult.png';
 import Pagination from '../Pagination/Pagination';
@@ -17,8 +17,8 @@ import styles from './WikiListPage.module.css';
 import WikiListPageSkeleton from './WikiListPageSkeleton';
 
 function WikiListPage() {
-  const { user } = useStore((state: any) => ({
-    user: state.user,
+  const { profileId } = useStore((state: any) => ({
+    profileId: state.profileId,
   }));
 
   const [isCopied, setIsCopied] = useState(false);
@@ -35,11 +35,20 @@ function WikiListPage() {
       const response = await getProfile(currentPage, pageSize * 2, searchTerm);
       const profiles = await Promise.all(response.list.map(async (profile) => getProfileCode(profile.code)));
 
-      const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
+      // const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
+      // 본인의 프로필 ID가 있을 경우에만 필터링
+      const filteredProfiles = profileId ? profiles.filter((profile) => profile.id !== profileId) : profiles;
       allProfiles = [...allProfiles, ...filteredProfiles];
+      console.log('filteredProfiles', filteredProfiles);
+      console.log('profileId', profileId);
 
       // 검색어가 있을 때는 totalCount를 그대로, 검색어가 없을 때는 본인을 제외한 값으로 설정
-      totalCount = searchTerm ? response.totalCount : Math.max(0, response.totalCount - 1);
+      totalCount = searchTerm
+        ? response.totalCount
+        : profileId
+        ? Math.max(0, response.totalCount - 1)
+        : response.totalCount;
+      // totalCount = searchTerm ? response.totalCount : Math.max(0, response.totalCount - 1);
 
       if (profiles.length < pageSize * 2 || allProfiles.length >= totalCount) {
         break;
@@ -52,12 +61,12 @@ function WikiListPage() {
     const paginatedProfiles = allProfiles.slice(startIndex, startIndex + pageSize);
 
     return { profiles: paginatedProfiles, totalCount };
-  }, [page, pageSize, searchTerm, user?.profile?.id]);
+  }, [page, pageSize, searchTerm, profileId]);
 
   const { data, isPending, isPlaceholderData } = useQuery({
     queryKey: ['profiles', page, pageSize, searchTerm],
     queryFn: fetchProfiles,
-    placeholderData: (previousData) => previousData,
+    placeholderData: keepPreviousData,
   });
 
   const handleSearch = (searchTerm: string) => {

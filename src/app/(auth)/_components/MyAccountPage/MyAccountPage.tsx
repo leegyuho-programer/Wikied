@@ -50,7 +50,7 @@ function MyAccountPage() {
     mutationFn: (profileData: PostProfileRequestType) => postProfile(profileData),
     onSuccess: () => {
       alert('질문이 등록되었습니다.');
-      router.push('mypage');
+      router.push('/mypage');
     },
     onError: (error) => {
       console.error('Failed to update profile', error);
