@@ -6,4 +6,6 @@ export const createProfileSlice: StateCreator<ProfileState> = (set) => ({
   setProfileId: (profileId) => set({ profileId }),
   profileImage: null,
   setProfileImage: (profileImage) => set({ profileImage }),
+  editingProfileId: null,
+  setEditingProfileId: (editingProfileId) => set({ editingProfileId }),
 });

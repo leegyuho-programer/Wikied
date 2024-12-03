@@ -21,13 +21,13 @@ function UserPage() {
   const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
-  const { isLogin, user, setProfileId, setSecurityQuestion, modals, showModal } = useStore((state) => ({
+  const { isLogin, user, setSecurityQuestion, modals, showModal, setEditingProfileId } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
-    setProfileId: state.setProfileId,
     setSecurityQuestion: state.setSecurityQuestion,
     modals: state.modals,
     showModal: state.showModal,
+    setEditingProfileId: state.setEditingProfileId,
   }));
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
@@ -41,6 +41,7 @@ function UserPage() {
     queryKey: ['profileCode', parsedId],
     queryFn: async () => {
       const codeId = profileList?.list.find((item) => item.id === parsedId)?.code;
+
       if (codeId) {
         return getProfileCode(codeId);
       }
@@ -51,10 +52,10 @@ function UserPage() {
 
   useEffect(() => {
     if (profileCodeResponse) {
-      setProfileId(parsedId);
+      setEditingProfileId(parsedId);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, setProfileId, setSecurityQuestion]);
+  }, [profileCodeResponse, parsedId, setEditingProfileId, setSecurityQuestion]);
 
   useEffect(() => {
     if (isLogin && user && user?.profile?.id === parsedId) {

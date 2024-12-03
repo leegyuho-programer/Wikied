@@ -35,12 +35,9 @@ function WikiListPage() {
       const response = await getProfile(currentPage, pageSize * 2, searchTerm);
       const profiles = await Promise.all(response.list.map(async (profile) => getProfileCode(profile.code)));
 
-      // const filteredProfiles = profiles.filter((profile) => profile.id !== user?.profile.id);
       // 본인의 프로필 ID가 있을 경우에만 필터링
       const filteredProfiles = profileId ? profiles.filter((profile) => profile.id !== profileId) : profiles;
       allProfiles = [...allProfiles, ...filteredProfiles];
-      console.log('filteredProfiles', filteredProfiles);
-      console.log('profileId', profileId);
 
       // 검색어가 있을 때는 totalCount를 그대로, 검색어가 없을 때는 본인을 제외한 값으로 설정
       totalCount = searchTerm
@@ -48,7 +45,6 @@ function WikiListPage() {
         : profileId
         ? Math.max(0, response.totalCount - 1)
         : response.totalCount;
-      // totalCount = searchTerm ? response.totalCount : Math.max(0, response.totalCount - 1);
 
       if (profiles.length < pageSize * 2 || allProfiles.length >= totalCount) {
         break;

@@ -33,6 +33,7 @@ export const useStore = create<SliceType>()(
           articleId: state.articleId,
           profileId: state.profileId,
           profileImage: state.profileImage,
+          editingProfileId: state.editingProfileId,
         }),
       }
     )

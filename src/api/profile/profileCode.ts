@@ -16,14 +16,11 @@ export const patchProfileCode = async (
   code: string
 ): Promise<PatchProfileCodeResponseType> => {
   try {
-    console.log('PATCH 요청 데이터:', data);
-    console.log('PATCH 요청 URL:', `profiles/${code}`);
     const response = await authBasedRequest({
       url: `profiles/${code}`,
       method: 'PATCH',
       body: data,
     });
-    console.log('PATCH 응답 데이터:', response);
     return response;
   } catch (error) {
     console.error('PATCH 요청 오류:', error);
