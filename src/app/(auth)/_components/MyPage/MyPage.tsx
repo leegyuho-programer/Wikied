@@ -18,16 +18,16 @@ import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 
 function MyPage() {
   const BASE_URL = `https://wikied.vercel.app`;
-  const { user, profileId, setProfileId, securityAnswer, modals, showModal } = useStore((state: any) => ({
+  const { user, profileId, setProfileId, securityAnswer, modals, showModal, clearModal } = useStore((state: any) => ({
     user: state.user,
     profileId: state.profileId,
     setProfileId: state.setProfileId,
     securityAnswer: state.securityAnswer,
     modals: state.modals,
     showModal: state.showModal,
+    clearModal: state.clearModal,
   }));
   const [isCopied, setIsCopied] = useState(false);
-  const [hasClickedLater, setHasClickedLater] = useState(false);
 
   // Profile 데이터 가져오기
   const { data: profileData, isPending } = useQuery({
@@ -88,16 +88,16 @@ function MyPage() {
   };
 
   const handleLaterClick = () => {
-    setHasClickedLater(true);
+    clearModal();
   };
 
   // Welcome 모달 표시 로직
   useEffect(() => {
-    const shouldShowModal = !profileId && !hasClickedLater && !modals.includes('welcome');
+    const shouldShowModal = !profileId && !modals.includes('welcome');
     if (shouldShowModal) {
       showModal('welcome');
     }
-  }, [profileId, hasClickedLater, modals, showModal]);
+  }, []);
 
   if (isPending) {
     return <MyPageSkeleton />;
@@ -138,7 +138,7 @@ function MyPage() {
           </div>
         )}
       </div>
-      {!profileId && modals.includes('welcome') && !hasClickedLater && <WelcomeModal onClose={handleLaterClick} />}
+      {!profileId && modals.includes('welcome') && <WelcomeModal onClose={handleLaterClick} />}
     </div>
   );
 }

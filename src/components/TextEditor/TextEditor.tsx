@@ -148,7 +148,7 @@ function TextEditor({ value, setValue }: Props) {
   }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
-    clearModal('OverTime');
+    clearModal();
     resetTimer();
 
     return () => {
