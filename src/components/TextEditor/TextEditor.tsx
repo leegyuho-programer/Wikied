@@ -136,16 +136,17 @@ function TextEditor({ value, setValue }: Props) {
     }
   }, [profileData]);
 
-  useEffect(() => {
-    if (user && profileData?.code) {
-      const pingRequest: PostProfilePingRequestType = {
-        securityAnswer,
-      };
-      postProfilePing(pingRequest, profileData.code)
-        .then(() => setPingTime(Date.now()))
-        .catch((error) => console.error('Ping 요청 실패:', error));
-    }
-  }, [user, profileData, securityAnswer]);
+  // useEffect(() => {
+  //   if (user && profileData?.code) {
+  //     const pingRequest: PostProfilePingRequestType = {
+  //       securityAnswer,
+  //     };
+  //     console.log(pingRequest);
+  //     postProfilePing(pingRequest, profileData.code)
+  //       .then(() => setPingTime(Date.now()))
+  //       .catch((error) => console.error('Ping 요청 실패:', error));
+  //   }
+  // }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
     clearModal();
