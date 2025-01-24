@@ -1,5 +1,9 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true', // ANALYZE 환경변수로 활성화 여부 결정
+})({
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config) => {
@@ -44,6 +48,6 @@ const nextConfig = {
   //     },
   //   ];
   // },
-};
+});
 
 export default nextConfig;
