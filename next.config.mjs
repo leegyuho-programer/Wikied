@@ -10,7 +10,32 @@ const nextConfig = withBundleAnalyzer({
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgo: true, // SVGO 활성화
+            svgoConfig: {
+              plugins: [
+                {
+                  name: 'removeViewBox', // viewBox 제거 방지
+                  active: false,
+                },
+                {
+                  name: 'removeAttrs', // 특정 속성 제거
+                  params: {
+                    attrs: '(fill|stroke)',
+                  },
+                },
+                {
+                  name: 'cleanupIDs', // ID 정리
+                  active: true,
+                },
+              ],
+            },
+          },
+        },
+      ],
     });
     return config;
   },
