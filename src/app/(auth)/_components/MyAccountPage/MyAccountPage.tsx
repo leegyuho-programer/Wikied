@@ -5,7 +5,7 @@ import { postProfile } from '@/api/profile/profile';
 import Button from '@/components/Button/Button';
 import DropDown from '@/components/DropDown/DropDown';
 import Input from '@/components/Input/Input';
-import StrokeIcon from '@/components/SvgComponents/StrokeIcon/StrokeIcon';
+import { StrokeIcon } from '@/components/SvgComponents';
 import { currentPasswordRules, signUpPasswordCheckRules, signUpPasswordRules } from '@/constants/inputErrorRules';
 import { useStore } from '@/store';
 import { PatchPassword } from '@/types/auth';

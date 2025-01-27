@@ -3,8 +3,8 @@
 import { useStore } from '@/store';
 import { PostProfileRequestType } from '@/types/profile';
 import { useState } from 'react';
+import { DropDownIcon } from '../SvgComponents';
 import Button from '../Button/Button';
-import DropDownIcon from '../SvgComponents/DropDownIcon';
 import styles from './DropDown.module.css';
 
 interface DropDownProps {

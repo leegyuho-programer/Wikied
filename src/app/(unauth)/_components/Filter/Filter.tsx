@@ -1,8 +1,8 @@
 'use client';
 
+import { DropDownIcon } from '@/components/SvgComponents';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Filter.module.css';
-import DropDownIcon from '@/components/SvgComponents/DropDownIcon';
 
 interface FilterProps {
   onSortChange: (option: string) => void;

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
 import LinkButton from '../Button/LinkButton';
 import Menu from '../Menu/Menu';
-import MenuIcon from '../SvgComponents/MenuIcon';
+import { MenuIcon } from '../SvgComponents';
 import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {

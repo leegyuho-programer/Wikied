@@ -1,10 +1,10 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import getArticlePagination from '@/api/article/getArticlesPagination';
 import SearchBar from '@/components/SearchBar/SearchBar';
-import LineStrokeIcon from '@/components/SvgComponents/StrokeIcon/LineStroke';
+import { StrokeIcon } from '@/components/SvgComponents';
 import { GetArticleResponseType } from '@/types/article';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import ArticleList from '../ArticleList/ArticleList';
 import Filter from '../Filter/Filter';
@@ -44,7 +44,7 @@ export default function PaginationPage() {
           <Filter onSortChange={handleSortChange} />
         </div>
         <div className={styles.articleList}>
-          <LineStrokeIcon />
+          <StrokeIcon width={1060} margin="15px 0" />
           <div className={styles.top}>
             <p className={styles.id}>번호</p>
             <p className={styles.articleTitle}>제목</p>
@@ -52,7 +52,7 @@ export default function PaginationPage() {
             <p className={styles.like}>좋아요</p>
             <p className={styles.day}>날짜</p>
           </div>
-          <LineStrokeIcon />
+          <StrokeIcon width={1060} margin="15px 0" />
           {data?.list.map((article) => (
             <ArticleList
               key={article.id}

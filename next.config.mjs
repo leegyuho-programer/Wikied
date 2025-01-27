@@ -27,10 +27,6 @@ const nextConfig = withBundleAnalyzer({
                     attrs: '(fill|stroke)',
                   },
                 },
-                {
-                  name: 'cleanupIDs', // ID 정리
-                  active: true,
-                },
               ],
             },
           },

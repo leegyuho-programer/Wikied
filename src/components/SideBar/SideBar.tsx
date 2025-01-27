@@ -7,8 +7,7 @@ import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
-import ArrowDownIcon from '../SvgComponents/ArrowDownIcon/ArrowDownIcon';
-import CameraIcon from '../SvgComponents/CameraIcon/CameraIcon';
+import { ArrowDownIcon, CameraIcon } from '../SvgComponents';
 import styles from './SideBar.module.css';
 
 interface Props {

@@ -1,4 +1,4 @@
-import LinkIcon from '../SvgComponents/LinkIcon/LinkIcon';
+import { LinkIcon } from '../SvgComponents';
 import LinkContent from './LinkContent';
 import styles from './LinkCopy.module.css';
 

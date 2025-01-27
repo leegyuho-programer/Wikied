@@ -1,6 +1,5 @@
 import { failModify, successCopy } from '@/constants/SnackBarMassage';
-import FailIcon from '../SvgComponents/FailIcon/FailIcon';
-import SuccessIcon from '../SvgComponents/SuccessIcon/SuccessIcon';
+import { FailIcon, SuccessIcon } from '../SvgComponents';
 import styles from './SnackBar.module.css';
 
 interface Props {

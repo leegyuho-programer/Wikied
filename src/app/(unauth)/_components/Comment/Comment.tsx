@@ -1,14 +1,13 @@
 import { deleteComment, patchComment } from '@/api/comment/comment';
-import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
-import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
+import { DeleteIcon, EditIcon } from '@/components/SvgComponents';
 import { useStore } from '@/store';
 import { GetCommentResponseType } from '@/types/comment';
+import { formatDate } from '@/utils/day';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useState } from 'react';
 import defaultIMG from '../../../../../public/images/default.jpg';
 import styles from './Comment.module.css';
-import { formatDate } from '@/utils/day';
 
 interface CommentProps {
   comment: GetCommentResponseType['list'][number];

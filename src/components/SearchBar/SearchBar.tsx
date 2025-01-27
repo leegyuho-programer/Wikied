@@ -2,9 +2,8 @@
 
 import classNames from 'classnames/bind';
 import { debounce } from 'lodash';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import CancelIcon from '../SvgComponents/CancelIcon';
-import SearchIcon from '../SvgComponents/SearchIcon';
+import { useEffect, useMemo, useState } from 'react';
+import { CancelIcon, SearchIcon } from '../SvgComponents';
 import styles from './SearchBar.module.css';
 
 const cn = classNames.bind(styles);

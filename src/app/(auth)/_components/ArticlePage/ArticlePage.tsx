@@ -2,12 +2,10 @@
 
 import { deleteArticle, getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
+import CommentContainer from '@/app/(unauth)/_components/Comment/CommentContainer';
 import Button from '@/components/Button/Button';
 import LinkButton from '@/components/Button/LinkButton';
-import DeleteIcon from '@/components/SvgComponents/DeleteIcon/DeleteIcon';
-import EditIcon from '@/components/SvgComponents/EditIcon/EditIcon';
-import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
-import ArticleStrokeIcon from '@/components/SvgComponents/StrokeIcon/ArticleStrokeIcon';
+import { DeleteIcon, EditIcon, HeartIcon, StrokeIcon } from '@/components/SvgComponents';
 import { useStore } from '@/store';
 import { DeleteArticleIdRequestType, DeleteLikeRequestType, GetArticleIdResponseType } from '@/types/article';
 import { formatDate } from '@/utils/day';
@@ -15,7 +13,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import CommentContainer from '@/app/(unauth)/_components/Comment/CommentContainer';
 import { PostLikeRequestType } from './../../../../types/article';
 import styles from './ArticlePage.module.css';
 import ArticlePageSkeleton from './ArticlePageSkeleton';
@@ -122,7 +119,7 @@ export default function ArticlePage() {
             </div>
           </div>
         </div>
-        <ArticleStrokeIcon />
+        <StrokeIcon />
         <div className={styles.imageWrapper}>
           {article?.image && (
             <Image

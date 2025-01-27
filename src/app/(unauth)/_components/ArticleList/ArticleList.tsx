@@ -1,7 +1,7 @@
-import { useRouter } from 'next/navigation';
-import LineStrokeIcon from '@/components/SvgComponents/StrokeIcon/LineStroke';
-import styles from './ArticleList.module.css';
+import { StrokeIcon } from '@/components/SvgComponents';
 import { formatDate } from '@/utils/day';
+import { useRouter } from 'next/navigation';
+import styles from './ArticleList.module.css';
 
 export interface ArticleListProps {
   id: number;
@@ -27,7 +27,7 @@ export default function ArticleList({ id, title, writerName, likeCount, createdA
         <div className={styles.like}>{likeCount}</div>
         <p className={styles.day}>{formatDate(createdAt)}</p>
       </div>
-      <LineStrokeIcon />
+      <StrokeIcon width={1060} margin="15px 0" />
     </div>
   );
 }

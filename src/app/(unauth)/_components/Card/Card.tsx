@@ -1,10 +1,10 @@
 'use client';
 
+import { HeartIcon } from '@/components/SvgComponents';
+import { formatDate } from '@/utils/day';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './Card.module.css';
-import Image from 'next/image';
-import HeartIcon from '@/components/SvgComponents/HeartIcon/HeartIcon';
-import { formatDate } from '@/utils/day';
 
 interface CardProps {
   id: number;

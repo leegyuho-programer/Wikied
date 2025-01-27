@@ -1,11 +1,11 @@
 'use client';
 
-import CloseIcon from '@/components/SvgComponents/CloseIcon/CloseIcon';
+import { CloseIcon } from '@/components/SvgComponents';
 import { useStore } from '@/store';
 import { modalType } from '@/store/zustand.types';
 import { ReactNode } from 'react';
-import styles from './ModalContainer.module.css';
 import ModalPortal from '../../ModalPortal';
+import styles from './ModalContainer.module.css';
 
 interface Props {
   children: ReactNode;
