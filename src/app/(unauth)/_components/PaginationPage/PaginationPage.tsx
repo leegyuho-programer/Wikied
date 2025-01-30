@@ -44,7 +44,7 @@ export default function PaginationPage() {
           <Filter onSortChange={handleSortChange} />
         </div>
         <div className={styles.articleList}>
-          <StrokeIcon width={1060} margin="15px 0" />
+          <StrokeIcon margin="15px 0" />
           <div className={styles.top}>
             <p className={styles.id}>번호</p>
             <p className={styles.articleTitle}>제목</p>
@@ -52,7 +52,7 @@ export default function PaginationPage() {
             <p className={styles.like}>좋아요</p>
             <p className={styles.day}>날짜</p>
           </div>
-          <StrokeIcon width={1060} margin="15px 0" />
+          <StrokeIcon margin="15px 0" />
           {data?.list.map((article) => (
             <ArticleList
               key={article.id}

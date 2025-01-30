@@ -27,7 +27,7 @@ export default function ArticleList({ id, title, writerName, likeCount, createdA
         <div className={styles.like}>{likeCount}</div>
         <p className={styles.day}>{formatDate(createdAt)}</p>
       </div>
-      <StrokeIcon width={1060} margin="15px 0" />
+      <StrokeIcon margin="15px 0" />
     </div>
   );
 }
