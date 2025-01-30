@@ -1,6 +1,10 @@
 import HeartSVGIcon from './HeartIcon.svg';
 import styles from './HeartIcon.module.css';
 
-export default function HeartIcon() {
-  return <HeartSVGIcon className={styles.container} />;
+interface Props {
+  color?: string;
+}
+
+export default function HeartIcon({ color = '#8F95B2' }: Props) {
+  return <HeartSVGIcon className={styles.container} fill={color} stroke={color} />;
 }

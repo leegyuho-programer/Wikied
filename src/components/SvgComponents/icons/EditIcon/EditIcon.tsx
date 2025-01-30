@@ -3,8 +3,9 @@ import styles from './EditIcon.module.css';
 
 interface Props {
   onClick: () => void;
+  color?: string;
 }
 
-export default function EditIcon({ onClick }: Props) {
-  return <EditSVGIcon className={styles.icon} onClick={onClick} />;
+export default function EditIcon({ onClick, color = '#8F95B2' }: Props) {
+  return <EditSVGIcon className={styles.icon} onClick={onClick} fill={color} />;
 }

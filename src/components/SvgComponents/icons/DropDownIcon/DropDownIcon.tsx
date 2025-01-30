@@ -1,5 +1,9 @@
 import DropDownSVGIcon from './DropDownIcon.svg';
 
-export default function DropDownIcon() {
-  return <DropDownSVGIcon />;
+interface Props {
+  color?: string;
+}
+
+export default function DropDownIcon({ color = '#8F95B2' }: Props) {
+  return <DropDownSVGIcon fill={color} />;
 }

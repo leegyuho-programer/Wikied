@@ -1,6 +1,11 @@
 import CameraSVGIcon from './CameraIcon.svg';
 import styles from './CameraIcon.module.css';
 
-export default function CameraIcon({ className }: { className?: string }) {
-  return <CameraSVGIcon className={`${styles.container} ${className}`} />;
+interface Props {
+  className?: string;
+  color?: string;
+}
+
+export default function CameraIcon({ className, color = '#E4E5F0' }: Props) {
+  return <CameraSVGIcon className={`${styles.container} ${className}`} fill={color} />;
 }

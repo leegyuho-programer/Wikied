@@ -114,7 +114,7 @@ export default function ArticlePage() {
               {article?.createdAt && <p>{formatDate(article.createdAt)}</p>}
             </div>
             <div className={styles.like} onClick={handleLikeClick}>
-              <HeartIcon />
+              <HeartIcon color={article?.isLiked ? '#D14343' : '#8F95B2'} />
               <p>{article?.likeCount}</p>
             </div>
           </div>

@@ -1,5 +1,9 @@
 import LockSVGIcon from './LockIcon.svg';
 
-export default function LockIcon() {
-  return <LockSVGIcon />;
+interface Props {
+  color?: string;
+}
+
+export default function LockIcon({ color = '#8F95B2' }: Props) {
+  return <LockSVGIcon fill={color} />;
 }

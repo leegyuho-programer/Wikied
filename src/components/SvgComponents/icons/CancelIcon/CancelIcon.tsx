@@ -1,5 +1,9 @@
 import CancelSVGIcon from './CancelIcon.svg';
 
-export default function CancelIcon() {
-  return <CancelSVGIcon />;
+interface Props {
+  color?: string;
+}
+
+export default function CancelIcon({ color = '#323232' }: Props) {
+  return <CancelSVGIcon fill={color} />;
 }
