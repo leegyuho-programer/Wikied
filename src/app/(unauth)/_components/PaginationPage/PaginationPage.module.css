@@ -18,12 +18,6 @@
 
 .search {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.search {
-  display: flex;
   justify-content: space-between;
   gap: 20px;
 }
