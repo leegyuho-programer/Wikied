@@ -17,14 +17,11 @@ const nextConfig = withBundleAnalyzer({
             svgo: true, // SVGO 활성화
             svgoConfig: {
               plugins: [
+                { name: 'removeViewBox', active: false }, // 필수인 경우만 비활성화
                 {
-                  name: 'removeViewBox', // viewBox 제거 방지
-                  active: false,
-                },
-                {
-                  name: 'removeAttrs', // 특정 속성 제거
+                  name: 'removeAttrs',
                   params: {
-                    attrs: '(fill|stroke)',
+                    attrs: '(fill|stroke|fill-opacity|stroke-width)', // 불필요 속성 제거 확대
                   },
                 },
               ],

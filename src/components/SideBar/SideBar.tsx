@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
-import { ArrowDownIcon, CameraIcon } from '../SvgComponents';
+import { CameraIcon } from '../SvgComponents';
 import styles from './SideBar.module.css';
 
 interface Props {
@@ -294,7 +294,7 @@ function SideBar({ profileData, showEditButton, className }: Props) {
         </form>
         <button className={`${styles.arrowButton} ${showAll ? styles.rotate : ''}`} onClick={handleToggle}>
           <div className={styles.arrowButtonWrapper}>
-            <ArrowDownIcon />
+            <Image src="/icons/ArrowDownIcon.svg" width={24} height={24} alt="ArrowDownIcon" />
           </div>
         </button>
       </div>
