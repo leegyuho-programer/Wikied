@@ -1,6 +1,6 @@
 import { failModify, successCopy } from '@/constants/SnackBarMassage';
-import { FailIcon, SuccessIcon } from '../SvgComponents';
 import styles from './SnackBar.module.css';
+import Image from 'next/image';
 
 interface Props {
   type: string;
@@ -9,7 +9,11 @@ interface Props {
 function SnackBar({ type }: Props) {
   return (
     <div className={`${styles.container} ${type ? styles.successContainer : styles.failContainer}`}>
-      {type ? <SuccessIcon /> : <FailIcon />}
+      {type ? (
+        <Image src="/icons/SuccessIcon.svg" width={20} height={20} alt="SuccessIcon" />
+      ) : (
+        <Image src="/icons/FailIcon.svg" width={20} height={20} alt="FailIcon" />
+      )}
       {type ? successCopy : failModify}
     </div>
   );

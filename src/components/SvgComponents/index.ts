@@ -1,8 +1,6 @@
 export { default as DropDownIcon } from './icons/DropDownIcon/DropDownIcon';
 export { default as LockIcon } from './icons/LockIcon/LockIcon';
 export { default as WikiIcon } from './icons/WikiIcon/WikiIcon';
-export { default as FailIcon } from './icons/FailIcon/FailIcon';
-export { default as SuccessIcon } from './icons/SuccessIcon/SuccessIcon';
 export { default as CloseIcon } from './icons/CloseIcon/CloseIcon';
 export { default as DeleteIcon } from './icons/DeleteIcon/DeleteIcon';
 export { default as EditIcon } from './icons/EditIcon/EditIcon';
