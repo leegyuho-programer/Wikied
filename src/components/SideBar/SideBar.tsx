@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
-import { CameraIcon } from '../SvgComponents';
 import styles from './SideBar.module.css';
 
 interface Props {
@@ -155,7 +154,13 @@ function SideBar({ profileData, showEditButton, className }: Props) {
               {showEditButton && (
                 <>
                   <input type="file" className={styles.input} onChange={handleFileChange} />
-                  <CameraIcon className={styles.cameraIcon} />
+                  <Image
+                    src="/icons/CameraIcon.svg"
+                    width={36}
+                    height={36}
+                    alt="CameraIcon"
+                    className={styles.cameraIcon}
+                  />
                 </>
               )}
             </label>

@@ -64,8 +64,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
   fill: rgba(0, 0, 0, 0); /* 초기에는 투명하게 설정 */
   transition: fill 0.3s ease; /* 호버 시 효과를 위한 transition 추가 */
   display: none;
@@ -292,6 +290,11 @@
   .line {
     gap: 10px;
   }
+
+  .cameraIcon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -317,5 +320,10 @@
   .label {
     width: 62px;
     height: 62px;
+  }
+
+  .cameraIcon {
+    width: 17px;
+    height: 17px;
   }
 }
