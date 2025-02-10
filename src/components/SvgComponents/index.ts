@@ -1,5 +1,3 @@
-export { default as SearchIcon } from './icons/SearchIcon/SearchIcon';
-export { default as CancelIcon } from './icons/CancelIcon/CancelIcon';
 export { default as DropDownIcon } from './icons/DropDownIcon/DropDownIcon';
 export { default as LockIcon } from './icons/LockIcon/LockIcon';
 export { default as WikiIcon } from './icons/WikiIcon/WikiIcon';

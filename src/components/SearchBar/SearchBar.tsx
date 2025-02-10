@@ -3,8 +3,8 @@
 import classNames from 'classnames/bind';
 import { debounce } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
-import { CancelIcon, SearchIcon } from '../SvgComponents';
 import styles from './SearchBar.module.css';
+import Image from 'next/image';
 
 const cn = classNames.bind(styles);
 
@@ -57,7 +57,7 @@ function SearchBar({ onSearch, className }: Props) {
 
   return (
     <div className={cn(styles.container, className)}>
-      <SearchIcon />
+      <Image src="/icons/SearchIcon.svg" width={22} height={22} alt="SearchIcon" />
       <input
         type="text"
         className={styles.input}
@@ -68,7 +68,7 @@ function SearchBar({ onSearch, className }: Props) {
       />
       {inputValue && (
         <button className={styles.clearButton} onClick={clearSearch}>
-          <CancelIcon />
+          <Image src="/icons/CancelIcon.svg" width={24} height={24} alt="CancelIcon" />
         </button>
       )}
       <button className={styles.button} onClick={handleSearchClick}>
