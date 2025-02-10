@@ -5,7 +5,6 @@ export { default as CloseIcon } from './icons/CloseIcon/CloseIcon';
 export { default as DeleteIcon } from './icons/DeleteIcon/DeleteIcon';
 export { default as EditIcon } from './icons/EditIcon/EditIcon';
 export { default as HeartIcon } from './icons/HeartIcon/HeartIcon';
-export { default as LinkIcon } from './icons/LinkIcon/LinkIcon';
 export { default as MenuIcon } from './icons/MenuIcon/MenuIcon';
 export { default as NavBarProfileIcon } from './icons/NavBarProfileIcon/NavBarProfileIcon';
 export { default as ProfileIcon } from './icons/ProfileIcon/ProfileIcon';

@@ -1,4 +1,4 @@
-import { LinkIcon } from '../SvgComponents';
+import Image from 'next/image';
 import LinkContent from './LinkContent';
 import styles from './LinkCopy.module.css';
 
@@ -24,7 +24,7 @@ function LinkCopy({ profileId, onCopy }: Props) {
 
   return (
     <div className={styles.container} onClick={handleCopy}>
-      <LinkIcon />
+      <Image src="/icons/LinkIcon.svg" width={20} height={20} alt="LinkIcon" className={styles.icon} />
       <LinkContent text={currentURL} />
     </div>
   );
