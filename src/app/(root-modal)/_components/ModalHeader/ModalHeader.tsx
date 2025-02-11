@@ -1,5 +1,5 @@
-import { LockIcon } from '@/components/SvgComponents';
 import styles from './ModalHeader.module.css';
+import Image from 'next/image';
 
 interface Props {
   text?: string;
@@ -10,7 +10,7 @@ function ModalHeader({ text, type }: Props) {
   return type === 'quiz' ? (
     <div className={styles.header}>
       <div className={styles.icon}>
-        <LockIcon />
+        <Image src="/icons/LockIcon.svg" width={20} height={20} alt="LockIcon" />
       </div>
       <p className={styles.text}>
         다음 퀴즈를 맞추고
