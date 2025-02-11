@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import defaultIMG from '../../../public/images/default.jpg';
 import LinkButton from '../Button/LinkButton';
 import Menu from '../Menu/Menu';
-import { MenuIcon } from '../SvgComponents';
 import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {
@@ -86,7 +85,7 @@ function NavigatorBox() {
             </LinkButton>
           </div>
           <div className={styles.dropdown}>
-            <MenuIcon onClick={toggleMenu} />
+            <Image src="/icons/MenuIcon.svg" width={20} height={20} alt="MenuIcon" onClick={toggleMenu} />
             {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
