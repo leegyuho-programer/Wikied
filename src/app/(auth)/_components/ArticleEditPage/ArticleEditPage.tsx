@@ -36,11 +36,7 @@ export default function ArticleEditPage() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const {
-    data: article,
-    isLoading,
-    isError,
-  } = useQuery<GetArticleIdResponseType>({
+  const { data: article } = useQuery<GetArticleIdResponseType>({
     queryKey: ['article', articleId],
     queryFn: () => getArticle(articleId),
     enabled: !!articleId,
@@ -124,9 +120,7 @@ export default function ArticleEditPage() {
         {errors.content && <p className={styles.error}>{errors.content.message}</p>}
 
         {imagePreview && (
-          <div className={styles.imagePreviewContainer}>
-            <Image src={imagePreview} alt="미리보기" className={styles.imagePreview} width={500} height={400} />
-          </div>
+          <Image src={imagePreview} alt="미리보기" className={styles.imagePreview} width={500} height={400} />
         )}
 
         <input type="file" className={styles.fileInput} onChange={handleImageChange} />

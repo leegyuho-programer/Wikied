@@ -1,7 +1,7 @@
 .container {
-  padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  padding: 20px;
 }
 
 .headerWrapper {
@@ -10,8 +10,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .title {
@@ -29,8 +29,8 @@
 .textarea {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
   font-size: 16px;
+  border-radius: 4px;
 }
 
 .textarea {
@@ -42,10 +42,10 @@
   padding: 10px;
   border: none;
   background-color: #007bff;
+  font-size: 16px;
   color: white;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 16px;
 }
 
 .submitButton:hover {
@@ -58,24 +58,20 @@
 }
 
 .error {
-  color: #d14343;
   font-size: 1.2rem;
+  color: #d14343;
 }
 
 .loading,
 .notFound {
-  text-align: center;
-  font-size: 18px;
   margin-top: 20px;
-}
-
-/* 이미지 미리보기 스타일 */
-.imagePreviewContainer {
-  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .imagePreview {
   width: 100%;
   max-width: 400px;
   height: auto;
+  margin-top: 15px;
 }

@@ -24,11 +24,7 @@ export default function ArticlePage() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const {
-    data: article,
-    isPending,
-    error,
-  } = useQuery<GetArticleIdResponseType, Error>({
+  const { data: article, isPending } = useQuery<GetArticleIdResponseType, Error>({
     queryKey: ['getArticle', id],
     queryFn: () => getArticle(id),
   });
@@ -94,7 +90,7 @@ export default function ArticlePage() {
             {article?.writer.name === user?.name && (
               <>
                 <div className={styles.buttons}>
-                  <LinkButton variant="primary" destination={`/article/${id}/articleEdit`} size="S">
+                  <LinkButton variant="primary" destination={`/articleEdit/${id}`} size="S">
                     수정하기
                   </LinkButton>
                   <Button variant="secondary" onClick={handleDeleteClick} size="S">
@@ -102,7 +98,7 @@ export default function ArticlePage() {
                   </Button>
                 </div>
                 <div className={styles.icons}>
-                  <EditIcon onClick={() => router.push(`/article/${id}/articleEdit`)} />
+                  <EditIcon onClick={() => router.push(`/articleEdit/${id}`)} />
                   <DeleteIcon onClick={handleDeleteClick} />
                 </div>
               </>
