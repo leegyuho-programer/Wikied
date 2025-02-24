@@ -3,6 +3,7 @@
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
 import { postProfilePing } from '@/api/profile/profilePing';
+import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 import Button from '@/components/Button/Button';
 import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SideBar from '@/components/SideBar/SideBar';
@@ -14,7 +15,6 @@ import DOMPurify from 'dompurify';
 import { useEffect, useState } from 'react';
 import styles from './MyPage.module.css';
 import MyPageSkeleton from './MyPageSkeleton';
-import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 
 function MyPage() {
   const BASE_URL = `https://wikied.vercel.app`;
@@ -75,7 +75,8 @@ function MyPage() {
     if (typeof window !== 'undefined') {
       try {
         if (!profileId) {
-          throw new Error('Profile ID is missing');
+          showModal('welcome');
+          return;
         }
         const currentURL = `${BASE_URL}/user/${profileId}`;
         await navigator.clipboard.writeText(currentURL);
