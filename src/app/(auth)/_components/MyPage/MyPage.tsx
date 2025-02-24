@@ -113,8 +113,10 @@ function MyPage() {
       )}
       <div className={styles.title}>
         <p className={styles.name}>{user?.name}</p>
-        {isPending || !profileId ? (
+        {isPending ? (
           <p>Loading profile link...</p>
+        ) : !profileId ? (
+          <p>질문과 답변을 등록해야 초대할 수 있습니다. 설정을 완료하고 친구들을 초대하세요!</p>
         ) : (
           <LinkCopy onCopy={setIsCopied} profileId={profileId} />
         )}
