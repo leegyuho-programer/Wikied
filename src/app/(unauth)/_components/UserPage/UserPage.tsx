@@ -64,6 +64,11 @@ function UserPage() {
   }, [isLogin, user, parsedId, router]);
 
   const handleClick = () => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.');
+      router.push('/login');
+      return;
+    }
     showModal('quiz');
   };
 
