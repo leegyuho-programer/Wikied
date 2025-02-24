@@ -18,10 +18,11 @@ import styles from './MyAccountPage.module.css';
 function MyAccountPage() {
   const router = useRouter();
   const storedPassword = useStore((state) => state.password);
-  const { setLogout, setSecurityQuestion, setSecurityAnswer } = useStore((state) => ({
+  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId } = useStore((state) => ({
     setLogout: state.setLogout,
     setSecurityQuestion: state.setSecurityQuestion,
     setSecurityAnswer: state.setSecurityAnswer,
+    setProfileId: state.setProfileId,
   }));
 
   const {
@@ -71,7 +72,13 @@ function MyAccountPage() {
   };
 
   const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
-    postProfileMutation.mutate(profileData);
+    postProfileMutation.mutate(profileData, {
+      onSuccess: (response) => {
+        alert('질문이 등록되었습니다.');
+        setProfileId(response?.id ?? null); // profileId 설정
+        router.push('/mypage'); // mypage로 이동
+      },
+    });
   };
 
   const handleQuestionChange = (question: string, answer: string) => {
