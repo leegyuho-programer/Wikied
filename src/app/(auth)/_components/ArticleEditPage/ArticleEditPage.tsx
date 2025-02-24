@@ -83,7 +83,7 @@ export default function ArticleEditPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['article', articleId] });
       alert('게시물이 성공적으로 수정되었습니다.');
-      router.push(`/article/${articleId}`);
+      router.replace(`/article/${articleId}`);
     },
     onError: (error) => {
       console.error('게시글 수정에 실패했습니다:', error);

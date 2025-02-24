@@ -20,7 +20,7 @@ export function useAuthCheck() {
     if (!userAuth || !refreshToken) {
       alert('로그인이 필요합니다.');
       setLogout();
-      router.replace('/login');
+      router.push('/login');
     } else {
       setIsChecking(false);
     }

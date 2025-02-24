@@ -66,7 +66,7 @@ export default function PostingPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['articles'] });
       alert('게시물이 성공적으로 업로드되었습니다.');
-      router.push('/freeBoard');
+      router.replace('/freeBoard');
     },
     onError: () => {
       alert('업로드에 실패했습니다.');
