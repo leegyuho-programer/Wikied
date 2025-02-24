@@ -8,6 +8,9 @@ interface Props {
 }
 
 export default function Layout({ children }: Props) {
-  useAuthCheck();
+  const isChecking = useAuthCheck();
+
+  if (isChecking) return null;
+
   return <>{children}</>;
 }
