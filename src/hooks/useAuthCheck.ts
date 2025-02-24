@@ -18,6 +18,7 @@ export function useAuthCheck() {
     const refreshToken = cookies.userRefreshToken;
 
     if (!userAuth || !refreshToken) {
+      alert('로그인이 필요합니다.');
       setLogout();
       router.replace('/login');
     } else {
