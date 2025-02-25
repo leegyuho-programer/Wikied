@@ -27,7 +27,7 @@
   background-color: #f0f0f0;
 }
 
-.profileImage {
+.localProfileImage {
   border-radius: 9999px;
   display: flex;
   justify-content: center;

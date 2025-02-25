@@ -32,6 +32,22 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   setLogin: (user: User, accessToken: string, refreshToken: string, password: string, codeId: string) => {
     saveTokenToCookies('userAccessToken', accessToken, 'AT');
     saveTokenToCookies('userRefreshToken', refreshToken, 'RT');
+
+    // 유저 프로필 이미지가 있는 경우 처리할 수 있도록 ready
+    const profileImage = user.profile?.image || null;
+
+    set({
+      isLogin: true,
+      user,
+      userId: user.id,
+      password,
+      codeId,
+      profileId: user.profile?.id || null,
+      // 로그인 시 profileImage도 설정 (profileSlice에서 관리됨)
+    });
+
+    // profileImage 설정을 여기서 직접 할 수 없으므로 로그인 페이지나 API 호출 후 처리 필요
+
     set({
       isLogin: true,
       user,

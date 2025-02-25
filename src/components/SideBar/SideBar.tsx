@@ -2,6 +2,7 @@
 
 import { postImage } from '@/api/image/postImage';
 import { patchProfileCode } from '@/api/profile/profileCode';
+import { useStore } from '@/store';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { parseCookies } from 'nookies';
@@ -26,7 +27,13 @@ function SideBar({ profileData, showEditButton, className }: Props) {
     }
     return false;
   });
-  const [profileImage, setProfileImage] = useState<string | null>(profileData?.image || null);
+
+  const { setProfileImage, profileImage } = useStore((state) => ({
+    setProfileImage: state.setProfileImage,
+    profileImage: state.profileImage,
+  }));
+
+  const [localProfileImage, setLocalProfileImage] = useState<string | null>(profileData?.image || null);
   const [formData, setFormData] = useState({
     image: profileData?.image || '',
     city: profileData?.city || '',
@@ -43,11 +50,11 @@ function SideBar({ profileData, showEditButton, className }: Props) {
     setShowAll(!showAll);
   };
 
-  // Mutation for image upload
   const uploadImageMutation = useMutation({
     mutationFn: (file: File) => postImage(file, accessToken),
     onSuccess: (data) => {
       setProfileImage(data.url);
+      setLocalProfileImage(data.url);
       setFormData((prevFormData) => ({
         ...prevFormData,
         image: data.url,
@@ -77,7 +84,7 @@ function SideBar({ profileData, showEditButton, className }: Props) {
     mutationFn: () =>
       patchProfileCode(
         {
-          image: profileImage || undefined,
+          image: localProfileImage || undefined,
           city: formData.city,
           mbti: formData.mbti,
           job: formData.job,
@@ -107,7 +114,10 @@ function SideBar({ profileData, showEditButton, className }: Props) {
   useEffect(() => {
     if (profileData) {
       setFormData(profileData);
-      setProfileImage(profileData.image || '');
+
+      if (profileData.image) {
+        setLocalProfileImage(profileData.image);
+      }
     }
   }, [profileData]);
 
@@ -145,9 +155,9 @@ function SideBar({ profileData, showEditButton, className }: Props) {
           <div className={`${styles.profileContainer} ${showEditButton ? styles.editable : ''}`}>
             <label className={`${styles.label} ${showEditButton ? styles.editable : ''}`}>
               <Image
-                src={profileImage ? profileImage : defaultIMG}
+                src={localProfileImage ? localProfileImage : defaultIMG}
                 alt="프로필 이미지"
-                className={styles.profileImage}
+                className={styles.localProfileImage}
                 layout="fill"
                 objectFit="cover"
               />

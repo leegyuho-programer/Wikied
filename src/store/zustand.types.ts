@@ -9,6 +9,7 @@ export interface User {
   profile: {
     id: number;
     code: string;
+    image?: string;
   };
 }
 

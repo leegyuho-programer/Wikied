@@ -11,21 +11,23 @@ import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {
   const router = useRouter();
-  const { isLogin, user, setLogout, profileImage, profileId } = useStore((state) => ({
+  const { isLogin, setLogout, profileImage, setProfileImage } = useStore((state) => ({
     isLogin: state.isLogin,
-    user: state.user,
     setLogout: state.setLogout,
     profileImage: state.profileImage,
-    profileId: state.profileId,
+    setProfileImage: state.setProfileImage,
   }));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const currentProfileImage = profileImage || defaultIMG;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLogout = () => {
+    // 로그아웃 시 프로필 이미지를 null로 설정
+    setProfileImage(null);
     setLogout();
     router.replace('/login');
     setIsMenuOpen(false);
@@ -49,31 +51,17 @@ function NavigatorBox() {
       {isLogin ? (
         <div ref={dropdownRef}>
           <div className={styles.profile}>
-            {profileImage ? (
-              <Image
-                src={profileImage}
-                alt="프로필 이미지"
-                width={32}
-                height={32}
-                layout="responsive"
-                className={styles.profileImage}
-                onClick={toggleMenu}
-                loading="eager"
-                priority={true}
-              />
-            ) : (
-              <Image
-                src={defaultIMG}
-                alt="기본 이미지"
-                width={32}
-                height={32}
-                layout="responsive"
-                className={styles.profileImage}
-                onClick={toggleMenu}
-                loading="eager"
-                priority={true}
-              />
-            )}
+            <Image
+              src={currentProfileImage}
+              alt="프로필 이미지"
+              width={32}
+              height={32}
+              layout="responsive"
+              className={styles.profileImage}
+              onClick={toggleMenu}
+              loading="eager"
+              priority={true}
+            />
             {isMenuOpen && <Menu onMenuClick={toggleMenu} onLogout={handleLogout} />}
           </div>
         </div>
