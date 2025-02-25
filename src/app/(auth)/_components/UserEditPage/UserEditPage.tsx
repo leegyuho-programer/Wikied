@@ -13,20 +13,19 @@ import UserEditPageSkeleton from './UserEditPageSkeleton';
 
 export default function UserEditPage() {
   const [text, setText] = useState('');
-  const { setSecurityQuestion, profileId, editingProfileId } = useStore((state) => ({
+  const { setSecurityQuestion, profileId } = useStore((state) => ({
     setSecurityQuestion: state.setSecurityQuestion,
     profileId: state.profileId,
-    editingProfileId: state.editingProfileId,
   }));
 
   const { data: profileData, isPending: isProfilePending } = useQuery({
-    queryKey: ['profile', editingProfileId],
+    queryKey: ['profile', profileId],
     queryFn: async () => {
       const response = await getProfile(1, 100);
 
-      return response.list.find((item) => item.id === editingProfileId);
+      return response.list.find((item) => item.id === profileId);
     },
-    enabled: !!editingProfileId,
+    enabled: !!profileId,
   });
 
   const { data: profileCodeData, isPending: isProfileCodePending } = useQuery<GetProfileCodeResponseType>({

@@ -54,8 +54,6 @@ export interface ProfileState {
   setProfileId: (profileId: number | null) => void;
   profileImage: string | null;
   setProfileImage: (profileImage: string | null) => void;
-  editingProfileId: number | null;
-  setEditingProfileId: (editingProfileId: number | null) => void;
 }
 
 export interface Profile {

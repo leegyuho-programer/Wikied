@@ -23,13 +23,13 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, securityAnswer, modals, showModal, clearModal, editingProfileId } = useStore((state: any) => ({
+  const { user, securityAnswer, modals, showModal, clearModal, profileId } = useStore((state: any) => ({
     user: state.user,
     securityAnswer: state.securityAnswer,
     modals: state.modals,
     showModal: state.showModal,
     clearModal: state.clearModal,
-    editingProfileId: state.editingProfileId,
+    profileId: state.profileId,
   }));
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -58,12 +58,12 @@ function TextEditor({ value, setValue }: Props) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const { data: profileData } = useQuery({
-    queryKey: ['profile', editingProfileId],
+    queryKey: ['profile', profileId],
     queryFn: async () => {
       const response = await getProfile(1, 100);
-      return response.list.find((item: any) => item.id === editingProfileId);
+      return response.list.find((item: any) => item.id === profileId);
     },
-    enabled: !!user && !!editingProfileId,
+    enabled: !!user && !!profileId,
   });
 
   const { data: profileCodeData } = useQuery({
@@ -76,7 +76,7 @@ function TextEditor({ value, setValue }: Props) {
     mutationFn: (payload: { content: string }) => patchProfileCode(payload, profileData?.code || ''),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
-      router.push(`/user/${editingProfileId}`);
+      router.push(`/user/${profileId}`);
     },
     onError: (error) => {
       console.error('프로필을 업데이트하는 데 실패했습니다:', error);
@@ -136,17 +136,17 @@ function TextEditor({ value, setValue }: Props) {
     }
   }, [profileData]);
 
-  // useEffect(() => {
-  //   if (user && profileData?.code) {
-  //     const pingRequest: PostProfilePingRequestType = {
-  //       securityAnswer,
-  //     };
-  //     console.log(pingRequest);
-  //     postProfilePing(pingRequest, profileData.code)
-  //       .then(() => setPingTime(Date.now()))
-  //       .catch((error) => console.error('Ping 요청 실패:', error));
-  //   }
-  // }, [user, profileData, securityAnswer]);
+  useEffect(() => {
+    if (user && profileData?.code) {
+      const pingRequest: PostProfilePingRequestType = {
+        securityAnswer,
+      };
+
+      postProfilePing(pingRequest, profileData.code)
+        .then(() => setPingTime(Date.now()))
+        .catch((error) => console.error('Ping 요청 실패:', error));
+    }
+  }, [user, profileData, securityAnswer]);
 
   useEffect(() => {
     clearModal();

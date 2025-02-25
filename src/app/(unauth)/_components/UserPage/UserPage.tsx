@@ -21,13 +21,13 @@ function UserPage() {
   const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
-  const { isLogin, user, setSecurityQuestion, modals, showModal, setEditingProfileId } = useStore((state) => ({
+  const { isLogin, user, setSecurityQuestion, modals, showModal, setProfileId } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
     setSecurityQuestion: state.setSecurityQuestion,
     modals: state.modals,
     showModal: state.showModal,
-    setEditingProfileId: state.setEditingProfileId,
+    setProfileId: state.setProfileId,
   }));
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
@@ -52,10 +52,10 @@ function UserPage() {
 
   useEffect(() => {
     if (profileCodeResponse) {
-      setEditingProfileId(parsedId);
+      setProfileId(parsedId);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, setEditingProfileId, setSecurityQuestion]);
+  }, [profileCodeResponse, parsedId, setProfileId, setSecurityQuestion]);
 
   useEffect(() => {
     if (isLogin && user && user?.profile?.id === parsedId) {
