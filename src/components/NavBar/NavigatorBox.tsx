@@ -58,7 +58,7 @@ function NavigatorBox() {
     if (isLogin && !profileImage) {
       setProfileImage(profileData?.list[0]?.image ?? null);
     }
-  }, [isLogin, profileImage, profileData]);
+  }, [isLogin, profileImage, setProfileImage, profileData]);
 
   return (
     <>

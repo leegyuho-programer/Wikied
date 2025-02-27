@@ -15,7 +15,7 @@ const baseURL = 'https://wikied-api.vercel.app/1-99';
 const reissueAccessToken = async (): Promise<string | null> => {
   try {
     const { userRefreshToken } = parseCookies();
-    console.log('리프레시 토큰:', userRefreshToken);
+
     if (!userRefreshToken) {
       throw new Error('리프레시 토큰을 찾을 수 없습니다. 다시 로그인 해주세요.');
     }
@@ -26,7 +26,6 @@ const reissueAccessToken = async (): Promise<string | null> => {
       body: JSON.stringify({ refreshToken: userRefreshToken }),
     });
 
-    console.log('리프레시 토큰 응답 상태:', response.status);
     if (!response.ok) {
       if (response.status === 400) {
         throw new Error('리프레시 토큰이 유효하지 않습니다. 다시 로그인 해주세요.');
@@ -36,7 +35,7 @@ const reissueAccessToken = async (): Promise<string | null> => {
     }
 
     const { accessToken } = await response.json();
-    console.log('재발급된 액세스 토큰:', accessToken);
+
     setCookie(null, 'userAccessToken', accessToken, {
       maxAge: 30 * 60, // 30분
       path: '/',
