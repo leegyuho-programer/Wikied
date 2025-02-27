@@ -15,19 +15,35 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import styles from './UserPage.module.css';
 import MyPageSkeleton from '@/app/(auth)/_components/MyPage/MyPageSkeleton';
+import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 
 function UserPage() {
   const [isCopied, setIsCopied] = useState(false);
   const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
-  const { isLogin, user, setSecurityQuestion, modals, showModal, setProfileId } = useStore((state) => ({
+  const {
+    isLogin,
+    user,
+    setSecurityQuestion,
+    modals,
+    showModal,
+    profileId,
+    setProfileId,
+    clearModal,
+    editingProfileId,
+    setEditingProfileId,
+  } = useStore((state) => ({
     isLogin: state.isLogin,
     user: state.user,
     setSecurityQuestion: state.setSecurityQuestion,
     modals: state.modals,
     showModal: state.showModal,
+    profileId: state.profileId,
     setProfileId: state.setProfileId,
+    clearModal: state.clearModal,
+    editingProfileId: state.editingProfileId,
+    setEditingProfileId: state.setEditingProfileId,
   }));
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
@@ -50,25 +66,37 @@ function UserPage() {
     enabled: !!profileList,
   });
 
+  console.log('profileCodeResponse', profileCodeResponse);
+
+  const handleLaterClick = () => {
+    clearModal();
+  };
+
   useEffect(() => {
     if (profileCodeResponse) {
-      setProfileId(parsedId);
+      setEditingProfileId(parsedId);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, setProfileId, setSecurityQuestion]);
+  }, [profileCodeResponse, parsedId, editingProfileId, setEditingProfileId, setSecurityQuestion]);
 
   useEffect(() => {
     if (isLogin && user && user?.profile?.id === parsedId) {
       router.push('/mypage');
     }
   }, [isLogin, user, parsedId, router]);
-
+  console.log('user', user);
   const handleClick = () => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');
       router.push('/login');
       return;
     }
+
+    if (!profileId) {
+      showModal('welcome');
+      return;
+    }
+
     showModal('quiz');
   };
 
@@ -113,6 +141,7 @@ function UserPage() {
         )}
       </div>
       {modals[modals.length - 1] === 'quiz' && <QuizModal codeId={profileCodeResponse?.code} />}
+      {modals.includes('welcome') && <WelcomeModal onClose={handleLaterClick} />}
     </div>
   );
 }

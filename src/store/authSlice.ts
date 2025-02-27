@@ -17,6 +17,8 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   securityAnswer: null,
   profileId: null,
   setProfileId: (profileId: number | null) => set({ profileId }),
+  editingProfileId: null,
+  setEditingProfileId: (editingProfileId: number | null) => set({ editingProfileId }),
 
   getUserAccessToken: () => get().userAccessToken,
   setUserAccessToken: (token: string) => {
@@ -70,6 +72,7 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
       securityQuestion: null,
       securityAnswer: null,
       profileId: null,
+      editingProfileId: null,
     });
     removeStore();
   },

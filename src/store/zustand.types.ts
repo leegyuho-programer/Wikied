@@ -32,6 +32,8 @@ export interface AuthState {
   // setPageId?: (data: number) => void;
   profileId: number | null;
   setProfileId: (profileId: number | null) => void;
+  editingProfileId: number | null;
+  setEditingProfileId: (editingProfileId: number | null) => void;
 
   getUserAccessToken: () => string;
   setUserAccessToken: (token: string) => void;
@@ -54,6 +56,8 @@ export interface ProfileState {
   setProfileId: (profileId: number | null) => void;
   profileImage: string | null;
   setProfileImage: (profileImage: string | null) => void;
+  editingProfileId: number | null;
+  setEditingProfileId: (editingProfileId: number | null) => void;
 }
 
 export interface Profile {
