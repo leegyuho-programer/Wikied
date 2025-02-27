@@ -66,8 +66,6 @@ function UserPage() {
     enabled: !!profileList,
   });
 
-  console.log('profileCodeResponse', profileCodeResponse);
-
   const handleLaterClick = () => {
     clearModal();
   };
@@ -84,7 +82,7 @@ function UserPage() {
       router.push('/mypage');
     }
   }, [isLogin, user, parsedId, router]);
-  console.log('user', user);
+
   const handleClick = () => {
     if (!isLogin) {
       alert('로그인이 필요합니다.');

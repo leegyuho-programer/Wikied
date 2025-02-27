@@ -56,7 +56,7 @@ function NavigatorBox() {
 
   useEffect(() => {
     if (isLogin && !profileImage) {
-      setProfileImage(profileData?.list[0].image ?? null);
+      setProfileImage(profileData?.list[0]?.image ?? null);
     }
   }, [isLogin, profileImage, setProfileImage, profileData]);
 
