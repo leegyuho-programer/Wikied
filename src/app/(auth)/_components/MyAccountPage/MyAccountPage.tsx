@@ -49,12 +49,13 @@ function MyAccountPage() {
 
   const postProfileMutation = useMutation({
     mutationFn: (profileData: PostProfileRequestType) => postProfile(profileData),
-    onSuccess: () => {
+    onSuccess: (response) => {
       alert('질문이 등록되었습니다.');
+      setProfileId(response?.id ?? null);
       router.push('/mypage');
     },
     onError: (error) => {
-      console.error('Failed to update profile', error);
+      console.error('질문 등록에 실패했습니다.', error);
       alert(error.message);
     },
   });
@@ -72,13 +73,7 @@ function MyAccountPage() {
   };
 
   const handleSecurityQuestionSubmit = async (profileData: PostProfileRequestType) => {
-    postProfileMutation.mutate(profileData, {
-      onSuccess: (response) => {
-        alert('질문이 등록되었습니다.');
-        setProfileId(response?.id ?? null); // profileId 설정
-        router.push('/mypage'); // mypage로 이동
-      },
-    });
+    postProfileMutation.mutate(profileData);
   };
 
   const handleQuestionChange = (question: string, answer: string) => {
