@@ -18,11 +18,12 @@ import styles from './MyAccountPage.module.css';
 function MyAccountPage() {
   const router = useRouter();
   const storedPassword = useStore((state) => state.password);
-  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId } = useStore((state) => ({
+  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId, securityAnswer } = useStore((state) => ({
     setLogout: state.setLogout,
     setSecurityQuestion: state.setSecurityQuestion,
     setSecurityAnswer: state.setSecurityAnswer,
     setProfileId: state.setProfileId,
+    securityAnswer: state.securityAnswer,
   }));
 
   const {
@@ -40,7 +41,7 @@ function MyAccountPage() {
     onSuccess: () => {
       alert('비밀번호가 변경되었습니다.');
       setLogout();
-      router.replace('login');
+      router.replace('/login');
     },
     onError: (error) => {
       console.error('Error:', error);

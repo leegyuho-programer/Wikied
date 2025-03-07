@@ -17,6 +17,24 @@ import styles from './TextEditor.module.css';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+const defaultTemplate = `
+  <h1 style="color: #474D66; font-size: 2.4rem; font-weight: 600;">01. 개요</h1>
+  <br/>
+  <p>여기에 간단한 소개를 적어주세요.</p>
+  <br/><br/><br/><br/>
+  <h1>02. 취미</h1>
+  <br/>
+  <p style="font-size: 18px;">평소에 취미로 즐기는 것들을 알고 있다면 알려주세요.</p>
+  <br/><br/><br/><br/>
+  <h1>03. 여담</h1>
+  <br/>
+  <p>나만 알고 있는 재미있는 여담을 공유해 보세요.</p>
+  <br/><br/><br/><br/>
+  <h1>04. 취향</h1>
+  <br/>
+  <p>좋아하는 것 중에 알고 있는 게 있으신가요?</p>
+`;
+
 interface Props {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
@@ -36,29 +54,9 @@ function TextEditor({ value, setValue }: Props) {
   );
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const [name, setName] = useState<string | null>(null);
-  const [pingTime, setPingTime] = useState<number | null>(null);
-
-  const defaultTemplate = `
-    <h1 style="color: #474D66; font-size: 2.4rem; font-weight: 600;">01. 개요</h1>
-    <br/>
-    <p>여기에 간단한 소개를 적어주세요.</p>
-    <br/><br/><br/><br/>
-    <h1>02. 취미</h1>
-    <br/>
-    <p style="font-size: 18px;">평소에 취미로 즐기는 것들을 알고 있다면 알려주세요.</p>
-    <br/><br/><br/><br/>
-    <h1>03. 여담</h1>
-    <br/>
-    <p>나만 알고 있는 재미있는 여담을 공유해 보세요.</p>
-    <br/><br/><br/><br/>
-    <h1>04. 취향</h1>
-    <br/>
-    <p>좋아하는 것 중에 알고 있는 게 있으신가요?</p>
-  `;
-
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [pingTime, setPingTime] = useState<number | null>(null);
 
   const { data: profileData } = useQuery({
     queryKey: ['profile', editingProfileId],
@@ -81,10 +79,7 @@ function TextEditor({ value, setValue }: Props) {
       queryClient.invalidateQueries({ queryKey: ['profileCode', profileData?.code] });
       router.push(`/user/${editingProfileId}`);
     },
-    onError: (error) => {
-      console.error('프로필을 업데이트하는 데 실패했습니다:', error);
-      alert(error.message);
-    },
+    onError: (error) => alert(error.message),
   });
 
   const handleUpdateProfile = () => {
@@ -95,9 +90,7 @@ function TextEditor({ value, setValue }: Props) {
     updateProfileMutation.mutate({ content: value });
   };
 
-  const handleCancel = () => {
-    router.back();
-  };
+  const handleCancel = () => router.back();
 
   const modules = useMemo(
     () => ({
@@ -106,7 +99,7 @@ function TextEditor({ value, setValue }: Props) {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ indent: '-1' }],
-        ['image', 'link'],
+        ['link'],
         [{ size: ['small', false, 'large', 'huge'] }],
       ],
     }),
@@ -131,13 +124,7 @@ function TextEditor({ value, setValue }: Props) {
 
   useEffect(() => {
     setValue(profileCodeData?.content || defaultTemplate);
-  }, [profileCodeData]);
-
-  useEffect(() => {
-    if (profileData) {
-      setName(profileData.name || null);
-    }
-  }, [profileData]);
+  }, [profileCodeData, setValue]);
 
   useEffect(() => {
     if (user && profileData?.code) {
@@ -165,7 +152,7 @@ function TextEditor({ value, setValue }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <p className={styles.name}>{name}</p>
+        <p className={styles.name}>{profileData?.name || ''}</p>
         <div className={styles.button}>
           <Button variant="white" size="XS" onClick={handleCancel}>
             취소

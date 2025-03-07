@@ -56,20 +56,12 @@ function MyPage() {
     },
   });
 
-  // profileCode가 있으면 postPing 실행
-  useQuery({
-    queryKey: ['profilePing', profileCode],
-    queryFn: () => {
-      if (!profileCode || !securityAnswer) {
-        throw new Error('Required data for ping is missing');
-      }
+  useEffect(() => {
+    if (profileCode && securityAnswer) {
       const pingRequest: PostProfilePingRequestType = { securityAnswer };
-
-      return postPingMutation.mutateAsync({ pingRequest, profileCode });
-    },
-    enabled: !!profileCode && !!securityAnswer,
-    retry: false,
-  });
+      postPingMutation.mutate({ pingRequest, profileCode });
+    }
+  }, [profileCode, securityAnswer]);
 
   const handleInvite = async () => {
     if (typeof window !== 'undefined') {
@@ -88,14 +80,9 @@ function MyPage() {
     }
   };
 
-  const handleLaterClick = () => {
-    clearModal();
-  };
-
   // Welcome 모달 표시 로직
   useEffect(() => {
-    const shouldShowModal = !profileId && !modals.includes('welcome');
-    if (shouldShowModal) {
+    if (!profileId && !modals.includes('welcome')) {
       showModal('welcome');
     }
   }, []);
@@ -141,7 +128,7 @@ function MyPage() {
           </div>
         )}
       </div>
-      {!profileId && modals.includes('welcome') && <WelcomeModal onClose={handleLaterClick} />}
+      {!profileId && modals.includes('welcome') && <WelcomeModal onClose={clearModal} />}
     </div>
   );
 }

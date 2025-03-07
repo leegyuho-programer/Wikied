@@ -24,12 +24,11 @@ export interface AuthState {
   userAccessToken: string;
   userRefreshToken: string;
   codeId: string | null;
+  setCodeId: (codeId: string | null) => void;
   securityQuestion?: string | null;
   setSecurityQuestion?: (question: string | null) => void;
   securityAnswer?: string | null;
   setSecurityAnswer?: (answer: string | null) => void;
-  // pageId?: number | null;
-  // setPageId?: (data: number) => void;
   profileId: number | null;
   setProfileId: (profileId: number | null) => void;
   editingProfileId: number | null;

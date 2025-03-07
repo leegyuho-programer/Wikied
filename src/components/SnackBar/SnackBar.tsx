@@ -1,4 +1,4 @@
-import { failModify, successCopy } from '@/constants/SnackBarMassage';
+import { failModify, successCopy } from '@/constants/SnackBarMessage';
 import styles from './SnackBar.module.css';
 import Image from 'next/image';
 

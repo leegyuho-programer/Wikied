@@ -11,8 +11,17 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
   userRefreshToken: getTokenFromCookies('userRefreshToken') || '',
   password: '',
   codeId: '',
+  setCodeId: (codeId: string | null) => set({ codeId }),
   setSecurityQuestion: (question) => set({ securityQuestion: question }),
-  setSecurityAnswer: (answer) => set({ securityAnswer: answer }),
+  // setSecurityAnswer: (answer) => set({ securityAnswer: answer }),
+  setSecurityAnswer: (answer) => {
+    const currentUserId = get().userId;
+
+    if (currentUserId) {
+      localStorage.setItem(`securityAnswer_${currentUserId}`, answer ?? ''); // null이면 빈 문자열 저장
+    }
+    set({ securityAnswer: answer });
+  },
   securityQuestion: null,
   securityAnswer: null,
   profileId: null,
@@ -37,6 +46,7 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
 
     // 유저 프로필 이미지가 있는 경우 처리할 수 있도록 ready
     const profileImage = user.profile?.image || null;
+    const savedSecurityAnswer = localStorage.getItem(`securityAnswer_${user.id}`);
 
     set({
       isLogin: true,
@@ -45,6 +55,7 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
       password,
       codeId,
       profileId: user.profile?.id || null,
+      securityAnswer: savedSecurityAnswer || null, // 기존 보안 질문 답변 불러오기
       // 로그인 시 profileImage도 설정 (profileSlice에서 관리됨)
     });
 
@@ -68,9 +79,9 @@ export const createAuthSlice: StateCreator<AuthState> = (set, get) => ({
       user: null,
       userId: 0,
       password: '',
-      codeId: '',
+      codeId: null,
       securityQuestion: null,
-      securityAnswer: null,
+      securityAnswer: null, // zustand 상태는 초기화, localStorage는 유지
       profileId: null,
       editingProfileId: null,
     });
