@@ -18,12 +18,12 @@ import styles from './MyAccountPage.module.css';
 function MyAccountPage() {
   const router = useRouter();
   const storedPassword = useStore((state) => state.password);
-  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId, securityAnswer } = useStore((state) => ({
+  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId, clearModal } = useStore((state) => ({
     setLogout: state.setLogout,
     setSecurityQuestion: state.setSecurityQuestion,
     setSecurityAnswer: state.setSecurityAnswer,
     setProfileId: state.setProfileId,
-    securityAnswer: state.securityAnswer,
+    clearModal: state.clearModal,
   }));
 
   const {
@@ -53,6 +53,7 @@ function MyAccountPage() {
     onSuccess: (response) => {
       alert('질문이 등록되었습니다.');
       setProfileId(response?.id ?? null);
+      clearModal();
       router.push('/mypage');
     },
     onError: (error) => {
