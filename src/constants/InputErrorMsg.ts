@@ -34,6 +34,7 @@ export const ERROR_MSG = {
   duplicatedEmail: '이미 사용중인 이메일입니다.',
   emptyNickname: '닉네임을 입력해 주세요.',
   invalidNickname: '2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 입력해 주세요.',
+  duplicatedNickname: '이미 사용중인 닉네임입니다.',
   signUpSuccessAlert: '회원가입이 성공적으로 완료되었습니다.',
   signUpFailedAlert: '회원가입에 실패했습니다. 다시 시도해 주세요.',
   emptyDashboardName: '대시보드 이름은 1글자 이상 입력해 주세요.',
