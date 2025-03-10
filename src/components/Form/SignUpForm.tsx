@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
-import { ERROR_MSG } from '@/constants/InputErrorMsg';
 
 function SignUpForm() {
   const router = useRouter();
@@ -31,12 +30,10 @@ function SignUpForm() {
       router.replace('/login');
     },
     onError: (error) => {
-      const errorMessage = error.message || '';
-
-      if (errorMessage.includes('Internal Server Error')) {
-        setError('name', { type: 'duplicate', message: ERROR_MSG.duplicatedNickname });
-      } else if (errorMessage.includes('이미 사용중인 이메일입니다.')) {
-        setError('email', { type: 'duplicate', message: ERROR_MSG.duplicatedEmail });
+      if (error.message.includes('이미 사용중인 닉네임입니다.')) {
+        setError('name', { type: 'duplicate', message: error.message });
+      } else if (error.message.includes('이미 사용중인 이메일입니다.')) {
+        setError('email', { type: 'duplicate', message: error.message });
       } else {
         alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
       }
