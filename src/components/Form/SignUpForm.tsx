@@ -31,8 +31,12 @@ function SignUpForm() {
       router.replace('/login');
     },
     onError: (error) => {
-      if (error.message.includes('Internal Server Error')) {
+      const errorMessage = error.message || '';
+
+      if (errorMessage.includes('Internal Server Error')) {
         setError('name', { type: 'duplicate', message: ERROR_MSG.duplicatedNickname });
+      } else if (errorMessage.includes('이미 사용중인 이메일입니다.')) {
+        setError('email', { type: 'duplicate', message: ERROR_MSG.duplicatedEmail });
       } else {
         alert('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
       }
