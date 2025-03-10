@@ -135,10 +135,7 @@ export const request = async ({ url, method = 'GET', params, body }: RequestType
     });
 
     if (!response.ok) {
-      return await response;
-      // const errorData = await response;
-      // console.log('errorData', errorData);
-      // throw new Error(`요청 실패: ${errorData.message || response.statusText}`);
+      return response;
     }
 
     return await response.json();
