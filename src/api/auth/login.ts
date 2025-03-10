@@ -2,18 +2,18 @@ import { PostLogin, PostLoginResponse } from '../../types/auth';
 import { request } from '../fetchRequestHandler';
 
 const login = async (data: PostLogin): Promise<PostLoginResponse> => {
-  try {
-    const response = await request({
-      url: 'auth/signIn',
-      method: 'POST',
-      body: data,
-    });
+  const response = await request({
+    url: 'auth/signIn',
+    method: 'POST',
+    body: data,
+  });
 
-    return response;
-  } catch (error) {
-    console.error('로그인 실패:', error);
-    throw error;
+  if (response.status === 400) {
+    const errorData = await response.json().catch(() => ({ message: '응답을 처리하는 중 오류가 발생했습니다.' }));
+    throw new Error(errorData?.message);
   }
+
+  return response;
 };
 
 export default login;

@@ -55,8 +55,7 @@ function LoginForm() {
       router.replace('/mypage');
     },
     onError: (error) => {
-      console.error('Error:', error);
-      alert('비밀번호가 틀렸습니다.');
+      alert(error.message);
     },
   });
 
