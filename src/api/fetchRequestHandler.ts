@@ -92,6 +92,7 @@ export const authBasedRequest = async ({ url, method = 'GET', params, body }: Au
     // }
 
     const errorData = await response.json();
+
     throw new Error(errorData?.message);
   };
 
