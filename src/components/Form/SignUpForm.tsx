@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './Form.module.css';
+import { ERROR_MSG } from '@/constants/InputErrorMsg';
 
 function SignUpForm() {
   const router = useRouter();
@@ -30,8 +31,8 @@ function SignUpForm() {
       router.replace('/login');
     },
     onError: (error) => {
-      if (error.message.includes('이미 사용중인 닉네임입니다.')) {
-        setError('name', { type: 'duplicate', message: error.message });
+      if (error.message.includes('Internal Server Error')) {
+        setError('name', { type: 'duplicate', message: ERROR_MSG.duplicatedNickname });
       } else if (error.message.includes('이미 사용중인 이메일입니다.')) {
         setError('email', { type: 'duplicate', message: error.message });
       } else {
