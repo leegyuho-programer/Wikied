@@ -52,15 +52,9 @@ function SignUpForm() {
           name="name"
           placeholder="이름을 입력해 주세요."
           label="이름"
-          register={register('name', {
-            ...nicknameRules,
-            onChange: () => {
-              clearErrors('name');
-            },
-          })}
+          register={register('name', nicknameRules)}
           errors={errors}
         />
-
         <Input
           name="email"
           placeholder="이메일을 입력해 주세요."

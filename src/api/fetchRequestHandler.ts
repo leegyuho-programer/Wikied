@@ -85,14 +85,14 @@ export const authBasedRequest = async ({ url, method = 'GET', params, body }: Au
         throw new Error('토큰을 재발급받을 수 없습니다. 다시 로그인 해주세요.');
       }
     }
-    if (response.status === 403) {
-      console.error('Forbidden: You do not have permission to perform this action.');
-      // 필요 시 로그아웃하거나 사용자에게 알림
-      throw new Error('권한이 없습니다. 관리자에게 문의하세요.');
-    }
+    // if (response.status === 403) {
+    //   console.error('Forbidden: You do not have permission to perform this action.');
+    //   // 필요 시 로그아웃하거나 사용자에게 알림
+    //   throw new Error('권한이 없습니다. 관리자에게 문의하세요.');
+    // }
+
     const errorData = await response.json();
-    console.error('Request failed with error:', errorData);
-    throw new Error(`요청 실패: ${errorData.message || response.statusText}`);
+    throw new Error(errorData?.message);
   };
 
   const getValidAccessToken = async (): Promise<string> => {

@@ -41,12 +41,15 @@ export default function QuizModal({ codeId }: Props) {
       const response = await postProfilePing({ securityAnswer: data.securityAnswer }, codeId as string);
       router.push('/userEdit');
       hideModal('quiz');
-    } catch (error) {
-      console.error('프로필 핑 전송 중 오류 발생:', error);
-      setError('securityAnswer', {
-        type: 'manual',
-        message: '보안 답변이 잘못되었습니다. 다시 시도해 주세요.',
-      });
+    } catch (error: any) {
+      if (error.message) {
+        setError('securityAnswer', {
+          type: 'manual',
+          message: error.message,
+        });
+      } else {
+        console.log('알 수 없는 오류 발생', error);
+      }
     }
   };
 
@@ -57,7 +60,7 @@ export default function QuizModal({ codeId }: Props) {
           setSecurityQuestion(response.securityQuestion);
         })
         .catch((error) => {
-          console.error('프로필 코드 가져오기 오류:', error);
+          console.log('error2', error);
         });
     }
   }, [codeId]);
