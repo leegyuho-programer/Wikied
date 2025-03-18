@@ -56,14 +56,66 @@ export default function ArticlePage() {
 
   const postLikeMutation = useMutation({
     mutationFn: ({ articleId: id }: PostLikeRequestType) => postLike(id),
-    onSuccess: () => {
+    onMutate: async () => {
+      // 1. 기존 데이터가 변경되지 않도록 현재 진행 중인 'getArticle' 쿼리를 취소한다.
+      await queryClient.cancelQueries({ queryKey: ['getArticle', id] });
+
+      // 2. 이전 데이터를 저장하여, 나중에 되돌릴 수 있도록 한다.
+      const previousArticle = queryClient.getQueryData<GetArticleIdResponseType>(['getArticle', id]);
+
+      // 3. 좋아요 수와 isLiked 값을 증가시켜 UI를 먼저 업데이트한다.
+      if (previousArticle) {
+        queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', id], {
+          ...previousArticle,
+          likeCount: previousArticle.likeCount + 1,
+          isLiked: true,
+        });
+      }
+
+      // 4. 기존 데이터를 되돌릴 수 있도록 저장한 이전 데이터를 반환한다.
+      return { previousArticle };
+    },
+    onError: (err, variables, context) => {
+      // 요청이 실패하면, onMutate에서 저장했던 이전 데이터를 사용하여 되돌린다.
+      if (context?.previousArticle) {
+        queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', id], context.previousArticle);
+      }
+    },
+    onSettled: () => {
+      // 요청이 끝나면(성공/실패 상관없이) 'getArticle' 데이터를 다시 가져와 최신 상태를 유지한다.
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
   });
 
   const deleteLikeMutation = useMutation({
     mutationFn: ({ articleId: id }: DeleteLikeRequestType) => deleteLike(id),
-    onSuccess: () => {
+    onMutate: async () => {
+      // 1. 기존 'getArticle' 쿼리를 취소하여 변경 사항이 덮어씌워지는 것을 방지
+      await queryClient.cancelQueries({ queryKey: ['getArticle', id] });
+
+      // 2. 기존 데이터를 저장 (되돌릴 때 필요)
+      const previousArticle = queryClient.getQueryData<GetArticleIdResponseType>(['getArticle', id]);
+
+      // 3. 좋아요 수와 isLiked 값을 감소시켜 UI를 먼저 업데이트
+      if (previousArticle) {
+        queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', id], {
+          ...previousArticle,
+          likeCount: previousArticle.likeCount - 1,
+          isLiked: false,
+        });
+      }
+
+      // 4. 기존 데이터를 되돌릴 수 있도록 반환
+      return { previousArticle };
+    },
+    onError: (err, variables, context) => {
+      // 요청이 실패하면, onMutate에서 저장했던 이전 데이터를 사용하여 되돌린다.
+      if (context?.previousArticle) {
+        queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', id], context.previousArticle);
+      }
+    },
+    onSettled: () => {
+      // 요청이 끝나면(성공/실패 상관없이) 'getArticle' 데이터를 다시 가져와 최신 상태를 유지한다.
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
     },
   });
