@@ -97,10 +97,8 @@ export default function PostingPage() {
         <input
           type="file"
           className={styles.fileInput}
-          {...register('image', {
-            required: '이미지를 선택해주세요.',
-            onChange: handleImageChange, // register 안에 onChange를 포함
-          })}
+          {...register('image', { required: '이미지를 선택해주세요.' })}
+          onChange={handleImageChange}
         />
         {errors.image && <p className={styles.error}>{errors.image.message}</p>}
 
