@@ -33,6 +33,7 @@ export default function ArticlePage() {
     mutationFn: ({ articleId: id }: DeleteArticleIdRequestType) => deleteArticle(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getArticle', id] });
+      queryClient.invalidateQueries({ queryKey: ['articles'] });
     },
   });
 
