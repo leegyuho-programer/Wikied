@@ -1,7 +1,10 @@
+import { metadataMap } from '@/app/metadata';
 import MyAccountPage from '../_components/MyAccountPage/MyAccountPage';
 
-function MyAccount() {
-  return <MyAccountPage />;
+export async function generateMetadata() {
+  return metadataMap.myAccount;
 }
 
-export default MyAccount;
+export default function MyAccount() {
+  return <MyAccountPage />;
+}
