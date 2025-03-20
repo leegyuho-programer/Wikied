@@ -1,7 +1,10 @@
+import { metadataMap } from '@/app/metadata';
 import SignUpPage from '../_components/SignUpPage';
 
-function SignUp() {
-  return <SignUpPage />;
+export async function generateMetadata() {
+  return metadataMap.signupPage;
 }
 
-export default SignUp;
+export default function SignUp() {
+  return <SignUpPage />;
+}
