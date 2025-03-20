@@ -37,7 +37,7 @@ export const metadataMap = {
     description: '유저의 개인 페이지입니다. 정보 및 활동을 확인할 수 있습니다.',
   },
   userEditPage: {
-    title: '유저 정보 수정 - Wikied',
+    title: '유저 위키 수정 - Wikied',
     description: '유저 정보를 수정할 수 있는 페이지입니다.',
   },
   myAccountPage: {

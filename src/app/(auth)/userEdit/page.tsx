@@ -1,7 +1,10 @@
+import { metadataMap } from '@/app/metadata';
 import UserEditPage from '../_components/UserEditPage/UserEditPage';
 
-function userEdit() {
-  return <UserEditPage />;
+export async function generateMetadata() {
+  return metadataMap.userEditPage;
 }
 
-export default userEdit;
+export default function userEdit() {
+  return <UserEditPage />;
+}
