@@ -1,12 +1,9 @@
-import type { Metadata } from 'next';
+import ReactQueryProviders from '@/utils/ReactQueryProvider';
 import NavBar from '../components/NavBar/NavBar';
 import '../styles/globals.css';
-import ReactQueryProviders from '@/utils/ReactQueryProvider';
+import { metadataMap } from './metadata';
 
-export const metadata: Metadata = {
-  title: 'Wikied - Your Custom Wiki',
-  description: 'Create and edit custom wiki pages with ease',
-};
+export const metadata = metadataMap.home;
 
 export default function RootLayout({
   children,
