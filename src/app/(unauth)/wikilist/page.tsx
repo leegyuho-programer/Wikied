@@ -1,7 +1,10 @@
+import { metadataMap } from '@/app/metadata';
 import WikiListPage from '../_components/WikiListPage/WikiListPage';
 
-function WikiList() {
-  return <WikiListPage />;
+export async function generateMetadata() {
+  return metadataMap.wikiListPage;
 }
 
-export default WikiList;
+export default function WikiList() {
+  return <WikiListPage />;
+}
