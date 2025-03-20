@@ -1,5 +1,5 @@
 export const metadataMap = {
-  home: {
+  default: {
     title: 'Wikied - 사용자 정의 위키 페이지 생성 및 편집',
     description:
       'Wikied는 위키 페이지를 사용자 정의로 생성하고 편집할 수 있는 플랫폼입니다. 생성한 위키 페이지를 친구들과 공유하고 함께 작성할 수 있으며, 자유게시판에서 글을 작성하고 인기 게시글을 확인할 수도 있습니다.',

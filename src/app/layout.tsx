@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar/NavBar';
 import '../styles/globals.css';
 import { metadataMap } from './metadata';
 
-export const metadata = metadataMap.home;
+export const metadata = metadataMap.default;
 
 export default function RootLayout({
   children,
