@@ -1,7 +1,10 @@
+import { metadataMap } from '@/app/metadata';
 import LoginPage from '../_components/LoginPage';
 
-function Login() {
-  return <LoginPage />;
+export async function generateMetadata() {
+  return metadataMap.loginPage;
 }
 
-export default Login;
+export default function Login() {
+  return <LoginPage />;
+}
