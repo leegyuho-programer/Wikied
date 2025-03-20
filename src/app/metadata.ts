@@ -20,6 +20,10 @@ export const metadataMap = {
     title: '게시물 상세 - Wikied',
     description: '게시물의 상세 내용을 확인하고 댓글을 남겨보세요.',
   },
+  articleEdit: {
+    title: '게시물 수정 - Wikied',
+    description: '기존 게시물을 수정할 수 있는 페이지입니다.',
+  },
   posting: {
     title: '새 게시물 작성 - Wikied',
     description: '새로운 게시물을 작성하고 다양한 사람들과 의견을 나눠보세요.',
@@ -43,9 +47,5 @@ export const metadataMap = {
   userList: {
     title: '유저 목록 - Wikied',
     description: 'Wikied의 모든 유저 목록을 확인할 수 있습니다.',
-  },
-  postEdit: {
-    title: '게시물 수정 - Wikied',
-    description: '기존 게시물을 수정할 수 있는 페이지입니다.',
   },
 };
