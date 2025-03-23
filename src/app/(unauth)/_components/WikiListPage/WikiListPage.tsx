@@ -6,12 +6,10 @@ import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
-import defaultIMG from '../../../../../public/images/default.jpg';
-import noResult from '../../../../../public/images/noResult.png';
+import { useCallback, useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
 import WikiListPageSkeleton from './WikiListPageSkeleton';
@@ -91,7 +89,7 @@ function WikiListPage() {
                 <div className={styles.info}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={profile.image || defaultIMG}
+                      src={profile.image || '/images/default.jpg'}
                       alt={`${profile.name}의 프로필 이미지`}
                       style={{ objectFit: 'fill', width: '100%', height: '100%' }}
                       width={85}
@@ -116,7 +114,7 @@ function WikiListPage() {
         ) : (
           <div className={styles.noResultContainer}>
             <div className={styles.noResults}>{`"${searchTerm}" 일치하는 검색 결과가 없어요.`}</div>
-            <Image src={noResult} width={144} height={144} alt="검색 결과 없음 이미지" />
+            <Image src="/noResult.png" width={144} height={144} alt="검색 결과 없음 이미지" priority />
           </div>
         )}
       </div>

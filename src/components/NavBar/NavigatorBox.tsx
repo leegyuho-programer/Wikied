@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import defaultIMG from '../../../public/images/default.jpg';
 import LinkButton from '../Button/LinkButton';
 import Menu from '../Menu/Menu';
 import styles from './NavigatorBox.module.css';
@@ -66,7 +65,7 @@ function NavigatorBox() {
         <div ref={dropdownRef}>
           <div className={styles.profile}>
             <Image
-              src={profileImage || defaultIMG}
+              src={profileImage || '/images/default.jpg'}
               alt="프로필 이미지"
               width={32}
               height={32}

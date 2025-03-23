@@ -7,7 +7,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
-import defaultIMG from '../../../public/images/default.jpg';
 import styles from './SideBar.module.css';
 
 interface Props {
@@ -155,7 +154,7 @@ function SideBar({ profileData, showEditButton, className }: Props) {
           <div className={`${styles.profileContainer} ${showEditButton ? styles.editable : ''}`}>
             <label className={`${styles.label} ${showEditButton ? styles.editable : ''}`}>
               <Image
-                src={localProfileImage ? localProfileImage : defaultIMG}
+                src={localProfileImage ? localProfileImage : '/images/default.jpg'}
                 alt="프로필 이미지"
                 className={styles.localProfileImage}
                 layout="fill"

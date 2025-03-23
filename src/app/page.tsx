@@ -1,16 +1,6 @@
 import LinkButton from '@/components/Button/LinkButton';
 import Image from 'next/image';
 import Link from 'next/link';
-import Image1 from '../../public/images/landing1.png';
-import Image10 from '../../public/images/landing10.png';
-import Image2 from '../../public/images/landing2.png';
-import Image3 from '../../public/images/landing3.png';
-import Image4 from '../../public/images/landing4.png';
-import Image5 from '../../public/images/landing5.png';
-import Image6 from '../../public/images/landing6.png';
-import Image7 from '../../public/images/landing7.png';
-import Image8 from '../../public/images/landing8.png';
-import Image9 from '../../public/images/landing9.png';
 import styles from './Home.module.css';
 
 function Home() {
@@ -28,7 +18,7 @@ function Home() {
           </LinkButton>
         </div>
         <div className={styles.imageContainer1}>
-          <Image src={Image1} alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/landing1.png" alt="예시 이미지" fill style={{ objectFit: 'cover' }} priority />
         </div>
         <div className={styles.circleBackground}></div>
 
@@ -43,12 +33,12 @@ function Home() {
               </p>
               <div className={styles.imageWrapper}>
                 <div className={styles.imageContainer2}>
-                  <Image src={Image2} alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
+                  <Image src="/images/landing2.png" alt="예시 이미지" fill style={{ objectFit: 'cover' }} priority />
                 </div>
               </div>
             </div>
             <div className={styles.imageContainer3}>
-              <Image src={Image3} alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
+              <Image src="/images/landing3.png" alt="예시 이미지" fill style={{ objectFit: 'cover' }} priority />
             </div>
           </div>
         </div>
@@ -66,16 +56,16 @@ function Home() {
       <div className={styles.imageContainerWrapper}>
         <div className={styles.imageContainer8}></div>
         <div className={styles.imageContainer4}>
-          <Image src={Image4} alt="확성기 이미지" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/landing4.png" alt="확성기 이미지" fill style={{ objectFit: 'cover' }} />
         </div>
         <div className={`${styles.imageContainer5} ${styles.imageContainer4}`}>
-          <Image src={Image5} alt="W 이미지" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/landing5.png" alt="W 이미지" fill style={{ objectFit: 'cover' }} />
         </div>
         <div className={`${styles.imageContainer6} ${styles.imageContainer4}`}>
-          <Image src={Image6} alt="공유 이미지" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/landing6.png" alt="공유 이미지" fill style={{ objectFit: 'cover' }} />
         </div>
         <div className={`${styles.imageContainer6} ${styles.imageContainer4}`}>
-          <Image src={Image7} alt="메세지 이미지" fill style={{ objectFit: 'cover' }} />
+          <Image src="/images/landing7.png" alt="메세지 이미지" fill style={{ objectFit: 'cover' }} />
         </div>
         <div className={styles.imageContainer7}></div>
       </div>
@@ -90,14 +80,14 @@ function Home() {
             </p>
           </div>
           <div className={styles.imageContainer9}>
-            <Image src={Image8} alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
+            <Image src="/images/landing8.png" alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
           </div>
           <div className={styles.wrapper}>
             <div className={styles.imageContainer10}>
-              <Image src={Image9} alt="종 이미지" fill style={{ objectFit: 'cover' }} />
+              <Image src="/images/landing9.png" alt="종 이미지" fill style={{ objectFit: 'cover' }} />
             </div>
             <div className={styles.imageContainer11}>
-              <Image src={Image10} alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
+              <Image src="/images/landing10.png" alt="예시 이미지" fill style={{ objectFit: 'cover' }} />
             </div>
           </div>
         </div>

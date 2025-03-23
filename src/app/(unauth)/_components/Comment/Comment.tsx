@@ -6,7 +6,6 @@ import { formatDate } from '@/utils/day';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useState } from 'react';
-import defaultIMG from '../../../../../public/images/default.jpg';
 import styles from './Comment.module.css';
 
 interface CommentProps {
@@ -63,7 +62,7 @@ export default function Comment({ comment, articleId }: CommentProps) {
           />
         ) : (
           <Image
-            src={defaultIMG}
+            src="/images/default.jpg"
             alt="기본 이미지"
             className={styles.image}
             width={50}
