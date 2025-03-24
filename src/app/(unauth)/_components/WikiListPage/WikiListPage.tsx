@@ -110,7 +110,7 @@ function WikiListPage() {
         ) : (
           <div className={styles.noResultContainer}>
             <div className={styles.noResults}>{`"${searchTerm}" 일치하는 검색 결과가 없어요.`}</div>
-            <Image src="/noResult.png" width={144} height={144} alt="검색 결과 없음 이미지" priority />
+            <Image src="/images/noResult.png" width={144} height={144} alt="검색 결과 없음 이미지" priority />
           </div>
         )}
       </div>
