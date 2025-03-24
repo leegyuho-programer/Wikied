@@ -6,10 +6,10 @@ import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { useStore } from '@/store';
 import { GetProfileCodeResponseType } from '@/types/profile';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 import styles from './WikiListPage.module.css';
 import WikiListPageSkeleton from './WikiListPageSkeleton';
@@ -24,42 +24,37 @@ function WikiListPage() {
   const [page, setPage] = useState(1);
   const pageSize = 3;
 
-  const fetchProfiles = useCallback(async () => {
-    let allProfiles: GetProfileCodeResponseType[] = [];
-    let currentPage = 1;
-    let totalCount = 0;
+  // 서버에서 페이지네이션된 데이터만 가져오기
+  const { data, isPending, isPlaceholderData } = useQuery({
+    queryKey: ['profiles', page, pageSize, searchTerm, profileId],
+    queryFn: async () => {
+      // 본인 프로필 필터링 때문에 하나 더 가져오도록 처리
+      const adjustedPageSize = profileId && !searchTerm ? pageSize + 1 : pageSize;
 
-    while (true) {
-      const response = await getProfile(currentPage, pageSize * 2, searchTerm);
-      const profiles = await Promise.all(response.list.map(async (profile) => getProfileCode(profile.code)));
+      // 1. 먼저 기본 프로필 목록을 페이지 크기만큼만 가져옴
+      const response = await getProfile(page, adjustedPageSize, searchTerm);
 
-      // 본인의 프로필 ID가 있을 경우에만 필터링
+      // 2. 각 프로필의 상세 정보를 병렬로 가져옴
+      const profiles = await Promise.all(response.list.map((profile) => getProfileCode(profile.code)));
+
+      // 3. 본인 프로필이 있으면 필터링
       const filteredProfiles = profileId ? profiles.filter((profile) => profile.id !== profileId) : profiles;
-      allProfiles = [...allProfiles, ...filteredProfiles];
 
-      // 검색어가 있을 때는 totalCount를 그대로, 검색어가 없을 때는 본인을 제외한 값으로 설정
-      totalCount = searchTerm
+      // 4. 페이지 크기에 맞게 잘라내기 (3개만 보여주기)
+      const paginatedProfiles = filteredProfiles.slice(0, pageSize);
+
+      // 5. 총 개수 조정 (본인 프로필 제외)
+      const adjustedTotalCount = searchTerm
         ? response.totalCount
         : profileId
-        ? Math.max(0, response.totalCount - 1)
+        ? Math.max(0, response.totalCount - (profiles.length > filteredProfiles.length ? 1 : 0))
         : response.totalCount;
 
-      if (profiles.length < pageSize * 2 || allProfiles.length >= totalCount) {
-        break;
-      }
-
-      currentPage++;
-    }
-
-    const startIndex = (page - 1) * pageSize;
-    const paginatedProfiles = allProfiles.slice(startIndex, startIndex + pageSize);
-
-    return { profiles: paginatedProfiles, totalCount };
-  }, [page, pageSize, searchTerm, profileId]);
-
-  const { data, isPending, isPlaceholderData } = useQuery({
-    queryKey: ['profiles', page, pageSize, searchTerm],
-    queryFn: fetchProfiles,
+      return {
+        profiles: paginatedProfiles,
+        totalCount: adjustedTotalCount,
+      };
+    },
     placeholderData: keepPreviousData,
   });
 
