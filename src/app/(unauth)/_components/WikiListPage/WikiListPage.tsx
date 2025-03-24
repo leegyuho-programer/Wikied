@@ -78,7 +78,7 @@ function WikiListPage() {
       </div>
       <div className={styles.wikiBoxContainer}>
         {profiles.length > 0 ? (
-          profiles.map((profile: GetProfileCodeResponseType) => (
+          profiles.map((profile: GetProfileCodeResponseType, index) => (
             <Link key={profile.id} className={styles.wikiBox} href={`/user/${profile.id}`} passHref>
               <div className={styles.profile}>
                 <div className={styles.info}>
@@ -89,6 +89,7 @@ function WikiListPage() {
                       style={{ objectFit: 'fill', width: '100%', height: '100%' }}
                       width={85}
                       height={85}
+                      priority={index < 3} // 첫 번째 3개 이미지만 우선 로딩
                     />
                   </div>
                   <div className={styles.intro}>
