@@ -10,9 +10,7 @@ interface Props {
 }
 
 function Menu({ onMenuClick, onLogout }: Props) {
-  const { isLogin } = useStore((state) => ({
-    isLogin: state.isLogin,
-  }));
+  const isLogin = useStore((state) => state.isLogin);
 
   return (
     <div className={styles.container}>

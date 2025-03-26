@@ -13,11 +13,8 @@ import UserEditPageSkeleton from './UserEditPageSkeleton';
 
 export default function UserEditPage() {
   const [text, setText] = useState('');
-  const { setSecurityQuestion, profileId, editingProfileId } = useStore((state) => ({
-    setSecurityQuestion: state.setSecurityQuestion,
-    profileId: state.profileId,
-    editingProfileId: state.editingProfileId,
-  }));
+  const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
+  const editingProfileId = useStore((state) => state.editingProfileId);
 
   const { data: profileData, isPending: isProfilePending } = useQuery({
     queryKey: ['profile', editingProfileId],

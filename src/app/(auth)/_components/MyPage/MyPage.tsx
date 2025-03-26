@@ -18,21 +18,19 @@ import MyPageSkeleton from './MyPageSkeleton';
 
 function MyPage() {
   const BASE_URL = `https://wikied.vercel.app`;
-  const { user, profileId, setProfileId, securityAnswer, modals, showModal, clearModal } = useStore((state: any) => ({
-    user: state.user,
-    profileId: state.profileId,
-    setProfileId: state.setProfileId,
-    securityAnswer: state.securityAnswer,
-    modals: state.modals,
-    showModal: state.showModal,
-    clearModal: state.clearModal,
-  }));
+  const user = useStore((state) => state.user);
+  const profileId = useStore((state) => state.profileId);
+  const setProfileId = useStore((state) => state.setProfileId);
+  const securityAnswer = useStore((state) => state.securityAnswer);
+  const modals = useStore((state) => state.modals);
+  const showModal = useStore((state) => state.showModal);
+  const clearModal = useStore((state) => state.clearModal);
   const [isCopied, setIsCopied] = useState(false);
 
   // Profile 데이터 가져오기
   const { data: profileData, isPending } = useQuery({
     queryKey: ['profile', user?.name],
-    queryFn: () => getProfile(1, 10, user.name),
+    queryFn: () => getProfile(1, 10, user?.name),
     enabled: !!user?.name,
   });
 

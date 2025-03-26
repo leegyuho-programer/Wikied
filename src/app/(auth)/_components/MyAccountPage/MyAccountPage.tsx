@@ -18,13 +18,11 @@ import styles from './MyAccountPage.module.css';
 function MyAccountPage() {
   const router = useRouter();
   const storedPassword = useStore((state) => state.password);
-  const { setLogout, setSecurityQuestion, setSecurityAnswer, setProfileId, clearModal } = useStore((state) => ({
-    setLogout: state.setLogout,
-    setSecurityQuestion: state.setSecurityQuestion,
-    setSecurityAnswer: state.setSecurityAnswer,
-    setProfileId: state.setProfileId,
-    clearModal: state.clearModal,
-  }));
+  const setLogout = useStore((state) => state.setLogout);
+  const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
+  const setSecurityAnswer = useStore((state) => state.setSecurityAnswer);
+  const setProfileId = useStore((state) => state.setProfileId);
+  const clearModal = useStore((state) => state.clearModal);
 
   const {
     handleSubmit,

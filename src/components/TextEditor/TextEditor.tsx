@@ -41,17 +41,13 @@ interface Props {
 }
 
 function TextEditor({ value, setValue }: Props) {
-  const { user, securityAnswer, modals, showModal, clearModal, profileId, editingProfileId } = useStore(
-    (state: any) => ({
-      user: state.user,
-      securityAnswer: state.securityAnswer,
-      modals: state.modals,
-      showModal: state.showModal,
-      clearModal: state.clearModal,
-      profileId: state.profileId,
-      editingProfileId: state.editingProfileId,
-    })
-  );
+  const user = useStore((state) => state.user);
+  const securityAnswer = useStore((state) => state.securityAnswer as string);
+  const modals = useStore((state) => state.modals);
+  const showModal = useStore((state) => state.showModal);
+  const clearModal = useStore((state) => state.clearModal);
+  const editingProfileId = useStore((state) => state.editingProfileId);
+
   const router = useRouter();
   const queryClient = useQueryClient();
   const timerRef = useRef<NodeJS.Timeout | null>(null);

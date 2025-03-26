@@ -22,29 +22,15 @@ function UserPage() {
   const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
-  const {
-    isLogin,
-    user,
-    setSecurityQuestion,
-    modals,
-    showModal,
-    profileId,
-    setProfileId,
-    clearModal,
-    editingProfileId,
-    setEditingProfileId,
-  } = useStore((state) => ({
-    isLogin: state.isLogin,
-    user: state.user,
-    setSecurityQuestion: state.setSecurityQuestion,
-    modals: state.modals,
-    showModal: state.showModal,
-    profileId: state.profileId,
-    setProfileId: state.setProfileId,
-    clearModal: state.clearModal,
-    editingProfileId: state.editingProfileId,
-    setEditingProfileId: state.setEditingProfileId,
-  }));
+  const isLogin = useStore((state) => state.isLogin);
+  const user = useStore((state) => state.user);
+  const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
+  const modals = useStore((state) => state.modals);
+  const showModal = useStore((state) => state.showModal);
+  const profileId = useStore((state) => state.profileId);
+  const clearModal = useStore((state) => state.clearModal);
+  const editingProfileId = useStore((state) => state.editingProfileId);
+  const setEditingProfileId = useStore((state) => state.setEditingProfileId);
 
   const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
 

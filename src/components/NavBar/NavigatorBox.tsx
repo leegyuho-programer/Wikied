@@ -12,13 +12,12 @@ import styles from './NavigatorBox.module.css';
 
 function NavigatorBox() {
   const router = useRouter();
-  const { isLogin, setLogout, profileImage, setProfileImage, user } = useStore((state) => ({
-    isLogin: state.isLogin,
-    setLogout: state.setLogout,
-    profileImage: state.profileImage,
-    setProfileImage: state.setProfileImage,
-    user: state.user,
-  }));
+
+  const isLogin = useStore((state) => state.isLogin);
+  const setLogout = useStore((state) => state.setLogout);
+  const profileImage = useStore((state) => state.profileImage);
+  const setProfileImage = useStore((state) => state.setProfileImage);
+  const user = useStore((state) => state.user);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

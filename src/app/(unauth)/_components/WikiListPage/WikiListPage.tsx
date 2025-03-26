@@ -15,9 +15,7 @@ import styles from './WikiListPage.module.css';
 import WikiListPageSkeleton from './WikiListPageSkeleton';
 
 function WikiListPage() {
-  const { profileId } = useStore((state: any) => ({
-    profileId: state.profileId,
-  }));
+  const profileId = useStore((state) => state.profileId);
 
   const [isCopied, setIsCopied] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');

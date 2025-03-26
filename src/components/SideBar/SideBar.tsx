@@ -27,10 +27,8 @@ function SideBar({ profileData, showEditButton, className }: Props) {
     return false;
   });
 
-  const { setProfileImage, profileImage } = useStore((state) => ({
-    setProfileImage: state.setProfileImage,
-    profileImage: state.profileImage,
-  }));
+  const setProfileImage = useStore((state) => state.setProfileImage);
+  const profileImage = useStore((state) => state.profileImage);
 
   const [localProfileImage, setLocalProfileImage] = useState<string | null>(profileData?.image || null);
   const [formData, setFormData] = useState({

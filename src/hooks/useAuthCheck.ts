@@ -6,9 +6,7 @@ import { parseCookies } from 'nookies';
 export function useAuthCheck() {
   const [isChecking, setIsChecking] = useState(true);
   const router = useRouter();
-  const { setLogout } = useStore((state) => ({
-    setLogout: state.setLogout,
-  }));
+  const setLogout = useStore((state) => state.setLogout);
 
   useLayoutEffect(() => {
     if (typeof window === 'undefined') return;

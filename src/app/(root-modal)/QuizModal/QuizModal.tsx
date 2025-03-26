@@ -22,10 +22,8 @@ interface FormValues {
 }
 
 export default function QuizModal({ codeId }: Props) {
-  const { setSecurityQuestion, securityQuestion } = useStore((state: any) => ({
-    setSecurityQuestion: state.setSecurityQuestion,
-    securityQuestion: state.securityQuestion,
-  }));
+  const securityQuestion = useStore((state) => state.securityQuestion);
+  const setSecurityQuestion = useStore((state) => state.setSecurityQuestion) ?? (() => {});
 
   const router = useRouter();
   const hideModal = useStore((state) => state.hideModal);
@@ -57,10 +55,10 @@ export default function QuizModal({ codeId }: Props) {
     if (codeId) {
       getProfileCode(codeId)
         .then((response) => {
-          setSecurityQuestion(response.securityQuestion);
+          setSecurityQuestion(response.securityQuestion ?? null);
         })
         .catch((error) => {
-          console.log('error2', error);
+          console.log('error', error);
         });
     }
   }, [codeId]);
