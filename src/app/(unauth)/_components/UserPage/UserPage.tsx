@@ -8,18 +8,24 @@ import LinkCopy from '@/components/LinkCopy/LinkCopy';
 import SideBar from '@/components/SideBar/SideBar';
 import SnackBar from '@/components/SnackBar/SnackBar';
 import { useStore } from '@/store';
-import { GetProfileCodeResponseType } from '@/types/profile';
+import { GetProfileCodeResponseType, GetProfileResponseType } from '@/types/profile';
 import { useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import styles from './UserPage.module.css';
 import MyPageSkeleton from '@/app/(auth)/_components/MyPage/MyPageSkeleton';
 import WelcomeModal from '@/app/(root-modal)/WelcomeModal/WelcomeModal';
 
-function UserPage() {
+interface Props {
+  initialProfileData: GetProfileCodeResponseType | null;
+  profileId: number;
+  profileList: any;
+  hasError?: boolean;
+}
+
+function UserPage({ initialProfileData, profileId, profileList: initialProfileList, hasError = false }: Props) {
   const [isCopied, setIsCopied] = useState(false);
-  const { id } = useParams<{ id: string | string[] }>();
   const router = useRouter();
 
   const isLogin = useStore((state) => state.isLogin);
@@ -27,29 +33,31 @@ function UserPage() {
   const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
   const modals = useStore((state) => state.modals);
   const showModal = useStore((state) => state.showModal);
-  const profileId = useStore((state) => state.profileId);
+  const userProfileId = useStore((state) => state.profileId);
   const clearModal = useStore((state) => state.clearModal);
   const editingProfileId = useStore((state) => state.editingProfileId);
   const setEditingProfileId = useStore((state) => state.setEditingProfileId);
 
-  const parsedId = parseInt(Array.isArray(id) ? id[0] : id);
-
-  const { data: profileList, isPending: isProfileListPending } = useQuery({
+  // 서버에서 받은 초기 데이터를 사용하되, 에러가 있거나 데이터가 없으면 클라이언트에서 페치
+  const { data: profileList } = useQuery<GetProfileResponseType, Error>({
     queryKey: ['profiles'],
     queryFn: () => getProfile(1, 100),
+    ...(initialProfileList && !hasError && { initialData: initialProfileList }),
+    enabled: !initialProfileList || hasError,
   });
 
-  const { data: profileCodeResponse, isPending: isProfileCodePending } = useQuery<GetProfileCodeResponseType, Error>({
-    queryKey: ['profileCode', parsedId],
+  const { data: profileCodeResponse } = useQuery<GetProfileCodeResponseType, Error>({
+    queryKey: ['profileCode', profileId],
     queryFn: async () => {
-      const codeId = profileList?.list.find((item) => item.id === parsedId)?.code;
+      const codeId = profileList?.list?.find((item: any) => item.id === profileId)?.code;
 
       if (codeId) {
         return getProfileCode(codeId);
       }
       throw new Error('일치하는 데이터의 코드를 찾을 수 없습니다.');
     },
-    enabled: !!profileList,
+    ...(initialProfileData && !hasError && { initialData: initialProfileData }),
+    enabled: (!initialProfileData || hasError) && !!profileList,
   });
 
   const handleLaterClick = () => {
@@ -58,16 +66,16 @@ function UserPage() {
 
   useEffect(() => {
     if (profileCodeResponse) {
-      setEditingProfileId(parsedId);
+      setEditingProfileId(profileId);
       setSecurityQuestion?.(profileCodeResponse.securityQuestion || null);
     }
-  }, [profileCodeResponse, parsedId, editingProfileId, setEditingProfileId, setSecurityQuestion]);
+  }, [profileCodeResponse, profileId, editingProfileId, setEditingProfileId, setSecurityQuestion]);
 
   useEffect(() => {
-    if (isLogin && user && user?.profile?.id === parsedId) {
+    if (isLogin && user && user?.profile?.id === profileId) {
       router.push('/mypage');
     }
-  }, [isLogin, user, parsedId, router]);
+  }, [isLogin, user, profileId, router]);
 
   const handleClick = () => {
     if (!isLogin) {
@@ -76,7 +84,7 @@ function UserPage() {
       return;
     }
 
-    if (!profileId) {
+    if (!userProfileId) {
       showModal('welcome');
       return;
     }
@@ -84,7 +92,10 @@ function UserPage() {
     showModal('quiz');
   };
 
-  if (isProfileListPending || isProfileCodePending) return <MyPageSkeleton />;
+  // 서버에서 데이터를 받았지만 로딩 중인 경우에만 스켈레톤 표시
+  if ((!initialProfileData && !profileCodeResponse) || hasError) {
+    return <MyPageSkeleton />;
+  }
 
   return (
     <div className={styles.container}>

@@ -1,36 +1,28 @@
 import { getProfile } from '@/api/profile/profile';
 import { getProfileCode } from '@/api/profile/profileCode';
-import { metadataMap } from '@/app/metadata';
+import { GetProfileCodeResponseType } from '@/types/profile';
 import UserPage from '../../_components/UserPage/UserPage';
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const profileList = await getProfile(1, 200);
-  const codeId = profileList?.list.find((item) => item.id === parseInt(params.id))?.code;
-  const profileCodeResponse = await getProfileCode(codeId ?? '');
+// 서버 컴포넌트에서 데이터를 미리 페치
+export default async function User({ params }: { params: { id: string } }) {
+  const parsedId = parseInt(params.id);
 
-  if (profileCodeResponse) {
-    return {
-      title: `${profileCodeResponse.name}님의 프로필`,
-      description: '유저의 개인 페이지입니다. 정보 및 활동을 확인할 수 있습니다.',
-      openGraph: {
-        title: `${profileCodeResponse.name}님의 프로필`,
-        description: '유저의 개인 페이지입니다. 정보 및 활동을 확인할 수 있습니다.',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user/${params.id}`,
-        images: [
-          {
-            url: profileCodeResponse.image || '/default-image.jpg',
-            width: 800,
-            height: 600,
-            alt: `${profileCodeResponse.name}님의 프로필 이미지`,
-          },
-        ],
-      },
-    };
+  try {
+    // 서버에서 데이터 미리 페치
+    const profileList = await getProfile(1, 100);
+    const codeId = profileList?.list?.find((item: any) => item.id === parsedId)?.code;
+
+    let profileCodeResponse: GetProfileCodeResponseType | null = null;
+    if (codeId) {
+      profileCodeResponse = await getProfileCode(codeId);
+    }
+
+    // 클라이언트 컴포넌트에 서버에서 페치한 데이터 전달
+    return <UserPage initialProfileData={profileCodeResponse} profileId={parsedId} profileList={profileList} />;
+  } catch (error) {
+    console.error('Server-side data fetching error:', error);
+
+    // 에러 발생 시 클라이언트에서 처리하도록
+    return <UserPage initialProfileData={null} profileId={parsedId} profileList={null} hasError={true} />;
   }
-
-  return metadataMap.default;
-}
-
-export default function User() {
-  return <UserPage />;
 }
