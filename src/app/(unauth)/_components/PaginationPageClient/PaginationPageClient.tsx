@@ -9,9 +9,13 @@ import { useState } from 'react';
 import ArticleList from '../ArticleList/ArticleList';
 import Filter from '../Filter/Filter';
 import Pagination from '../Pagination/Pagination';
-import styles from './PaginationPage.module.css';
+import styles from './PaginationPageClient.module.css';
 
-export default function PaginationPage() {
+interface Props {
+  initialData: GetArticleResponseType;
+}
+
+export default function PaginationPageClient({ initialData }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState<'recent' | 'like'>('recent');
   const [keyword, setKeyword] = useState('');
@@ -21,6 +25,7 @@ export default function PaginationPage() {
     queryKey: ['articles', currentPage, pageSize, sortOption, keyword],
     queryFn: () => getArticlePagination(currentPage, pageSize, sortOption, keyword),
     placeholderData: (previousData) => previousData,
+    initialData: currentPage === 1 && sortOption === 'recent' && keyword === '' ? initialData : undefined,
   });
 
   const handlePageChange = (pageNumber: number) => {
@@ -29,11 +34,12 @@ export default function PaginationPage() {
 
   const handleSortChange = (option: string) => {
     setSortOption(option === '최신순' ? 'recent' : 'like');
+    setCurrentPage(1);
   };
 
   const handleSearch = (searchTerm: string) => {
     setKeyword(searchTerm);
-    setCurrentPage(1); // 검색 시 첫 페이지로 리셋
+    setCurrentPage(1);
   };
 
   return (

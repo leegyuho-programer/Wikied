@@ -1,92 +1,16 @@
-'use client';
-
 import getArticlePagination from '@/api/article/getArticlesPagination';
 import LinkButton from '@/components/Button/LinkButton';
-import { GetArticleResponseType } from '@/types/article';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import Card from '../Card/Card';
-import PaginationPage from '../PaginationPage/PaginationPage';
+import BestArticlesClient from '../BestArticlesClient/BestArticlesClient';
+import PaginationPageClient from '../PaginationPageClient/PaginationPageClient';
 import styles from './FreeBoardPage.module.css';
-import FreeBoardPageSkeleton from './FreeBoardPageSkeleton';
 
-export default function FreeBoardPage() {
-  const [scrollX, setScrollX] = useState(0);
-  const cardWrapperRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+// ISR 설정
+export const revalidate = 300; // 5분마다 재생성
 
-  const {
-    data: articles,
-    isPending,
-    error,
-  } = useQuery<GetArticleResponseType>({
-    queryKey: ['bestArticles'],
-    queryFn: async () => {
-      const response = await getArticlePagination(1, 10, 'like');
-      return response;
-    },
-  });
-
-  // 스크롤 가능 여부 체크
-  useEffect(() => {
-    const checkScroll = () => {
-      if (cardWrapperRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = cardWrapperRef.current;
-        setCanScrollLeft(scrollLeft > 0);
-        setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
-      }
-    };
-
-    const currentRef = cardWrapperRef.current;
-    const observer = new ResizeObserver(checkScroll);
-
-    if (currentRef) {
-      observer.observe(currentRef);
-      checkScroll(); // 초기 체크
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-      observer.disconnect();
-    };
-  }, [articles]);
-
-  const scrollLeft = () => {
-    if (cardWrapperRef.current) {
-      const newX = Math.max(scrollX - 250, 0);
-      cardWrapperRef.current.scrollTo({ left: newX, behavior: 'smooth' });
-      setScrollX(newX);
-    }
-  };
-
-  const scrollRight = () => {
-    if (cardWrapperRef.current) {
-      const maxScrollX = cardWrapperRef.current.scrollWidth - cardWrapperRef.current.clientWidth;
-      const newX = Math.min(scrollX + 250, maxScrollX);
-      cardWrapperRef.current.scrollTo({ left: newX, behavior: 'smooth' });
-      setScrollX(newX);
-    }
-  };
-
-  const handleScroll = () => {
-    if (cardWrapperRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = cardWrapperRef.current;
-      setScrollX(scrollLeft);
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 약간의 여유 추가
-    }
-  };
-
-  if (error) {
-    return <div className={styles.error}>게시글을 불러오는데 실패했습니다.</div>;
-  }
-
-  if (isPending) {
-    return <FreeBoardPageSkeleton />;
-  }
+export default async function FreeBoardPage() {
+  // 서버에서 베스트 게시글 미리 가져오기
+  const initialBestArticles = await getArticlePagination(1, 10, 'like');
+  const initialArticles = await getArticlePagination(1, 10, 'recent');
 
   return (
     <div className={styles.container}>
@@ -96,38 +20,12 @@ export default function FreeBoardPage() {
           게시물 등록하기
         </LinkButton>
       </div>
-      <div className={styles.cardWrapper}>
-        <button
-          className={`${styles.scrollButton} ${styles.leftButton} ${!canScrollLeft ? styles.hidden : ''}`}
-          onClick={scrollLeft}
-          aria-label="스크롤 왼쪽"
-        >
-          {'<'}
-        </button>
 
-        <div className={styles.card} ref={cardWrapperRef} onScroll={handleScroll}>
-          {articles?.list?.map((article) => (
-            <Card
-              key={article.id}
-              id={article.id}
-              title={article.title}
-              image={article.image}
-              writerName={article.writer.name}
-              createdAt={article.createdAt}
-              likeCount={article.likeCount}
-            />
-          ))}
-        </div>
+      {/* 베스트 게시글 섹션 - 클라이언트 컴포넌트로 분리 */}
+      <BestArticlesClient initialData={initialBestArticles} />
 
-        <button
-          className={`${styles.scrollButton} ${styles.rightButton} ${!canScrollRight ? styles.hidden : ''}`}
-          onClick={scrollRight}
-          aria-label="스크롤 오른쪽"
-        >
-          {'>'}
-        </button>
-      </div>
-      <PaginationPage />
+      {/* 일반 게시글 목록 - 클라이언트 컴포넌트로 분리 */}
+      <PaginationPageClient initialData={initialArticles} />
     </div>
   );
 }
