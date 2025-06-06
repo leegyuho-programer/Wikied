@@ -39,13 +39,13 @@ function LoginForm() {
       setCookie(null, 'userAccessToken', response.accessToken, {
         maxAge: 30 * 60,
         path: '/',
-        secure: true,
+        secure: process.env.NODE_ENV === 'production', // 개발환경에서는 false
         sameSite: 'strict',
       });
       setCookie(null, 'userRefreshToken', response.refreshToken, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
-        secure: true,
+        secure: process.env.NODE_ENV === 'production', // 개발환경에서는 false
         sameSite: 'strict',
       });
 

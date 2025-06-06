@@ -99,7 +99,7 @@ function MyPage() {
       <div className={styles.title}>
         <p className={styles.name}>{user?.name}</p>
         {isPending ? (
-          <p>Loading profile link...</p>
+          <p>로딩중 입니다...</p>
         ) : !profileId ? (
           <p>질문과 답변을 등록해야 초대할 수 있습니다. 설정을 완료하고 친구들을 초대하세요!</p>
         ) : (
