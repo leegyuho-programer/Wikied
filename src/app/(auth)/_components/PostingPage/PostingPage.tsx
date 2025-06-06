@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import styles from './PostingPage.module.css';
 import Image from 'next/image';
 
-interface FormData {
+interface Props {
   title: string;
   content: string;
   image: string;
@@ -27,7 +27,7 @@ export default function PostingPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<Props>();
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null); // 이미지 미리보기 URL
 
@@ -45,8 +45,8 @@ export default function PostingPage() {
     }
   };
 
-  const uploadMutation = useMutation<PostArticleResponseType, Error, FormData>({
-    mutationFn: async (data: FormData) => {
+  const uploadMutation = useMutation<PostArticleResponseType, Error, Props>({
+    mutationFn: async (data: Props) => {
       if (!image) {
         throw new Error('이미지를 선택해주세요.');
       }
@@ -73,7 +73,7 @@ export default function PostingPage() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: Props) => {
     uploadMutation.mutate(data);
   };
 

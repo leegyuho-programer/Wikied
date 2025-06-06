@@ -8,12 +8,12 @@ import Image from 'next/image';
 import { useState } from 'react';
 import styles from './Comment.module.css';
 
-interface CommentProps {
+interface Props {
   comment: GetCommentResponseType['list'][number];
   articleId: number;
 }
 
-export default function Comment({ comment, articleId }: CommentProps) {
+export default function Comment({ comment, articleId }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const currentUserId = useStore((state) => state.userId); // 현재 로그인한 사용자의 ID 가져오기

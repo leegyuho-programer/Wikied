@@ -9,11 +9,11 @@ import Comment from './Comment';
 import styles from './CommentContainer.module.css';
 import CommentContainerSkeleton from './CommentContainerSkeleton';
 
-interface CommentContainerProps {
+interface Props {
   articleId: number;
 }
 
-export default function CommentContainer({ articleId }: CommentContainerProps) {
+export default function CommentContainer({ articleId }: Props) {
   const [comment, setComment] = useState(''); // 댓글 입력 상태 관리
   const queryClient = useQueryClient();
   const user = useStore((state) => state.user);

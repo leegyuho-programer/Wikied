@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './Card.module.css';
 
-interface CardProps {
+interface Props {
   id: number;
   title: string;
   image: string;
@@ -15,7 +15,7 @@ interface CardProps {
   likeCount: number;
 }
 
-export default function Card({ id, title, image, writerName, createdAt, likeCount }: CardProps) {
+export default function Card({ id, title, image, writerName, createdAt, likeCount }: Props) {
   const router = useRouter();
 
   const handleClick = () => {

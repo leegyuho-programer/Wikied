@@ -7,7 +7,7 @@ import { DropDownIcon } from '../SvgComponents';
 import Button from '../Button/Button';
 import styles from './DropDown.module.css';
 
-interface DropDownProps {
+interface Props {
   onSelectionChange: (question: string, answer: string) => void;
   onSubmit: (data: PostProfileRequestType) => void;
   isSubmitting: boolean;
@@ -17,7 +17,7 @@ interface DropDownProps {
 
 const options = ['직접 입력', '싫어하는 음식은?', '좋아하는 음식은?', '좋아하는 운동은?', '내 별명은?'];
 
-function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, initialAnswer }: DropDownProps) {
+function DropDown({ onSelectionChange, onSubmit, isSubmitting, initialQuestion, initialAnswer }: Props) {
   const setSecurityQuestion = useStore((state) => state.setSecurityQuestion);
   const setSecurityAnswer = useStore((state) => state.setSecurityAnswer);
 

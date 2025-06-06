@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './ArticleEditPage.module.css';
 
-interface FormData {
+interface Props {
   title: string;
   content: string;
   image: FileList; // 이미지 파일 리스트
@@ -34,7 +34,7 @@ export default function ArticleEditPage() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<Props>();
 
   const { data: article } = useQuery<GetArticleIdResponseType>({
     queryKey: ['article', articleId],
@@ -91,7 +91,7 @@ export default function ArticleEditPage() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: Props) => {
     // FormData를 PatchArticleRequestType으로 변환하여 전달
     const requestData: PatchArticleRequestType = {
       title: data.title,

@@ -4,13 +4,13 @@ import { DropDownIcon } from '@/components/SvgComponents';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Filter.module.css';
 
-interface FilterProps {
+interface Props {
   onSortChange: (option: string) => void;
 }
 
 const options = ['최신순', '인기순'];
 
-function Filter({ onSortChange }: FilterProps) {
+function Filter({ onSortChange }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('최신순');
   const dropdownRef = useRef<HTMLDivElement>(null);
