@@ -6,17 +6,21 @@ import { GetCommentResponseType } from '@/types/comment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import Comment from './Comment';
-import styles from './CommentContainer.module.css';
+import styles from './CommentContainerClient.module.css';
 import CommentContainerSkeleton from './CommentContainerSkeleton';
 
 interface Props {
   articleId: number;
+  initialData?: GetCommentResponseType['list'] | null;
+  hasError?: boolean;
 }
 
-export default function CommentContainer({ articleId }: Props) {
-  const [comment, setComment] = useState(''); // 댓글 입력 상태 관리
+export default function CommentContainerClient({ articleId, initialData, hasError = false }: Props) {
+  const [comment, setComment] = useState('');
   const queryClient = useQueryClient();
   const user = useStore((state) => state.user);
+
+  const shouldFetchOnClient = hasError || !initialData;
 
   const {
     data: comments = [],
@@ -25,6 +29,9 @@ export default function CommentContainer({ articleId }: Props) {
   } = useQuery<GetCommentResponseType['list'], Error>({
     queryKey: ['comments', articleId],
     queryFn: () => getComment(articleId).then((response) => response.list),
+    ...(initialData && !hasError && { initialData }),
+    enabled: shouldFetchOnClient,
+    retry: shouldFetchOnClient ? 1 : false,
   });
 
   const postCommentMutation = useMutation({
@@ -43,7 +50,8 @@ export default function CommentContainer({ articleId }: Props) {
     setComment('');
   };
 
-  if (isPending) {
+  // 클라이언트에서 데이터를 가져오는 중인 경우 스켈레톤 표시
+  if (shouldFetchOnClient && isPending) {
     return <CommentContainerSkeleton />;
   }
 

@@ -2,7 +2,6 @@
 
 import { deleteArticle, getArticle } from '@/api/article/article';
 import { deleteLike, postLike } from '@/api/article/like';
-import CommentContainer from '@/app/(unauth)/_components/Comment/CommentContainer';
 import Button from '@/components/Button/Button';
 import LinkButton from '@/components/Button/LinkButton';
 import { DeleteIcon, EditIcon, HeartIcon, StrokeIcon } from '@/components/SvgComponents';
@@ -33,10 +32,8 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  // 서버에서 성공적으로 데이터를 받은 경우에는 클라이언트 쿼리를 비활성화
   const shouldFetchOnClient = hasError || !initialData;
 
-  // 서버에서 받은 초기 데이터를 사용하되, 에러가 있거나 데이터가 없으면 클라이언트에서 페치
   const {
     data: article,
     isPending,
@@ -46,10 +43,9 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
     queryFn: () => getArticle(articleId),
     ...(initialData && !hasError && { initialData }),
     enabled: shouldFetchOnClient,
-    retry: shouldFetchOnClient ? 1 : false, // 서버 데이터가 있으면 재시도하지 않음
+    retry: shouldFetchOnClient ? 1 : false,
   });
 
-  // 클라이언트에서도 데이터를 가져오지 못한 경우 404로 리다이렉트
   useEffect(() => {
     if (error && !isPending) {
       router.push('/404');
@@ -89,9 +85,7 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
     mutationFn: ({ articleId }: PostLikeRequestType) => postLike(articleId),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['getArticle', articleId] });
-
       const previousArticle = queryClient.getQueryData<GetArticleIdResponseType>(['getArticle', articleId]);
-
       if (previousArticle) {
         queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', articleId], {
           ...previousArticle,
@@ -99,7 +93,6 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
           isLiked: true,
         });
       }
-
       return { previousArticle };
     },
     onError: (err, variables, context) => {
@@ -117,9 +110,7 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
     mutationFn: ({ articleId }: DeleteLikeRequestType) => deleteLike(articleId),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['getArticle', articleId] });
-
       const previousArticle = queryClient.getQueryData<GetArticleIdResponseType>(['getArticle', articleId]);
-
       if (previousArticle) {
         queryClient.setQueryData<GetArticleIdResponseType>(['getArticle', articleId], {
           ...previousArticle,
@@ -127,7 +118,6 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
           isLiked: false,
         });
       }
-
       return { previousArticle };
     },
     onError: (err, variables, context) => {
@@ -143,7 +133,6 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
 
   const handleLikeClick = () => {
     if (!article) return;
-
     if (!article.isLiked) {
       postLikeMutation.mutate({ articleId });
     } else {
@@ -151,12 +140,11 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
     }
   };
 
-  // 클라이언트에서 데이터를 가져오는 중인 경우에만 스켈레톤 표시
+  // 클라이언트에서 데이터를 가져오는 중인 경우 스켈레톤 표시
   if (shouldFetchOnClient && isPending) {
     return <ArticlePageSkeleton />;
   }
 
-  // 최종적으로 article이 없는 경우 (서버/클라이언트 모두 실패)
   if (!article) {
     router.push('/404');
     return null;
@@ -228,7 +216,6 @@ export default function ArticlePageClient({ initialData, articleId, hasError = f
       <Link href="/board" className={styles.link}>
         목록으로
       </Link>
-      <CommentContainer articleId={articleId} />
     </div>
   );
 }
