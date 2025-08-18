@@ -26,7 +26,7 @@
 ## quick start guide
 
 ```jsx
-$ git clone https://github.com/ArtTalkTalk/ArtTalkTalk_frontend.git
+$ git clone https://github.com/leegyuho-programer/Wikied.git
 $ npm install
 $ npm build
 $ npm start
